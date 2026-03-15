@@ -63,7 +63,7 @@ const featuredBooks = shuffled.slice(0, 12);
   </section>
 
   <!-- IMMERSION MODE -->
-  <section class="section section--alt">
+  <section class="section section--accent" style="padding-top: calc(var(--space-4xl) + 40px); padding-bottom: calc(var(--space-4xl) + 40px);">
     <div class="container">
       <div class="text-center mb-xxl">
         <h2 class="mb-m">Режим погружения — английский появляется в тексте постепенно</h2>
@@ -97,7 +97,7 @@ const featuredBooks = shuffled.slice(0, 12);
         </div>
       </div>
       <div class="text-center" style="margin-top: var(--space-xl);">
-        <a href="/metod-pogruzheniya" class="btn btn--primary">Подробнее о методе погружения</a>
+        <a href="/metod-pogruzheniya" class="btn btn--white">Подробнее о методе погружения</a>
       </div>
     </div>
   </section>
@@ -176,7 +176,7 @@ const featuredBooks = shuffled.slice(0, 12);
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="section section--alt">
+  <section class="section section--warm">
     <div class="container">
       <h2 class="text-center mb-xxl">Что говорят наши читатели</h2>
       <div class="grid-3">
@@ -317,8 +317,9 @@ const featuredBooks = shuffled.slice(0, 12);
 
 <style>
   .hero {
-    background: var(--color-surface);
+    background: var(--gradient-hero);
     padding: var(--space-4xl) 0;
+    border-bottom: 1px solid var(--color-card-border);
   }
 
   .hero__inner {

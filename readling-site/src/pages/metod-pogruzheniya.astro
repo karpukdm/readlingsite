@@ -318,8 +318,9 @@ import { links } from '../config/links';
 
 <style>
   .hero {
-    background: var(--color-surface);
+    background: var(--gradient-hero);
     padding: var(--space-4xl) 0;
+    border-bottom: 1px solid var(--color-card-border);
   }
 
   .hero__inner {
@@ -345,6 +346,7 @@ import { links } from '../config/links';
     background: var(--color-surface);
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-card-border);
+    border-left: 3px solid var(--color-primary);
     padding: var(--space-l);
   }
 
@@ -357,7 +359,7 @@ import { links } from '../config/links';
 
   .stage__badge {
     flex-shrink: 0;
-    background: var(--color-primary);
+    background: var(--gradient-accent);
     color: var(--color-on-primary);
     font-size: 0.75rem;
     font-weight: 700;
