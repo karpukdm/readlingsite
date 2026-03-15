@@ -28,9 +28,7 @@ const featuredBooks = shuffled.slice(0, 8);
         </div>
       </div>
       <div class="hero__visual">
-        <div class="screenshot-placeholder screenshot-placeholder--phone">
-          Скриншот<br/>параллельного чтения
-        </div>
+        <img src="/screen-parallel.png" alt="Параллельное чтение Readling" class="hero__phone" />
       </div>
     </div>
   </section>
@@ -56,9 +54,7 @@ const featuredBooks = shuffled.slice(0, 8);
           </p>
         </div>
         <div class="what-section__visual">
-          <div class="screenshot-placeholder" style="min-height: 400px;">
-            Скриншот<br/>параллельного чтения<br/>(крупный)
-          </div>
+          <img src="/screen-parallel-wide.png" alt="Параллельное чтение — крупно" class="section__img" />
         </div>
       </div>
     </div>
@@ -241,7 +237,7 @@ const featuredBooks = shuffled.slice(0, 8);
           <summary>Чем параллельное чтение в Readling отличается от обычных книг с параллельным переводом?</summary>
           <div class="faq-item__answer">
             В Readling текст интерактивный: вы можете нажать на любое слово и увидеть перевод.
-            Незнакомые слова сохраняются в личный словарь. А ещё можно в любой момент переключиться на режим погружения.
+            Незнакомые слова сохраняются в личный словарь и используются в тренировках.
           </div>
         </details>
         <details class="faq-item">
@@ -270,7 +266,7 @@ const featuredBooks = shuffled.slice(0, 8);
         {
           "@type": "Question",
           "name": "Чем параллельное чтение в Readling отличается от обычных книг с параллельным переводом?",
-          "acceptedAnswer": { "@type": "Answer", "text": "В Readling текст интерактивный: можно нажать на любое слово и увидеть перевод. Незнакомые слова сохраняются в личный словарь." }
+          "acceptedAnswer": { "@type": "Answer", "text": "В Readling текст интерактивный: можно нажать на любое слово и увидеть перевод. Незнакомые слова сохраняются в личный словарь и используются в тренировках." }
         },
         {
           "@type": "Question",
@@ -304,6 +300,23 @@ const featuredBooks = shuffled.slice(0, 8);
   .hero__subtitle {
     font-size: 1.125rem;
     line-height: 1.7;
+  }
+
+  .hero__phone {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xxl);
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+    display: block;
+  }
+
+  .section__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
   .what-section {

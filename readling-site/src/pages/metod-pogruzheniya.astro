@@ -23,9 +23,7 @@ import { links } from '../config/links';
         </div>
       </div>
       <div class="hero__visual">
-        <div class="screenshot-placeholder screenshot-placeholder--phone">
-          Скриншот<br/>режима погружения
-        </div>
+        <img src="/screen-immersion.png" alt="Режим погружения Readling" class="hero__phone" />
       </div>
     </div>
   </section>
@@ -186,9 +184,7 @@ import { links } from '../config/links';
           </p>
         </div>
         <div class="tap-section__visual">
-          <div class="screenshot-placeholder" style="min-height: 320px;">
-            Скриншот<br/>тап-перевода
-          </div>
+          <img src="/screen-immersion-wide.png" alt="Перевод слова по нажатию" class="section__img" />
         </div>
       </div>
     </div>
@@ -333,6 +329,23 @@ import { links } from '../config/links';
   .hero__subtitle {
     font-size: 1.125rem;
     line-height: 1.7;
+  }
+
+  .hero__phone {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xxl);
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+    display: block;
+  }
+
+  .section__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
 
   /* Stages */

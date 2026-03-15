@@ -28,9 +28,7 @@ const featuredBooks = shuffled.slice(0, 12);
         </div>
       </div>
       <div class="hero__visual">
-        <div class="screenshot-placeholder screenshot-placeholder--phone">
-          Скриншот приложения<br/>Режим погружения
-        </div>
+        <img src="/screen-immersion.png" alt="Readling — режим погружения" class="hero__phone" />
       </div>
     </div>
   </section>
@@ -42,19 +40,19 @@ const featuredBooks = shuffled.slice(0, 12);
       <div class="grid-3">
         <div class="step-card">
           <div class="step-card__number">1</div>
-          <div class="screenshot-placeholder mb-m" style="min-height:180px;">Скриншот каталога</div>
+          <img src="/screen-catalog.png" alt="Каталог книг Readling" class="step-card__img mb-m" />
           <h3 class="mb-s">Выберите книгу по своему уровню</h3>
           <p>В каталоге — книги от A1 до C2: детективы, фантастика, классика, романтика. Найдите то, что интересно именно вам.</p>
         </div>
         <div class="step-card">
           <div class="step-card__number">2</div>
-          <div class="screenshot-placeholder mb-m" style="min-height:180px;">Скриншот тап-перевода</div>
+          <img src="/screen-immersion.png" alt="Чтение с переводом по нажатию" class="step-card__img mb-m" />
           <h3 class="mb-s">Читайте с переводом по нажатию</h3>
           <p>Встретили незнакомое слово? Нажмите — увидите перевод мгновенно. Слово сохранится в ваш личный словарь.</p>
         </div>
         <div class="step-card">
           <div class="step-card__number">3</div>
-          <div class="screenshot-placeholder mb-m" style="min-height:180px;">Скриншот тренировки</div>
+          <img src="/screen-training.png" alt="Тренировки в Readling" class="step-card__img mb-m" />
           <h3 class="mb-s">Закрепляйте слова тренировками</h3>
           <p>Карточки, пазлы предложений, вставка слов — всё из книг, которые вы читаете. Учите то, что действительно встречается в тексте.</p>
         </div>
@@ -115,9 +113,7 @@ const featuredBooks = shuffled.slice(0, 12);
           <a href="/parallelnoe-chtenie" class="btn btn--secondary">Подробнее о параллельном чтении &rarr;</a>
         </div>
         <div class="parallel-section__visual">
-          <div class="screenshot-placeholder" style="min-height: 320px;">
-            Скриншот<br/>параллельного чтения
-          </div>
+          <img src="/screen-parallel.png" alt="Параллельное чтение в Readling" class="hero__phone" />
         </div>
       </div>
     </div>
@@ -134,17 +130,17 @@ const featuredBooks = shuffled.slice(0, 12);
       </div>
       <div class="grid-3">
         <div class="card">
-          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот флэш-карточки</div>
+          <img src="/screen-flashcards.png" alt="Флэш-карточки" class="step-card__img mb-m" />
           <h3 class="mb-s">Флэш-карточки</h3>
           <p>Повторяйте слова из книг. Знаете — свайп вправо, не знаете — вернётся снова.</p>
         </div>
         <div class="card">
-          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот пазла</div>
+          <img src="/screen-sentence-puzzle.png" alt="Собери предложение" class="step-card__img mb-m" />
           <h3 class="mb-s">Собери предложение</h3>
           <p>Расставьте перемешанные слова в правильном порядке. Три уровня сложности.</p>
         </div>
         <div class="card">
-          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот вставки слова</div>
+          <img src="/screen-fill-word.png" alt="Вставь слово" class="step-card__img mb-m" />
           <h3 class="mb-s">Вставь пропущенное слово</h3>
           <p>Вспомните слово и соберите его по буквам. Отличная тренировка правописания.</p>
         </div>
@@ -334,8 +330,27 @@ const featuredBooks = shuffled.slice(0, 12);
     line-height: 1.7;
   }
 
+  .hero__phone {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xxl);
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+    display: block;
+  }
+
   .step-card {
     text-align: center;
+  }
+
+  .step-card__img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin: 0 auto;
   }
 
   .step-card__number {
