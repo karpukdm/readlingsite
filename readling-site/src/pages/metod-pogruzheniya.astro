@@ -1,0 +1,435 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../config/links';
+---
+
+<BaseLayout
+  title="Метод погружения в английский через чтение книг — Readling"
+  description="Как выучить английский через чтение? Режим погружения в Readling: английский плавно появляется в тексте книги. Без зубрёжки, через контекст. Попробуйте бесплатно."
+  canonicalPath="/metod-pogruzheniya"
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <h1 class="mb-m">Метод погружения: как выучить английский, читая книги</h1>
+        <p class="hero__subtitle mb-l">
+          Вы читаете книгу на русском, а английские слова и фразы появляются всё чаще.
+          К концу книги — вы читаете на английском. И всё понимаете. Это метод погружения в Readling.
+        </p>
+        <div class="store-buttons">
+          <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+          <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="screenshot-placeholder screenshot-placeholder--phone">
+          Скриншот<br/>режима погружения
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="section">
+    <div class="container max-w-prose mx-auto">
+      <h2 class="mb-l">Почему учить английский так сложно</h2>
+      <p class="mb-m">
+        Знакомо? Вы учите списки слов — и забываете через неделю. Проходите упражнения в приложении —
+        но в реальной жизни слова не вспоминаются. Пытаетесь читать книгу на английском —
+        но бросаете на третьей странице, потому что непонятно почти всё.
+      </p>
+      <p>
+        Проблема не в вас. Проблема в методе. Мозг не запоминает слова из списков — он запоминает слова из историй.
+        Не из упражнений — а из контекста. Именно так дети учат родной язык — через истории, которые им рассказывают.
+      </p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="text-center mb-xxl">
+        <h2 class="mb-m">Как работает метод погружения в Readling</h2>
+        <p class="max-w-prose mx-auto">
+          Метод погружения — это постепенное замещение русского текста английским прямо внутри книги.
+          Вы выбираете книгу, начинаете читать — и даже не замечаете, как переходите на английский.
+        </p>
+      </div>
+
+      <div class="stages max-w-wide mx-auto">
+        <!-- Stage 1 -->
+        <div class="stage">
+          <div class="stage__header">
+            <div class="stage__badge">Этап 1</div>
+            <div class="stage__progress"><div class="stage__progress-fill" style="width: 10%;"></div></div>
+          </div>
+          <h3 class="mb-s">Начало книги — почти всё на русском</h3>
+          <p class="mb-m">
+            На первых страницах текст на 90–95% русский. Только простые, самые частотные английские слова:
+            the, and, said, morning. Вы читаете интересную историю и привыкаете к виду английских слов.
+          </p>
+          <div class="stage__example">
+            <p>
+              Анна <span class="en">opened</span> дверь и вошла в комнату. На столе лежало <span class="en">the letter</span>.
+              Она <span class="en">looked</span> на конверт и <span class="en">smiled</span>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="stage">
+          <div class="stage__header">
+            <div class="stage__badge">Этап 2</div>
+            <div class="stage__progress"><div class="stage__progress-fill" style="width: 35%;"></div></div>
+          </div>
+          <h3 class="mb-s">Разгон — простые фразы по-английски</h3>
+          <p class="mb-m">
+            К середине книги 30–50% текста — на английском. Вы читаете простые фразы не задумываясь:
+            "he said", "opened the door", "in the morning". Сложные конструкции пока на русском.
+          </p>
+          <div class="stage__example">
+            <p>
+              <span class="en">Anna opened the door and walked into</span> комнату.
+              <span class="en">On the table</span> лежало <span class="en">a letter.
+              She looked at the envelope and smiled.</span> Нужно было <span class="en">decide what to do next.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="stage">
+          <div class="stage__header">
+            <div class="stage__badge">Этап 3</div>
+            <div class="stage__progress"><div class="stage__progress-fill" style="width: 70%;"></div></div>
+          </div>
+          <h3 class="mb-s">Погружение — вы уже читаете на английском</h3>
+          <p class="mb-m">
+            60–80% текста на английском. Только сложные или редкие слова остаются на русском — как подсказки.
+            Вы читаете книгу на английском и понимаете!
+          </p>
+          <div class="stage__example">
+            <p>
+              <span class="en">Anna opened the door and walked into the room. On the table lay a letter.</span>
+              Она <span class="en">looked at the envelope and smiled. She had to decide what to do next, but</span>
+              сомнения <span class="en">wouldn't let her think clearly.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="stage">
+          <div class="stage__header">
+            <div class="stage__badge">Этап 4</div>
+            <div class="stage__progress"><div class="stage__progress-fill" style="width: 95%;"></div></div>
+          </div>
+          <h3 class="mb-s">Свободное чтение — почти полностью на английском</h3>
+          <p class="mb-m">
+            К концу книги 90–100% текста на английском. Вы читаете свободно, лишь изредка заглядывая в перевод.
+            Вы не заметили, как это произошло — но вы теперь читаете книги на английском.
+          </p>
+          <div class="stage__example">
+            <p>
+              <span class="en">Anna opened the door and walked into the room. On the table lay a letter.
+              She looked at the envelope and smiled. She had to decide what to do next,
+              but doubt wouldn't let her think clearly.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY IT WORKS -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-xxl">Почему слова из книг запоминаются лучше, чем из учебника</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3 class="mb-s">Контекст решает всё</h3>
+          <p>
+            Когда вы встречаете слово в интересной истории, мозг запоминает не только значение —
+            но и ситуацию, эмоцию, персонажа. Слова, выученные в контексте, запоминаются в 2–3 раза лучше, чем из списка.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Естественное повторение</h3>
+          <p>
+            Частотные слова встречаются в книге десятки раз — вы повторяете их, не прикладывая усилий.
+            К десятому разу слово "remember" становится таким же привычным, как "помнить".
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Мотивация через историю</h3>
+          <p>
+            Вам хочется узнать, чем закончится книга. Это мотивирует читать дальше — и учить больше слов.
+            Никакие уведомления и стрики не сравнятся с хорошей историей.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAP TO TRANSLATE -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="tap-section">
+        <div class="tap-section__text">
+          <h2 class="mb-m">Встретили незнакомое слово? Нажмите — и увидите перевод</h2>
+          <p class="mb-m">
+            В режиме погружения каждое слово интерактивно. Нажмите на незнакомое слово или фразу —
+            перевод появится мгновенно. Не нужно переключаться в словарь или другое приложение.
+          </p>
+          <p>
+            И главное: каждое слово, на которое вы нажали, автоматически сохраняется в ваш личный словарь.
+            Потом тренируете именно эти слова — те, которые вам действительно нужны.
+          </p>
+        </div>
+        <div class="tap-section__visual">
+          <div class="screenshot-placeholder" style="min-height: 320px;">
+            Скриншот<br/>тап-перевода
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEVELS -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-xxl">Метод погружения подходит для любого уровня — от A1 до C2</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="badge mb-m">A1–A2</div>
+          <h3 class="mb-s">Начинающие</h3>
+          <p>
+            Книги начинаются почти полностью на русском. Английские слова появляются по одному —
+            вы входите в язык мягко, без стресса. Идеально, если вы никогда не читали на английском.
+          </p>
+        </div>
+        <div class="card">
+          <div class="badge mb-m">B1–B2</div>
+          <h3 class="mb-s">Средний уровень</h3>
+          <p>
+            Английского больше с первых страниц. Вы быстро наращиваете словарный запас
+            и привыкаете к длинным предложениям на английском.
+          </p>
+        </div>
+        <div class="card">
+          <div class="badge mb-m">C1–C2</div>
+          <h3 class="mb-s">Продвинутые</h3>
+          <p>
+            Минимум русского — только подсказки для редких слов.
+            Читаете почти как на оригинале, но с удобной страховочной сеткой.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="section section--alt">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Что говорят пользователи о методе погружения</h2>
+      <div class="testimonial" style="max-width: 600px; margin: 0 auto;">
+        <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial__text">
+          &laquo;Сначала не верил, что получится. Но к середине книги вдруг понял — я читаю на английском и всё понимаю.
+          Это магия какая-то.&raquo;
+        </p>
+        <p class="testimonial__author">Алексей — App Store</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container text-center">
+      <h2 class="mb-m">Попробуйте метод погружения бесплатно</h2>
+      <p class="max-w-prose mx-auto mb-l">
+        Скачайте Readling, выберите книгу по уровню и начните читать прямо сейчас. Первые 7 дней — бесплатно.
+      </p>
+      <div class="store-buttons" style="justify-content: center;">
+        <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+      <p style="margin-top: var(--space-m); font-size: 0.875rem; color: var(--color-text-tertiary);">
+        200+ книг · Все уровни · Без рекламы
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Вопросы о методе погружения</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Чем метод погружения отличается от обычного чтения на английском?</summary>
+          <div class="faq-item__answer">
+            При обычном чтении вы сразу видите сложный текст целиком — и быстро сдаётесь.
+            В режиме погружения сложность нарастает плавно. Вы начинаете с почти полностью русского текста,
+            и английский появляется постепенно — вы никогда не чувствуете, что «не справляетесь».
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Для какого уровня подходит метод погружения?</summary>
+          <div class="faq-item__answer">
+            Для любого — от полного начинающего (A1) до продвинутого (C2). Приложение адаптирует начальную долю
+            английского под ваш уровень. Начинающие начинают с 5% английского, продвинутые — с 50% и выше.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Это работает с любой книгой в каталоге?</summary>
+          <div class="faq-item__answer">
+            В каталоге Readling у каждой книги указан доступный режим чтения — погружение или параллельный.
+            Часть книг доступна в режиме погружения, часть — в параллельном режиме.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schema.org -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Чем метод погружения отличается от обычного чтения на английском?",
+          "acceptedAnswer": { "@type": "Answer", "text": "При обычном чтении вы сразу видите сложный текст целиком. В режиме погружения сложность нарастает плавно — вы никогда не чувствуете, что не справляетесь." }
+        },
+        {
+          "@type": "Question",
+          "name": "Для какого уровня подходит метод погружения?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Для любого — от A1 до C2. Приложение адаптирует начальную долю английского под ваш уровень." }
+        },
+        {
+          "@type": "Question",
+          "name": "Это работает с любой книгой в каталоге?",
+          "acceptedAnswer": { "@type": "Answer", "text": "В каталоге у каждой книги указан доступный режим чтения — погружение или параллельный. Часть книг доступна в режиме погружения, часть — в параллельном режиме." }
+        }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: var(--color-surface);
+    padding: var(--space-4xl) 0;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .hero__subtitle {
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  /* Stages */
+  .stages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .stage {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    padding: var(--space-l);
+  }
+
+  .stage__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    margin-bottom: var(--space-m);
+  }
+
+  .stage__badge {
+    flex-shrink: 0;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stage__progress {
+    flex: 1;
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .stage__progress-fill {
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: 3px;
+    transition: width 0.5s var(--ease-out);
+  }
+
+  .stage__example {
+    background: var(--color-section-bg);
+    border-radius: var(--radius-sm);
+    padding: var(--space-m);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+  }
+
+  .stage__example .en {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  /* Tap section */
+  .tap-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero__visual {
+      order: -1;
+    }
+
+    .store-buttons {
+      justify-content: center;
+    }
+
+    .tap-section {
+      grid-template-columns: 1fr;
+    }
+
+    .stage__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-s);
+    }
+
+    .stage__progress {
+      width: 100%;
+    }
+  }
+</style>

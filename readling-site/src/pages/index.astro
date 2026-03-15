@@ -1,0 +1,379 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../config/links';
+import allBooks from '../data/books.json';
+
+const books = allBooks.filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
+const shuffled = [...books].sort(() => Math.random() - 0.5);
+const featuredBooks = shuffled.slice(0, 12);
+---
+
+<BaseLayout
+  title="Readling — учите английский язык, читая любимые книги"
+  description="Изучение английского через чтение книг в приложении Readling. Режим плавного погружения, параллельное чтение, тренировки слов в контексте. 7 дней бесплатно."
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <span class="badge mb-m">7 дней бесплатно</span>
+        <h1 class="mb-m">Учите английский через книги — легко, интересно, без зубрёжки</h1>
+        <p class="hero__subtitle mb-l">
+          Readling — приложение для изучения английского через чтение настоящих книг.
+          Английский текст появляется в книге постепенно — вы читаете интересную историю, а язык усваивается сам.
+        </p>
+        <div class="store-buttons">
+          <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+          <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="screenshot-placeholder screenshot-placeholder--phone">
+          Скриншот приложения<br/>Режим погружения
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-xxl">Как учить английский через книги в Readling</h2>
+      <div class="grid-3">
+        <div class="step-card">
+          <div class="step-card__number">1</div>
+          <div class="screenshot-placeholder mb-m" style="min-height:180px;">Скриншот каталога</div>
+          <h3 class="mb-s">Выберите книгу по своему уровню</h3>
+          <p>В каталоге — книги от A1 до C2: детективы, фантастика, классика, романтика. Найдите то, что интересно именно вам.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__number">2</div>
+          <div class="screenshot-placeholder mb-m" style="min-height:180px;">Скриншот тап-перевода</div>
+          <h3 class="mb-s">Читайте с переводом по нажатию</h3>
+          <p>Встретили незнакомое слово? Нажмите — увидите перевод мгновенно. Слово сохранится в ваш личный словарь.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__number">3</div>
+          <div class="screenshot-placeholder mb-m" style="min-height:180px;">Скриншот тренировки</div>
+          <h3 class="mb-s">Закрепляйте слова тренировками</h3>
+          <p>Карточки, пазлы предложений, вставка слов — всё из книг, которые вы читаете. Учите то, что действительно встречается в тексте.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMMERSION MODE -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="text-center mb-xxl">
+        <h2 class="mb-m">Режим погружения — английский появляется в тексте постепенно</h2>
+        <p class="max-w-prose mx-auto">
+          Забудьте о стрессе перед английским текстом. В режиме погружения вы начинаете читать почти полностью на русском —
+          и с каждой страницей английских слов становится больше. Мозг привыкает к языку естественно, как при жизни за рубежом.
+        </p>
+      </div>
+      <div class="immersion-demo max-w-wide mx-auto">
+        <div class="immersion-step">
+          <div class="immersion-step__label">Начало книги — 10% английского</div>
+          <p class="immersion-step__text">
+            Анна <span class="en">opened</span> дверь и вошла в комнату. На столе лежало <span class="en">the letter</span>.
+            Она <span class="en">looked</span> на конверт и <span class="en">smiled</span>. Нужно было решить, что делать дальше.
+          </p>
+        </div>
+        <div class="immersion-step">
+          <div class="immersion-step__label">Середина — 50% английского</div>
+          <p class="immersion-step__text">
+            <span class="en">Anna opened the door and walked into</span> комнату. <span class="en">On the table</span> лежало
+            <span class="en">a letter. She looked at the envelope and smiled.</span> Нужно было <span class="en">decide what to do next.</span>
+          </p>
+        </div>
+        <div class="immersion-step">
+          <div class="immersion-step__label">Конец книги — 90% английского</div>
+          <p class="immersion-step__text">
+            <span class="en">Anna opened the door and walked into the room. On the table lay a letter.
+            She looked at the envelope and smiled. She had to decide what to do next, but</span> сомнения
+            <span class="en">wouldn't let her think clearly.</span>
+          </p>
+        </div>
+      </div>
+      <div class="text-center" style="margin-top: var(--space-xl);">
+        <a href="/metod-pogruzheniya" class="btn btn--primary">Подробнее о методе погружения</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARALLEL READING -->
+  <section class="section">
+    <div class="container">
+      <div class="parallel-section">
+        <div class="parallel-section__text">
+          <h2 class="mb-m">Или читайте с параллельным переводом</h2>
+          <p class="mb-l">
+            Английский оригинал и русский перевод рядом — сравнивайте конструкции, учите грамматику,
+            понимайте каждое предложение. Идеально для уровней B1 и выше.
+          </p>
+          <a href="/parallelnoe-chtenie" class="btn btn--secondary">Подробнее о параллельном чтении &rarr;</a>
+        </div>
+        <div class="parallel-section__visual">
+          <div class="screenshot-placeholder" style="min-height: 320px;">
+            Скриншот<br/>параллельного чтения
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="text-center mb-xxl">
+        <h2 class="mb-m">Тренировки по вашим словам — запоминайте то, что читаете</h2>
+        <p class="max-w-prose mx-auto">
+          Все слова, которые вы посмотрели при чтении, попадают в личный словарь. А тренировки помогают их запомнить.
+        </p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот флэш-карточки</div>
+          <h3 class="mb-s">Флэш-карточки</h3>
+          <p>Повторяйте слова из книг. Знаете — свайп вправо, не знаете — вернётся снова.</p>
+        </div>
+        <div class="card">
+          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот пазла</div>
+          <h3 class="mb-s">Собери предложение</h3>
+          <p>Расставьте перемешанные слова в правильном порядке. Три уровня сложности.</p>
+        </div>
+        <div class="card">
+          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот вставки слова</div>
+          <h3 class="mb-s">Вставь пропущенное слово</h3>
+          <p>Вспомните слово и соберите его по буквам. Отличная тренировка правописания.</p>
+        </div>
+      </div>
+      <p class="text-center" style="margin-top: var(--space-l);">
+        <strong>Главное:</strong> тренировки строятся на ваших словах — тех, что вы встретили в книге.
+      </p>
+    </div>
+  </section>
+
+  <!-- BOOK CATALOG -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-m">200+ книг на английском для любого уровня</h2>
+      <p class="text-center max-w-prose mx-auto mb-xl">
+        Выбирайте книги по уровню сложности — от A1 для начинающих до C2 для продвинутых.
+        Детективы, фантастика, классика, романтика, научная фантастика и другие жанры.
+      </p>
+      <div class="book-scroll">
+        {featuredBooks.map(book => (
+          <div class="book-card">
+            <img class="book-card__cover" src={book.imageUrl} alt={book.title} loading="lazy" />
+            <div class="book-card__title">{book.title}</div>
+            <div class="book-card__author">{book.author}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="text-center mb-xxl">Что говорят наши читатели</h2>
+      <div class="grid-3">
+        <div class="testimonial">
+          <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial__text">
+            &laquo;Наконец-то нашёл способ учить английский, который не бросаешь через неделю. Читаю книги и не замечаю, как учусь.&raquo;
+          </p>
+          <p class="testimonial__author">Алексей — App Store</p>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial__text">
+            &laquo;Режим погружения — это гениально. К середине книги вдруг понимаешь, что читаешь по-английски.&raquo;
+          </p>
+          <p class="testimonial__author">Мария — Google Play</p>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial__text">
+            &laquo;Тренировки по словам из книги — это то, чего не хватало. Учу именно свои слова, а не случайные списки.&raquo;
+          </p>
+          <p class="testimonial__author">Дмитрий — App Store</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Частые вопросы о Readling</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Для какого уровня английского подходит Readling?</summary>
+          <div class="faq-item__answer">
+            Для любого — от полного начинающего (A1) до продвинутого (C2). В каталоге есть книги для каждого уровня,
+            а режим погружения адаптирует сложность текста под вас.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Что такое режим погружения?</summary>
+          <div class="faq-item__answer">
+            Это уникальный способ чтения, при котором английские слова и фразы постепенно появляются в русском тексте.
+            Вы начинаете читать почти на русском, а к концу книги — уже на английском. Переход происходит плавно и незаметно.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Можно ли пользоваться Readling бесплатно?</summary>
+          <div class="faq-item__answer">
+            Да, бесплатная версия даёт доступ к части каталога. Подписка открывает все книги, убирает рекламу
+            и даёт доступ ко всем функциям. Первые 7 дней — бесплатно.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Какие книги есть в каталоге?</summary>
+          <div class="faq-item__answer">
+            Более 200 книг в 25 жанрах: детективы, фантастика, классика, романтика, научпоп и другие.
+            Каждая книга адаптирована для изучения английского и доступна в двух режимах чтения.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Как работают тренировки?</summary>
+          <div class="faq-item__answer">
+            Когда вы читаете и нажимаете на незнакомое слово, оно сохраняется в ваш личный словарь.
+            Тренировки — флэш-карточки, пазлы предложений, вставка слов — помогают запомнить именно ваши слова,
+            а не случайные из учебника.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>На каких устройствах работает Readling?</summary>
+          <div class="faq-item__answer">
+            На iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schema.org -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Readling",
+      "applicationCategory": "EducationApplication",
+      "operatingSystem": "iOS, Android",
+      "description": "Приложение для изучения английского через чтение книг. Режим погружения, параллельное чтение, тренировки слов.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "RUB"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "500"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Для какого уровня английского подходит Readling?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Для любого — от полного начинающего (A1) до продвинутого (C2). В каталоге есть книги для каждого уровня, а режим погружения адаптирует сложность текста под вас." }
+        },
+        {
+          "@type": "Question",
+          "name": "Что такое режим погружения?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Это уникальный способ чтения, при котором английские слова и фразы постепенно появляются в русском тексте. Вы начинаете читать почти на русском, а к концу книги — уже на английском." }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли пользоваться Readling бесплатно?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Да, бесплатная версия даёт доступ к части каталога. Подписка открывает все книги, убирает рекламу и даёт доступ ко всем функциям. Первые 7 дней — бесплатно." }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие книги есть в каталоге?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Более 200 книг в 25 жанрах: детективы, фантастика, классика, романтика, научпоп и другие." }
+        },
+        {
+          "@type": "Question",
+          "name": "Как работают тренировки?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Когда вы читаете и нажимаете на незнакомое слово, оно сохраняется в ваш личный словарь. Тренировки помогают запомнить именно ваши слова." }
+        },
+        {
+          "@type": "Question",
+          "name": "На каких устройствах работает Readling?",
+          "acceptedAnswer": { "@type": "Answer", "text": "На iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play." }
+        }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: var(--color-surface);
+    padding: var(--space-4xl) 0;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  .hero__subtitle {
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .step-card {
+    text-align: center;
+  }
+
+  .step-card__number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: var(--space-m);
+  }
+
+  .parallel-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero__visual {
+      order: -1;
+    }
+
+    .store-buttons {
+      justify-content: center;
+    }
+
+    .parallel-section {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

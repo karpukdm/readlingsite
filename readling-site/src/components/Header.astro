@@ -1,0 +1,156 @@
+---
+import { links } from '../config/links';
+const navItems = [
+  { href: '/metod-pogruzheniya', label: 'Метод погружения' },
+  { href: '/parallelnoe-chtenie', label: 'Параллельное чтение' },
+  { href: '/sravnenie/readling-vs-duolingo', label: 'Readling vs Duolingo' },
+];
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="header__logo">
+      <img src="/logo.png" alt="Readling" class="header__logo-icon" width="32" height="32" />
+      <span class="header__logo-text">Readling</span>
+    </a>
+    <nav class="header__nav" id="nav">
+      {navItems.map(item => (
+        <a href={item.href} class="header__link">{item.label}</a>
+      ))}
+    </nav>
+    <a href="#download" class="btn btn--primary header__cta">Скачать</a>
+    <button class="header__burger" id="burger" aria-label="Открыть меню">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245, 245, 247, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-card-border);
+    height: var(--header-height);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .header {
+      background: rgba(20, 20, 20, 0.85);
+    }
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: var(--space-l);
+  }
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+  }
+
+  .header__logo:hover {
+    color: var(--color-text);
+  }
+
+  .header__logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+  }
+
+  .header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+    margin-left: auto;
+  }
+
+  .header__link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header__link:hover {
+    color: var(--color-primary);
+  }
+
+  .header__cta {
+    min-height: 40px;
+    padding: var(--space-s) var(--space-m);
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .header__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-s);
+  }
+
+  .header__burger span {
+    width: 20px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 1px;
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  @media (max-width: 768px) {
+    .header__nav {
+      display: none;
+      position: absolute;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-card-border);
+      flex-direction: column;
+      padding: var(--space-m) var(--space-l);
+      gap: var(--space-m);
+    }
+
+    .header__nav.open {
+      display: flex;
+    }
+
+    .header__cta {
+      display: none;
+    }
+
+    .header__burger {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('nav');
+  burger?.addEventListener('click', () => {
+    nav?.classList.toggle('open');
+  });
+</script>

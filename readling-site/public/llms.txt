@@ -1,0 +1,35 @@
+# Readling
+> Mobile app for learning English through reading real books with gradual immersion
+
+## About
+Readling is a mobile app (iOS & Android) that helps Russian speakers learn English by reading real books. Its unique "immersion mode" gradually weaves English phrases into Russian text, increasing the English percentage with each page.
+
+## Key Features
+- Immersion mode: English gradually replaces Russian text as you read
+- Parallel reading: side-by-side English and Russian translation
+- 3 training types: flash cards, sentence puzzles, fill-in-the-word
+- Book catalog: A1-C2 CEFR levels, 25 genres, 200+ books
+- Personal dictionary: auto-saved from reading, used in training
+- Daily reading streaks for motivation
+
+## How Immersion Mode Works
+1. Start: Text is 90-95% Russian with a few English words (the, said, morning)
+2. Middle: 30-50% English — you read simple phrases without thinking
+3. Advanced: 60-80% English — only complex words remain in Russian
+4. Final: 90-100% English — you read freely in English
+
+## Target Audience
+- Russian speakers learning English, levels A1 to C2
+- People who love reading and want to combine hobby with learning
+- Users looking for alternatives to exercise-based apps like Duolingo
+
+## Pricing
+- Free tier: limited book catalog
+- Subscription: all books, no ads, all features
+- 7-day free trial
+
+## Links
+- Website: https://readling.app
+- Immersion Method: https://readling.app/metod-pogruzheniya
+- Parallel Reading: https://readling.app/parallelnoe-chtenie
+- Readling vs Duolingo: https://readling.app/sravnenie/readling-vs-duolingo

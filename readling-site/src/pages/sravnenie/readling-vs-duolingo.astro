@@ -1,0 +1,533 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { links } from '../../config/links';
+---
+
+<BaseLayout
+  title="Readling vs Duolingo — сравнение приложений для изучения английского"
+  description="Честное сравнение Readling и Duolingo: методы обучения, фичи, цены. Два разных подхода — выберите тот, который подходит вам."
+  canonicalPath="/sravnenie/readling-vs-duolingo"
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container text-center">
+      <h1 class="mb-m">Readling vs Duolingo: два подхода к изучению английского</h1>
+      <p class="hero__subtitle max-w-prose mx-auto mb-l">
+        Duolingo учит языку через упражнения. Readling — через чтение книг.
+        Оба подхода работают, но для разных целей. Разберёмся, какой подходит вам.
+      </p>
+      <div class="vs-badges">
+        <div class="vs-badge">
+          <img src="/logo.png" alt="Readling" class="vs-badge__icon" />
+          <span class="vs-badge__name">Readling</span>
+        </div>
+        <span class="vs-divider">vs</span>
+        <div class="vs-badge">
+          <img src="/duolingo-logo.png" alt="Duolingo" class="vs-badge__icon" />
+          <span class="vs-badge__name">Duolingo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY DIFFERENCE -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-xxl">Главное различие: упражнения vs чтение книг</h2>
+      <div class="grid-2">
+        <div class="approach-card approach-card--readling">
+          <h3 class="mb-m">Readling — изучение через книги</h3>
+          <p class="mb-m">
+            Readling — это чтение настоящих книг на английском с режимом плавного погружения.
+            Английский текст появляется в книге постепенно, слова запоминаются в контексте историй.
+          </p>
+          <ul class="approach-list">
+            <li>Читаете настоящие книги</li>
+            <li>Слова запоминаются в контексте</li>
+            <li>Английский появляется плавно</li>
+            <li>Тренировки по вашим словам</li>
+          </ul>
+        </div>
+        <div class="approach-card approach-card--duo">
+          <h3 class="mb-m">Duolingo — геймифицированные уроки</h3>
+          <p class="mb-m">
+            Duolingo — это короткие уроки по 5 минут: перевод предложений, выбор правильного ответа, аудирование.
+            Подход — «язык как игра»: лиги, жизни, стрики, награды.
+          </p>
+          <ul class="approach-list">
+            <li>Короткие уроки по 5 минут</li>
+            <li>Перевод отдельных предложений</li>
+            <li>Грамматические упражнения</li>
+            <li>Система лиг и наград</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="section section--alt">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Подробное сравнение Readling и Duolingo</h2>
+      <div class="table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Что сравниваем</th>
+              <th>Readling</th>
+              <th>Duolingo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Метод обучения</strong></td>
+              <td>Чтение настоящих книг</td>
+              <td>Короткие упражнения</td>
+            </tr>
+            <tr>
+              <td><strong>Контент</strong></td>
+              <td>Книги, рассказы, романы</td>
+              <td>Учебные предложения</td>
+            </tr>
+            <tr>
+              <td><strong>Откуда слова</strong></td>
+              <td>Из книг, которые вы читаете</td>
+              <td>Из программы курса</td>
+            </tr>
+            <tr>
+              <td><strong>Грамматика</strong></td>
+              <td>Через контекст + пазлы</td>
+              <td>Через упражнения</td>
+            </tr>
+            <tr>
+              <td><strong>Режим погружения</strong></td>
+              <td>&#10003;</td>
+              <td>&#10007;</td>
+            </tr>
+            <tr>
+              <td><strong>Параллельное чтение</strong></td>
+              <td>&#10003;</td>
+              <td>&#10007;</td>
+            </tr>
+            <tr>
+              <td><strong>Личный словарь</strong></td>
+              <td>&#10003; Автоматический</td>
+              <td>Ограниченный</td>
+            </tr>
+            <tr>
+              <td><strong>Аудио</strong></td>
+              <td>Произношение слов</td>
+              <td>Полные аудиоуроки</td>
+            </tr>
+            <tr>
+              <td><strong>Стрики</strong></td>
+              <td>&#10003;</td>
+              <td>&#10003;</td>
+            </tr>
+            <tr>
+              <td><strong>Уровни</strong></td>
+              <td>A1–C2</td>
+              <td>A1–B2</td>
+            </tr>
+            <tr>
+              <td><strong>Продвинутые (C1–C2)</strong></td>
+              <td>&#10003; Сложные книги</td>
+              <td>Ограниченно</td>
+            </tr>
+            <tr>
+              <td><strong>Бесплатная версия</strong></td>
+              <td>&#10003; Часть каталога</td>
+              <td>&#10003; С рекламой</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHEN DUOLINGO -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <h2 class="mb-l">Когда стоит выбрать Duolingo</h2>
+          <p class="mb-m">Duolingo — отличное приложение. Вот когда оно подойдёт лучше:</p>
+          <ul class="check-list check-list--neutral">
+            <li>У вас есть только 5 минут в день — Duolingo заточен под микро-сессии</li>
+            <li>Вы полный новичок и хотите выучить базовые фразы для путешествия</li>
+            <li>Вам нравится соревноваться в лигах и зарабатывать награды</li>
+            <li>Вы учите несколько языков одновременно — в Duolingo 40+ языков</li>
+            <li>Вам нужны аудиоуроки и тренировка произношения</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="mb-l">Когда стоит выбрать Readling</h2>
+          <p class="mb-m">Readling подойдёт вам лучше, если:</p>
+          <ul class="check-list check-list--primary">
+            <li>Вы любите читать — и хотите совместить чтение с изучением английского</li>
+            <li>Duolingo стал скучным или слишком простым — вам нужен реальный контент</li>
+            <li>Вы хотите расширить словарный запас за счёт настоящих текстов</li>
+            <li>Ваш уровень B2+ и Duolingo уже не даёт прогресса</li>
+            <li>Вы хотите понимать английские книги, статьи, сериалы</li>
+            <li>Вам ближе спокойное чтение, чем гонка за лигами</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOGETHER -->
+  <section class="section section--alt">
+    <div class="container max-w-prose mx-auto text-center">
+      <h2 class="mb-l">Readling и Duolingo — не конкуренты, а дополнение</h2>
+      <p class="mb-m">Многие наши пользователи используют оба приложения:</p>
+      <div class="schedule">
+        <div class="schedule__item">
+          <div class="schedule__time">Утро</div>
+          <p>5 минут Duolingo в метро — повторить грамматику, размять мозг</p>
+        </div>
+        <div class="schedule__divider"></div>
+        <div class="schedule__item">
+          <div class="schedule__time">Вечер</div>
+          <p>20 минут Readling перед сном — прочитать главу книги, выучить новые слова</p>
+        </div>
+      </div>
+      <p style="margin-top: var(--space-l);">
+        <strong>Duolingo даёт базу. Readling даёт глубину. Вместе — быстрый и устойчивый прогресс.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- UNIQUE FEATURES -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-xxl">Три вещи, которые есть в Readling и нет в Duolingo</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот погружения</div>
+          <h3 class="mb-s">Режим плавного погружения</h3>
+          <p>
+            Английский текст появляется в книге постепенно — вы привыкаете к языку без стресса.
+            Вы не заметите момент, когда начнёте читать по-английски.
+          </p>
+        </div>
+        <div class="card">
+          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот каталога</div>
+          <h3 class="mb-s">Настоящие книги</h3>
+          <p>
+            В Readling вы читаете детективы, фантастику, классику — полноценные истории.
+            Мотивация — узнать, чем закончится книга, а не заработать очки.
+          </p>
+        </div>
+        <div class="card">
+          <div class="screenshot-placeholder mb-m" style="min-height: 160px;">Скриншот тренировки</div>
+          <h3 class="mb-s">Тренировки из ваших книг</h3>
+          <p>
+            Каждое слово, которое вы посмотрели при чтении, попадает в словарь.
+            Тренировки построены на ваших реальных пробелах, а не на случайных списках.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="section section--alt">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Что говорят пользователи, попробовавшие оба приложения</h2>
+      <div class="testimonial" style="max-width: 600px; margin: 0 auto;">
+        <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial__text">
+          &laquo;Сидел на Duolingo два года. Прогресс остановился. В Readling за месяц прочитал первую книгу
+          на английском — и запомнил больше слов, чем за полгода упражнений.&raquo;
+        </p>
+        <p class="testimonial__author">Михаил — App Store</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container text-center">
+      <h2 class="mb-m">Попробуйте другой подход к английскому</h2>
+      <p class="max-w-prose mx-auto mb-l">
+        Скачайте Readling и начните читать настоящие книги на английском —
+        с плавным погружением и переводом. 7 дней бесплатно.
+      </p>
+      <div class="store-buttons" style="justify-content: center;">
+        <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+      <p style="margin-top: var(--space-m); font-size: 0.875rem; color: var(--color-text-tertiary);">
+        200+ книг · Без рекламы · Отмена в любой момент
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Вопросы о Readling и Duolingo</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Readling может полностью заменить Duolingo?</summary>
+          <div class="faq-item__answer">
+            Зависит от ваших целей. Если вы хотите учить английский через чтение настоящих книг и контекст — да.
+            Если нужны короткие грамматические упражнения и аудиоуроки — используйте оба приложения вместе.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Что лучше для начинающих — Readling или Duolingo?</summary>
+          <div class="faq-item__answer">
+            Для абсолютных новичков Duolingo поможет набрать базовый словарный запас.
+            Но в Readling есть книги уровня A1 с режимом погружения, где текст начинается почти полностью на русском —
+            так что начинающие тоже могут учиться через чтение с первого дня.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Можно ли пользоваться Readling бесплатно?</summary>
+          <div class="faq-item__answer">
+            Да, бесплатная версия даёт доступ к части каталога книг. Подписка открывает все книги, убирает рекламу
+            и даёт доступ ко всем режимам чтения. Первые 7 дней подписки — бесплатно.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Я уже продвинутый — Readling мне подойдёт?</summary>
+          <div class="faq-item__answer">
+            Да, особенно если Duolingo стал слишком простым. В каталоге Readling есть книги уровней C1–C2:
+            классическая литература, научная фантастика, философская проза. Это уровень, на котором
+            Duolingo заканчивается — а Readling продолжает.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schema.org -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Readling может полностью заменить Duolingo?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Зависит от целей. Для обучения через чтение книг — да. Для коротких грамматических упражнений — используйте оба вместе." }
+        },
+        {
+          "@type": "Question",
+          "name": "Что лучше для начинающих — Readling или Duolingo?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Для абсолютных новичков Duolingo поможет набрать базу. Но в Readling есть книги A1 с режимом погружения, где текст почти полностью на русском." }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли пользоваться Readling бесплатно?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Да, бесплатная версия даёт доступ к части каталога. Подписка открывает всё. Первые 7 дней — бесплатно." }
+        },
+        {
+          "@type": "Question",
+          "name": "Я уже продвинутый — Readling мне подойдёт?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Да, в каталоге есть книги C1–C2. Это уровень, на котором Duolingo заканчивается — а Readling продолжает." }
+        }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: var(--color-surface);
+    padding: var(--space-4xl) 0;
+  }
+
+  .hero__subtitle {
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  /* VS Badges */
+  .vs-badges {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-l);
+    margin-top: var(--space-xl);
+  }
+
+  .vs-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .vs-badge__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .vs-badge__icon--duo {
+    background: #58CC02;
+  }
+
+  .vs-badge__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .vs-divider {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-tertiary);
+  }
+
+  /* Approach cards */
+  .approach-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    border: 2px solid var(--color-card-border);
+  }
+
+  .approach-card--readling {
+    border-color: var(--color-primary);
+  }
+
+  .approach-card--duo {
+    border-color: #58CC02;
+  }
+
+  .approach-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .approach-list li {
+    padding-left: 24px;
+    position: relative;
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .approach-list li::before {
+    content: '•';
+    position: absolute;
+    left: 8px;
+    color: var(--color-text-tertiary);
+  }
+
+  /* Check lists */
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .check-list li {
+    padding-left: 28px;
+    position: relative;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .check-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+
+  .check-list--primary li::before {
+    color: var(--color-primary);
+  }
+
+  .check-list--neutral li::before {
+    color: #58CC02;
+  }
+
+  /* Schedule */
+  .schedule {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+    justify-content: center;
+    margin-top: var(--space-l);
+    flex-wrap: wrap;
+  }
+
+  .schedule__item {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-l);
+    border: 1px solid var(--color-card-border);
+    max-width: 280px;
+    text-align: left;
+  }
+
+  .schedule__time {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  .schedule__divider {
+    width: 40px;
+    height: 2px;
+    background: var(--color-border);
+    flex-shrink: 0;
+  }
+
+  /* Table wrapper for horizontal scroll on mobile */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (max-width: 768px) {
+    .vs-badges {
+      gap: var(--space-m);
+    }
+
+    .vs-badge__icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+
+    .vs-badge__name {
+      font-size: 1rem;
+    }
+
+    .schedule {
+      flex-direction: column;
+    }
+
+    .schedule__divider {
+      width: 2px;
+      height: 24px;
+    }
+
+    .schedule__item {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .comparison-table {
+      min-width: 580px;
+    }
+  }
+</style>

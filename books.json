@@ -1,0 +1,522 @@
+[
+  {
+    "title": "Алые паруса",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/fbe295fd6cbfc34ec34a225cb1128348.jpg",
+    "author": "Александр Грин"
+  },
+  {
+    "title": "Гордость и предубеждение",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/2e1c814cd6a9195a2cb09a2092d53c83.jpg",
+    "author": "Остен Джейн"
+  },
+  {
+    "title": "Джен Эйр",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/294efeae78be59fb8eb0e5c3a387977c.jpeg",
+    "author": "Шарлотта Бронте"
+  },
+  {
+    "title": "Грозовой перевал",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover1__w600.jpg",
+    "author": "Бронте Эмили"
+  },
+  {
+    "title": "Моби Дик",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/a5be17bd945495cd8a58081f5604dba5.jpeg",
+    "author": "Герман Мелвилл"
+  },
+  {
+    "title": "Алиса в Стране чудес",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/33224.jpg",
+    "author": "Льюис Кэрролл"
+  },
+  {
+    "title": "Франкенштейн",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/2.00x-thumb%20(1).png",
+    "author": "Мэри Шелли"
+  },
+  {
+    "title": "Дракула",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/945136356601840.jpg",
+    "author": "Брэм Стокер"
+  },
+  {
+    "title": "О дивный новый мир",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/10121782_0.jpg",
+    "author": "Олдос Леонард Хаксли"
+  },
+  {
+    "title": "Портрет Дориана Грея",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/427.jpg",
+    "author": "Оскар Уайльд"
+  },
+  {
+    "title": "Двадцать тысяч лье под водой",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/3-93.jpg",
+    "author": "Жюль Верн"
+  },
+  {
+    "title": "Таинственный остров",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/10561295_0.jpg",
+    "author": "Жюль Верн"
+  },
+  {
+    "title": "Путешествие к центру Земли",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/20227.jpg",
+    "author": "Жюль Верн"
+  },
+  {
+    "title": "Остров сокровищ",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/6594017046.jpg",
+    "author": "Роберт Льюис Стивенсон"
+  },
+  {
+    "title": "Странная история доктора Джекила и мистера Хайда",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/101360908_0.jpg",
+    "author": "Роберт Льюис Стивенсон"
+  },
+  {
+    "title": "Машина времени",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover_347998.jpg",
+    "author": "Герберт Уэллс"
+  },
+  {
+    "title": "Война миров",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/192743f36ed5f979deb4a4ecbba6c0bb.jpg",
+    "author": "Герберт Уэллс"
+  },
+  {
+    "title": "Человек-невидимка",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover.jpg",
+    "author": "Герберт Уэллс"
+  },
+  {
+    "title": "Так говорил Заратустра",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/3913.jpg",
+    "author": "Фридрих Ницше"
+  },
+  {
+    "title": "1984",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/1984%20Book.jpg",
+    "author": "Джордж Оруэлл"
+  },
+  {
+    "title": "Приключения Шерлока Холмса",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Sherlock%20Holmes%20Book.jpg",
+    "author": "Артур Конан Дойл"
+  },
+  {
+    "title": "Белый клык",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/1.50x-thumb.png",
+    "author": "Джек Лондон"
+  },
+  {
+    "title": "Зов предков",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%97%D0%BE%D0%B2%20%D0%9F%D1%80%D0%B5%D0%B4%D0%BA%D0%BE%D0%B2%20%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
+    "author": "Джек Лондон"
+  },
+  {
+    "title": "О мышах и людях",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/8109.jpg",
+    "author": "Джон Стейнбек"
+  },
+  {
+    "title": "Преступление и наказание",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Crime%20and%20Punishment%20Thumbnail.png",
+    "author": "Фёдор Достоевский"
+  },
+  {
+    "title": "Собачье сердце",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dog%20Heart%20Book%20Cover.jpeg",
+    "author": "Михаил Булгаков"
+  },
+  {
+    "title": "451° по Фаренгейту",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover1__w600_144_556.webp",
+    "author": "Рэй Брэдбери"
+  },
+  {
+    "title": "Маленькие женщины",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Little%20Women%20Book%20Thumbnail.png",
+    "author": "Луиза Мэй Олкотт"
+  },
+  {
+    "title": "Путешествия Гулливера",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Gulliver's%20Travels%20Book.jpg",
+    "author": "Джонатан Свифт"
+  },
+  {
+    "title": "Оливер Твист",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Oliver%20Twist.jpg",
+    "author": "Чарльз Диккенс"
+  },
+  {
+    "title": "Три мушкетёра",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Three%20Musketeers%20Book.webp",
+    "author": "Александр Дюма"
+  },
+  {
+    "title": "Двенадцать стульев",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%94%D0%B2%D0%B5%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C%20%D1%81%D1%82%D1%83%D0%BB%D1%8C%D0%B5%D0%B2%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
+    "author": "Ильф и Петров"
+  },
+  {
+    "title": "Анна Каренина",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Anna%20Karenina%20Thumbnail.png",
+    "author": "Лев Толстой"
+  },
+  {
+    "title": "Пигмалион",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Pygmalion%20Book.webp",
+    "author": "Джордж Бернард Шоу"
+  },
+  {
+    "title": "Мастер и Маргарита",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Master%20and%20Margarita%20Thumbnail.png",
+    "author": "Михаил Булгаков"
+  },
+  {
+    "title": "Идиот",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/91875HBqLEL._UF1000%2C1000_QL80_.jpg",
+    "author": "Фёдор Достоевский"
+  },
+  {
+    "title": "Мёртвые души",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dead%20Souls%20Book%20Image.jpeg",
+    "author": "Николай Гоголь"
+  },
+  {
+    "title": "Отцы и дети",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Fathers%20and%20Sons%20Thumbnail.png",
+    "author": "Иван Тургенев"
+  },
+  {
+    "title": "Дубровский",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dubrovsky%20Book.jpg",
+    "author": "Александр Пушкин"
+  },
+  {
+    "title": "Приключения Тома Сойера",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Tom%20Sawyer%20Book.jpg",
+    "author": "Марк Твен"
+  },
+  {
+    "title": "Кентервильское привидение",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%9A%D0%B5%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B8%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B5%20%D0%BF%D1%80%D0%B8%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0%20thumbnail.png",
+    "author": "Оскар Уайльд"
+  },
+  {
+    "title": "Легенда о Сонной Лощине",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Legend%20of%20Sleepy%20Hollow%20Book.jpg",
+    "author": "Вашингтон Ирвинг"
+  },
+  {
+    "title": "Робинзон Крузо",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Robinson%20Crusoe%20Book.jpg",
+    "author": "Даниель Дефо"
+  },
+  {
+    "title": "Граф Монте-Кристо",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Monte%20Cristo%20Book%20Thumbnail.png",
+    "author": "Александр Дюма"
+  },
+  {
+    "title": "Сказки братьев Гримм",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Grimm%20Brothers%20Tales.jpeg",
+    "author": "Якоб и Вильгельм Гримм"
+  },
+  {
+    "title": "Великий Гэтсби",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Great%20Gatsby%20Book.jpg",
+    "author": "Фрэнсис Скотт Фицджеральд"
+  },
+  {
+    "title": "Собор Парижской Богоматери",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Sabor%20Paris%20Book%20Thumbnail.png",
+    "author": "Виктор Гюго"
+  },
+  {
+    "title": "Братья Карамазовы",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Brothers%20Karamazov%20Thumbnail.png",
+    "author": "Фёдор Достоевский"
+  },
+  {
+    "title": "Черный обелиск",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Black%20Obelisk%20Book.jpg",
+    "author": "Эрих Мария Ремарк"
+  },
+  {
+    "title": "Старик Хоттабыч",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%A1%D1%82%D0%B0%D1%80%D0%B8%D0%BA%20%D0%A5%D0%BE%D1%82%D1%82%D0%B0%D0%B1%D1%8B%D1%87%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
+    "author": "Лазарь Лагин"
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/To%20Kill%20a%20Mockingbird.jpg",
+    "author": "Harper Lee"
+  },
+  {
+    "title": "Middlemarch",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Middlemarch%20Book.jpg",
+    "author": "George Eliot"
+  },
+  {
+    "title": "English Fairy Tales",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/English%20Fairy%20Tales.jpg",
+    "author": "Joseph Jacobs"
+  },
+  {
+    "title": "User Guide",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/readling_onboarding.png",
+    "author": "Readling"
+  },
+  {
+    "title": "Руководство пользователя",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/readling_onboarding.png",
+    "author": "Readling"
+  },
+  {
+    "title": "Alice's Adventures in Wonderland",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/f9521cd6-f13f-4c1c-b1fc-f4e2aab23a09.jpg",
+    "author": "Lewis Carroll"
+  },
+  {
+    "title": "Little Women; Or, Meg, Jo, Beth, and Amy",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b02742c7-4a74-4651-bc17-60dcf656a4bc.jpg",
+    "author": "Louisa May Alcott"
+  },
+  {
+    "title": "Anne of Green Gables",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/94527763-ac8e-4cb0-aad3-8ee2cdd1ecf7.jpg",
+    "author": "L. M. Montgomery"
+  },
+  {
+    "title": "The Wonderful Wizard of Oz",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/106bed6d-a678-46c2-a6ff-4df88719593e.jpg",
+    "author": "L. Frank Baum"
+  },
+  {
+    "title": "Peter Pan",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/ee98aae9-2166-42ae-af08-f535fa372f91.jpg",
+    "author": "J. M. Barrie"
+  },
+  {
+    "title": "Winnie-the-Pooh",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1e99c3ee-ebcf-4d73-813e-6e499988dcdf.jpg",
+    "author": "A. A. Milne"
+  },
+  {
+    "title": "Through the Looking-Glass",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/407444a6-52f9-48eb-9eaf-44e7a00e926b.jpg",
+    "author": "Lewis Carroll"
+  },
+  {
+    "title": "Fairy Tales of Hans Christian Andersen",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/10838973-8796-4109-b24b-88dd11dd2168.jpg",
+    "author": "H. C. Andersen"
+  },
+  {
+    "title": "The King in Yellow",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/2121b73b-5563-46f0-ba8f-65a0c6b725be.webp",
+    "author": "Robert W. Chambers"
+  },
+  {
+    "title": "The Adventures of Sherlock Holmes",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/d29e2a7d-bb73-480a-9808-af194bb6f51c.jpg",
+    "author": "Arthur Conan Doyle"
+  },
+  {
+    "title": "The Fairy Tales of Charles Perrault",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/68311d4a-fcd2-42d1-8f3c-72748a293155.jpg",
+    "author": "Charles Perrault"
+  },
+  {
+    "title": "The oriental story book : a collection of tales by Wilhelm Hauff",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/9b894954-71df-4e47-89ec-8a0480327588.jpg",
+    "author": "Wilhelm Hauff"
+  },
+  {
+    "title": "The Jungle Book",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/cf802056-4aed-4c9d-9530-734a5620910a.jpg",
+    "author": "Rudyard Kipling"
+  },
+  {
+    "title": "The Adventures of Pinocchio",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/54ab6951-6d30-4d10-9ba0-e9fcda15c376.jpg",
+    "author": "Carlo Collodi"
+  },
+  {
+    "title": "The Count of Monte Cristo",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/cfb26c53-b7ea-4a44-b8c9-093eb4c0d5a9.jpg",
+    "author": "Alexandre Dumas"
+  },
+  {
+    "title": "Граф Монте-Кристо",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b9df629f-d1d3-4c90-ad5b-7ac517fcbbe5.jpg",
+    "author": "Александр Дюма"
+  },
+  {
+    "title": "Who Was Edgar Allan Poe",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/ecfe5f65-dcc8-4623-a973-ea4493f2f30d.jpg",
+    "author": "Jim Gigliotti"
+  },
+  {
+    "title": "Who Was Henry Ford",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1b97d02d-2bf7-4fc8-a9f0-1f0791740a3a.jpg",
+    "author": "Michael Burgan"
+  },
+  {
+    "title": "Who Was J.R.R. Tolkien",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/e3cea09c-3b5c-4ac1-8f7f-dea9d1b55a91.jpg",
+    "author": "Pam Pollack and Meg Belviso"
+  },
+  {
+    "title": "Who Was Jane Austen",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/38353a4c-5e93-431f-a93f-abadd89c4845.jpg",
+    "author": "Sarah Fabiny"
+  },
+  {
+    "title": "Богатый папа, бедный папа",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/a78684af-8bde-4ebf-bc19-fc85a2bc5066.webp",
+    "author": "Роберт Кийосаки"
+  },
+  {
+    "title": "The call of the wild",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b826517e-725e-41e9-af38-07940e4c94ec.jpg",
+    "author": "Jack London"
+  },
+  {
+    "title": "White Fang",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/c79424fe-c832-4914-8fa2-94e7c2275310.jpg",
+    "author": "Jack London"
+  },
+  {
+    "title": "Martin Eden",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/4346a07e-59b8-4616-ba01-7b2c00de0e8e.jpg",
+    "author": "Jack London"
+  },
+  {
+    "title": "The iron heel",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/edb4c77f-b77e-4eb5-8425-4c116a65a821.jpg",
+    "author": "Jack London"
+  },
+  {
+    "title": "The Little Lady of the Big House",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/174f2707-ba2b-4406-a417-5b31f0e46f20.jpg",
+    "author": "Jack London"
+  },
+  {
+    "title": "A Tale of Two Cities",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/3affbc21-b9e1-46b8-8f48-aa0b6927d7c6.jpg",
+    "author": "Charles Dickens"
+  },
+  {
+    "title": "Great Expectations",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/654da791-0755-4306-bab7-bc495012167f.jpg",
+    "author": "Charles Dickens"
+  },
+  {
+    "title": "Bleak House",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/4c704038-7f0c-4c03-a840-fb94681bde05.jpg",
+    "author": "Charles Dickens"
+  },
+  {
+    "title": "David Copperfield",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/bba9da2f-ff25-4cb8-9129-5aa502e5e2ba.jpg",
+    "author": "Charles Dickens"
+  },
+  {
+    "title": "Hard Times",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/44b5f2c5-118a-497f-a059-c601998c1749.jpg",
+    "author": "Charles Dickens"
+  },
+  {
+    "title": "A farewell to arms",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/afaf5ed8-a9f6-4e0b-a43e-0a9e5a119098.jpg",
+    "author": "Ernest Hemingway"
+  },
+  {
+    "title": "The Sun Also Rises",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/411dd43b-3f0e-43c4-be74-f2c68614d5cd.jpg",
+    "author": "Ernest Hemingway"
+  },
+  {
+    "title": "Men without women",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/231f5235-dfdb-4089-864a-035cf16ac782.jpg",
+    "author": "Ernest Hemingway"
+  },
+  {
+    "title": "The Moon and Sixpence",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/8c03dff9-28d8-46e1-9cbc-dbcf19ece496.jpg",
+    "author": "W. Somerset Maugham"
+  },
+  {
+    "title": "Of Human Bondage",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/71154804-a174-4d7e-9e39-34ed4be8ad9b.jpg",
+    "author": "W. Somerset Maugham"
+  },
+  {
+    "title": "The Picture of Dorian Gray",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1e1a24f9-2d48-4404-aebe-de50aed03c39.jpg",
+    "author": "Oscar Wilde"
+  },
+  {
+    "title": "The Great Gatsby",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/7150a916-2a13-44e3-b7d5-f9f9ac6edb3f.jpg",
+    "author": "F. Scott Fitzgerald"
+  },
+  {
+    "title": "All quiet on the Western Front",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/024ab39f-e873-4af9-b782-7c9423c969e2.jpg",
+    "author": "Erich Maria Remarque"
+  },
+  {
+    "title": "The murder of Roger Ackroyd",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6985d336-d0d7-4a57-8f2d-083b7f39e844.jpg",
+    "author": "Agatha Christie"
+  },
+  {
+    "title": "The Secret of Chimneys",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/81387b6a-3b98-4afe-a2b8-399a6f954990.webp",
+    "author": "Agatha Christie"
+  },
+  {
+    "title": "The Mysterious Affair at Styles",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b7f79768-9bcc-4b91-88ff-e4a26cb4cc7b.jpg",
+    "author": "Agatha Christie"
+  },
+  {
+    "title": "Poirot Investigates",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/bb42003a-1640-443b-b988-e7e1f83a83e4.jpg",
+    "author": "Agatha Christie"
+  },
+  {
+    "title": "The Murder on the Links",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/308868e8-a8b8-4ebe-9cf2-4b8bce6b9a04.jpg",
+    "author": "Agatha Christie"
+  },
+  {
+    "title": "A Study in Scarlet",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/c5769b80-2078-4c8d-a677-66fafd24f825.jpg",
+    "author": "Arthur Conan Doyle"
+  },
+  {
+    "title": "The Sign of the Four",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6f62f8d8-25e2-49db-8bb6-6dbd40ebd4bf.jpg",
+    "author": "Arthur Conan Doyle"
+  },
+  {
+    "title": "The Red House Mystery",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6f7cd235-f77c-4c27-bfd1-823de7ac4b98.jpg",
+    "author": "A. A. Milne"
+  },
+  {
+    "title": "Now we are six",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6e7cf647-61ad-46f8-8ae4-01ad95c82342.jpg",
+    "author": "A. A. Milne"
+  },
+  {
+    "title": "The house at Pooh Corner",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/3fd71370-bd0e-4321-87a1-173cb33ae630.jpg",
+    "author": "A. A. Milne"
+  }
+]

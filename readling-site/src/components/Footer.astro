@@ -1,0 +1,186 @@
+---
+import { links } from '../config/links';
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer" id="download">
+  <!-- CTA Section -->
+  <div class="footer-cta">
+    <div class="container text-center">
+      <h2 class="mb-m">Начните читать на английском прямо сейчас</h2>
+      <p class="mb-l max-w-prose mx-auto">Скачайте Readling — 7 дней бесплатно, без рекламы, отмена в любой момент</p>
+      <div class="store-buttons" style="justify-content: center;">
+        <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+      <div class="qr-code">
+        <a href={links.onelink} target="_blank" rel="noopener">
+          <img src="/qr-code.gif" width="132" height="132" alt="QR-код для скачивания Readling" />
+        </a>
+        <p class="qr-code__hint">Наведите камеру, чтобы скачать</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Links -->
+  <div class="footer-links">
+    <div class="container footer-links__inner">
+      <div class="footer-col">
+        <a href="/" class="footer__logo">
+          <img src="/logo.png" alt="Readling" class="footer__logo-icon" width="32" height="32" />
+          Readling
+        </a>
+        <p class="footer__desc">Приложение для изучения английского через чтение книг</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Возможности</h4>
+        <a href="/metod-pogruzheniya">Метод погружения</a>
+        <a href="/parallelnoe-chtenie">Параллельное чтение</a>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Сравнение</h4>
+        <a href="/sravnenie/readling-vs-duolingo">Readling vs Duolingo</a>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col__title">Информация</h4>
+        <a href="https://readling.notion.site/Privacy-Policy-28905c6ed51e80ceb8cafbd84d6eeb42?pvs=74" target="_blank" rel="noopener">Конфиденциальность</a>
+        <a href="https://readling.notion.site/Terms-of-Use-2d405c6ed51e80d3b5f2cf3ed237b3ec" target="_blank" rel="noopener">Условия использования</a>
+        <a href="https://t.me/readlingapp" target="_blank" rel="noopener">Поддержка</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {currentYear} Readling. Все права защищены.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-cta {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    padding: var(--space-4xl) 0;
+  }
+
+  .footer-cta h2 {
+    color: var(--color-on-primary);
+  }
+
+  .footer-cta p {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .qr-code {
+    margin-top: var(--space-l);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .qr-code img {
+    border-radius: var(--radius-sm);
+    background: white;
+    padding: 4px;
+  }
+
+  .qr-code__hint {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @media (max-width: 768px) {
+    .qr-code {
+      display: none;
+    }
+  }
+
+  .footer-links {
+    background: var(--color-surface);
+    padding: var(--space-3xl) 0 var(--space-xl);
+    border-top: 1px solid var(--color-card-border);
+  }
+
+  .footer-links__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .footer-col__title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .footer-col a {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  .footer-col a:hover {
+    color: var(--color-primary);
+  }
+
+  .footer__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .footer__logo:hover {
+    color: var(--color-text);
+  }
+
+  .footer__logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+  }
+
+  .footer__desc {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
+  .footer-bottom {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-card-border);
+    padding: var(--space-m) 0;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  @media (max-width: 768px) {
+    .footer-links__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-links__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
