@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://readling.app',
+  site: 'https://app.readling.club',
   output: 'static',
   integrations: [sitemap()],
   build: {
