@@ -176,6 +176,42 @@ import { links } from '../config/links';
     </div>
   </section>
 
+  <!-- REFERRAL -->
+  <section class="section">
+    <div class="container">
+      <div class="referral-block">
+        <div class="referral-block__content">
+          <div class="referral-block__icon">&#127873;</div>
+          <div>
+            <h2 class="mb-s">Приглашайте друзей — пользуйтесь бесплатно</h2>
+            <p class="mb-m">
+              За каждого приглашённого друга вы получаете <strong>7 бесплатных дней</strong> подписки.
+              Друг тоже получает бонус. Приглашайте больше — и пользуйтесь Readling бесплатно столько, сколько хотите.
+            </p>
+            <div class="referral-block__steps">
+              <div class="referral-step">
+                <div class="referral-step__number">1</div>
+                <p>Поделитесь ссылкой с другом</p>
+              </div>
+              <div class="referral-step">
+                <div class="referral-step__number">2</div>
+                <p>Друг скачивает Readling</p>
+              </div>
+              <div class="referral-step">
+                <div class="referral-step__number">3</div>
+                <p>Вы оба получаете 7 дней бесплатно</p>
+              </div>
+            </div>
+            <p class="referral-block__highlight">
+              Пригласите 5 друзей — и у вас уже больше месяца бесплатной подписки.
+              Чем больше друзей, тем дольше можно учиться бесплатно. Без ограничений.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- SOCIAL PROOF -->
   <section class="section">
     <div class="container text-center">
@@ -232,6 +268,13 @@ import { links } from '../config/links';
           <div class="faq-item__answer">
             Да, весь ваш прогресс, личный словарь и закладки сохранятся. Вы просто вернётесь к бесплатной версии
             с ограниченным каталогом и лимитом тренировок.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Как работает реферальная программа?</summary>
+          <div class="faq-item__answer">
+            За каждого друга, который скачает Readling по вашей ссылке, вы получаете 7 дней бесплатной подписки.
+            Друг тоже получает бонусные дни. Количество приглашений не ограничено — приглашайте больше и пользуйтесь бесплатно.
           </div>
         </details>
         <details class="faq-item">
@@ -505,6 +548,66 @@ import { links } from '../config/links';
     margin-top: var(--space-xs);
   }
 
+  /* Referral block */
+  .referral-block {
+    max-width: 800px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.06), rgba(88, 86, 214, 0.06));
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+  }
+
+  .referral-block__content {
+    display: flex;
+    gap: var(--space-l);
+    align-items: flex-start;
+  }
+
+  .referral-block__icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+  }
+
+  .referral-block__steps {
+    display: flex;
+    gap: var(--space-m);
+    margin-bottom: var(--space-m);
+  }
+
+  .referral-step {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-s);
+  }
+
+  .referral-step__number {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .referral-step p {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+  }
+
+  .referral-block__highlight {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.9375rem;
+  }
+
   /* Mobile */
   @media (max-width: 768px) {
     .pricing-grid {
@@ -518,6 +621,19 @@ import { links } from '../config/links';
 
     .anchor-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .referral-block__content {
+      flex-direction: column;
+    }
+
+    .referral-block__icon {
+      font-size: 2.5rem;
+    }
+
+    .referral-block__steps {
+      flex-direction: column;
+      gap: var(--space-s);
     }
 
     .social-stats {
