@@ -119,6 +119,39 @@ const featuredBooks = shuffled.slice(0, 12);
     </div>
   </section>
 
+  <!-- PHRASE TRANSLATION -->
+  <section class="section section--accent-light">
+    <div class="container">
+      <div class="phrase-translation">
+        <div class="phrase-translation__content">
+          <span class="badge mb-m">Умный перевод</span>
+          <h2 class="mb-m">Фразовый перевод — не дословный, а по смыслу</h2>
+          <p class="mb-l">
+            В Readling перевод всегда учитывает контекст. Это значит, что идиомы, устойчивые выражения
+            и фразовые глаголы переведены так, как их понимает носитель языка — а не слово за словом.
+          </p>
+          <div class="phrase-examples">
+            <div class="phrase-example">
+              <div class="phrase-example__original"><span class="en">It's raining cats and dogs</span></div>
+              <div class="phrase-example__bad">Дословно: «Идёт дождь из кошек и собак»</div>
+              <div class="phrase-example__good">В Readling: «Льёт как из ведра»</div>
+            </div>
+            <div class="phrase-example">
+              <div class="phrase-example__original"><span class="en">He kicked the bucket</span></div>
+              <div class="phrase-example__bad">Дословно: «Он пнул ведро»</div>
+              <div class="phrase-example__good">В Readling: «Он отдал концы»</div>
+            </div>
+            <div class="phrase-example">
+              <div class="phrase-example__original"><span class="en">She got cold feet</span></div>
+              <div class="phrase-example__bad">Дословно: «У неё стали холодные ноги»</div>
+              <div class="phrase-example__good">В Readling: «Она струсила»</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- TRAINING -->
   <section class="section section--alt">
     <div class="container">
@@ -372,6 +405,47 @@ const featuredBooks = shuffled.slice(0, 12);
     grid-template-columns: 1fr 1fr;
     gap: var(--space-3xl);
     align-items: center;
+  }
+
+  .section--accent-light {
+    background: var(--color-surface-alt, #f0f7ff);
+  }
+
+  .phrase-translation__content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .phrase-examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .phrase-example {
+    background: var(--color-card-bg, #fff);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-l);
+  }
+
+  .phrase-example__original {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--space-s);
+  }
+
+  .phrase-example__bad {
+    color: var(--color-text-secondary, #888);
+    text-decoration: line-through;
+    margin-bottom: var(--space-xs);
+    font-size: 0.95rem;
+  }
+
+  .phrase-example__good {
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
   }
 
   @media (max-width: 768px) {
