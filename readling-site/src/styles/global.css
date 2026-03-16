@@ -761,6 +761,12 @@ p {
   flex-shrink: 0;
   width: 140px;
   scroll-snap-align: start;
+  text-decoration: none;
+  color: inherit;
+}
+
+.book-card:hover {
+  color: inherit;
 }
 
 .book-card__cover {

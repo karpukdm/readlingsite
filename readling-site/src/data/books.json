@@ -1,522 +1,722 @@
 [
   {
-    "title": "Алые паруса",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/fbe295fd6cbfc34ec34a225cb1128348.jpg",
-    "author": "Александр Грин"
-  },
-  {
-    "title": "Гордость и предубеждение",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/2e1c814cd6a9195a2cb09a2092d53c83.jpg",
-    "author": "Остен Джейн"
-  },
-  {
-    "title": "Джен Эйр",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/294efeae78be59fb8eb0e5c3a387977c.jpeg",
-    "author": "Шарлотта Бронте"
-  },
-  {
-    "title": "Грозовой перевал",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover1__w600.jpg",
-    "author": "Бронте Эмили"
-  },
-  {
-    "title": "Моби Дик",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/a5be17bd945495cd8a58081f5604dba5.jpeg",
-    "author": "Герман Мелвилл"
-  },
-  {
-    "title": "Алиса в Стране чудес",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/33224.jpg",
-    "author": "Льюис Кэрролл"
-  },
-  {
-    "title": "Франкенштейн",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/2.00x-thumb%20(1).png",
-    "author": "Мэри Шелли"
-  },
-  {
-    "title": "Дракула",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/945136356601840.jpg",
-    "author": "Брэм Стокер"
-  },
-  {
-    "title": "О дивный новый мир",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/10121782_0.jpg",
-    "author": "Олдос Леонард Хаксли"
-  },
-  {
-    "title": "Портрет Дориана Грея",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/427.jpg",
-    "author": "Оскар Уайльд"
-  },
-  {
-    "title": "Двадцать тысяч лье под водой",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/3-93.jpg",
-    "author": "Жюль Верн"
-  },
-  {
-    "title": "Таинственный остров",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/10561295_0.jpg",
-    "author": "Жюль Верн"
-  },
-  {
-    "title": "Путешествие к центру Земли",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/20227.jpg",
-    "author": "Жюль Верн"
-  },
-  {
-    "title": "Остров сокровищ",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/6594017046.jpg",
-    "author": "Роберт Льюис Стивенсон"
-  },
-  {
-    "title": "Странная история доктора Джекила и мистера Хайда",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/101360908_0.jpg",
-    "author": "Роберт Льюис Стивенсон"
-  },
-  {
-    "title": "Машина времени",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover_347998.jpg",
-    "author": "Герберт Уэллс"
-  },
-  {
-    "title": "Война миров",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/192743f36ed5f979deb4a4ecbba6c0bb.jpg",
-    "author": "Герберт Уэллс"
-  },
-  {
-    "title": "Человек-невидимка",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover.jpg",
-    "author": "Герберт Уэллс"
-  },
-  {
-    "title": "Так говорил Заратустра",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/3913.jpg",
-    "author": "Фридрих Ницше"
-  },
-  {
     "title": "1984",
+    "author": "Джордж Оруэлл",
+    "complexity": 4,
+    "description": "Своеобразный антипод второй великой антиутопии XX века – «О дивный новый мир» Олдоса Хаксли. Что, в сущности, страшнее: доведенное до абсурда «общество потребления» – или доведенное до абсолюта «общество идеи»? По Оруэллу, нет и не может быть ничего ужаснее тотальной несвободы…",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/1984%20Book.jpg",
-    "author": "Джордж Оруэлл"
-  },
-  {
-    "title": "Приключения Шерлока Холмса",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Sherlock%20Holmes%20Book.jpg",
-    "author": "Артур Конан Дойл"
-  },
-  {
-    "title": "Белый клык",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/1.50x-thumb.png",
-    "author": "Джек Лондон"
-  },
-  {
-    "title": "Зов предков",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%97%D0%BE%D0%B2%20%D0%9F%D1%80%D0%B5%D0%B4%D0%BA%D0%BE%D0%B2%20%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
-    "author": "Джек Лондон"
-  },
-  {
-    "title": "О мышах и людях",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/8109.jpg",
-    "author": "Джон Стейнбек"
-  },
-  {
-    "title": "Преступление и наказание",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Crime%20and%20Punishment%20Thumbnail.png",
-    "author": "Фёдор Достоевский"
-  },
-  {
-    "title": "Собачье сердце",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dog%20Heart%20Book%20Cover.jpeg",
-    "author": "Михаил Булгаков"
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION",
+    "mode": "погружение"
   },
   {
     "title": "451° по Фаренгейту",
+    "author": "Рэй Брэдбери",
+    "complexity": 2,
+    "description": "451° по Фаренгейту – температура, при которой воспламеняется и горит бумага. Философская антиутопия Брэдбери рисует беспросветную картину развития постиндустриального общества: это мир будущего, в котором все письменные издания безжалостно уничтожаются специальным отрядом пожарных, а хранение книг преследуется по закону, интерактивное телевидение успешно служит всеобщему оболваниванию, карательная психиатрия решительно разбирается с редкими инакомыслящими, а на охоту за неисправимыми диссидентами выходит электрический пес… Роман, принесший своему творцу мировую известность.",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/cover1__w600_144_556.webp",
-    "author": "Рэй Брэдбери"
-  },
-  {
-    "title": "Маленькие женщины",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Little%20Women%20Book%20Thumbnail.png",
-    "author": "Луиза Мэй Олкотт"
-  },
-  {
-    "title": "Путешествия Гулливера",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Gulliver's%20Travels%20Book.jpg",
-    "author": "Джонатан Свифт"
-  },
-  {
-    "title": "Оливер Твист",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Oliver%20Twist.jpg",
-    "author": "Чарльз Диккенс"
-  },
-  {
-    "title": "Три мушкетёра",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Three%20Musketeers%20Book.webp",
-    "author": "Александр Дюма"
-  },
-  {
-    "title": "Двенадцать стульев",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%94%D0%B2%D0%B5%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C%20%D1%81%D1%82%D1%83%D0%BB%D1%8C%D0%B5%D0%B2%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
-    "author": "Ильф и Петров"
-  },
-  {
-    "title": "Анна Каренина",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Anna%20Karenina%20Thumbnail.png",
-    "author": "Лев Толстой"
-  },
-  {
-    "title": "Пигмалион",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Pygmalion%20Book.webp",
-    "author": "Джордж Бернард Шоу"
-  },
-  {
-    "title": "Мастер и Маргарита",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Master%20and%20Margarita%20Thumbnail.png",
-    "author": "Михаил Булгаков"
-  },
-  {
-    "title": "Идиот",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/91875HBqLEL._UF1000%2C1000_QL80_.jpg",
-    "author": "Фёдор Достоевский"
-  },
-  {
-    "title": "Мёртвые души",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dead%20Souls%20Book%20Image.jpeg",
-    "author": "Николай Гоголь"
-  },
-  {
-    "title": "Отцы и дети",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Fathers%20and%20Sons%20Thumbnail.png",
-    "author": "Иван Тургенев"
-  },
-  {
-    "title": "Дубровский",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dubrovsky%20Book.jpg",
-    "author": "Александр Пушкин"
-  },
-  {
-    "title": "Приключения Тома Сойера",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Tom%20Sawyer%20Book.jpg",
-    "author": "Марк Твен"
-  },
-  {
-    "title": "Кентервильское привидение",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%9A%D0%B5%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B8%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B5%20%D0%BF%D1%80%D0%B8%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0%20thumbnail.png",
-    "author": "Оскар Уайльд"
-  },
-  {
-    "title": "Легенда о Сонной Лощине",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Legend%20of%20Sleepy%20Hollow%20Book.jpg",
-    "author": "Вашингтон Ирвинг"
-  },
-  {
-    "title": "Робинзон Крузо",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Robinson%20Crusoe%20Book.jpg",
-    "author": "Даниель Дефо"
-  },
-  {
-    "title": "Граф Монте-Кристо",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Monte%20Cristo%20Book%20Thumbnail.png",
-    "author": "Александр Дюма"
-  },
-  {
-    "title": "Сказки братьев Гримм",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Grimm%20Brothers%20Tales.jpeg",
-    "author": "Якоб и Вильгельм Гримм"
-  },
-  {
-    "title": "Великий Гэтсби",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Great%20Gatsby%20Book.jpg",
-    "author": "Фрэнсис Скотт Фицджеральд"
-  },
-  {
-    "title": "Собор Парижской Богоматери",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Sabor%20Paris%20Book%20Thumbnail.png",
-    "author": "Виктор Гюго"
-  },
-  {
-    "title": "Братья Карамазовы",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Brothers%20Karamazov%20Thumbnail.png",
-    "author": "Фёдор Достоевский"
-  },
-  {
-    "title": "Черный обелиск",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Black%20Obelisk%20Book.jpg",
-    "author": "Эрих Мария Ремарк"
-  },
-  {
-    "title": "Старик Хоттабыч",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%A1%D1%82%D0%B0%D1%80%D0%B8%D0%BA%20%D0%A5%D0%BE%D1%82%D1%82%D0%B0%D0%B1%D1%8B%D1%87%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
-    "author": "Лазарь Лагин"
-  },
-  {
-    "title": "To Kill a Mockingbird",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/To%20Kill%20a%20Mockingbird.jpg",
-    "author": "Harper Lee"
-  },
-  {
-    "title": "Middlemarch",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/Middlemarch%20Book.jpg",
-    "author": "George Eliot"
-  },
-  {
-    "title": "English Fairy Tales",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/English%20Fairy%20Tales.jpg",
-    "author": "Joseph Jacobs"
-  },
-  {
-    "title": "User Guide",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/readling_onboarding.png",
-    "author": "Readling"
-  },
-  {
-    "title": "Руководство пользователя",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/readling_onboarding.png",
-    "author": "Readling"
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION",
+    "mode": "погружение"
   },
   {
     "title": "Alice's Adventures in Wonderland",
+    "author": "Lewis Carroll",
+    "complexity": 2,
+    "description": "Сказочно-абсурдная история о любопытной девочке Алисе, которая попадает в фантасмагорический мир через кроличью нору. Книга погружает читателя в атмосферу парадоксальной логики, оживших метафор и игр с языком. Это не просто детская сказка, а глубокое философское размышление о взрослении, идентичности и природе реальности, поданное с изящным юмором. Читается как увлекательная головоломка, открывающая новые смыслы в любом возрасте.",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/images/f9521cd6-f13f-4c1c-b1fc-f4e2aab23a09.jpg",
-    "author": "Lewis Carroll"
-  },
-  {
-    "title": "Little Women; Or, Meg, Jo, Beth, and Amy",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b02742c7-4a74-4651-bc17-60dcf656a4bc.jpg",
-    "author": "Louisa May Alcott"
+    "genres": "FANTASY,CHILDRENS,CLASSIC",
+    "mode": "параллельный"
   },
   {
     "title": "Anne of Green Gables",
+    "author": "L. M. Montgomery",
+    "complexity": 2,
+    "description": "«Энн из Зелёных Крыш» — это трогательная история рыжеволосой сироты Энн Ширли, которая по ошибке попадает в дом брата и сестры Мэтью и Марилы Касберт на ферму Зелёные Крыши. Книга рассказывает о её взрослении, неукротимом воображении и способности видеть красоту в обыденном. Атмосфера произведения наполнена светом, юмором и ностальгией по беззаботному детству на живописном острове Принца Эдуарда. Эта классика заслуживает прочтения благодаря глубоким темам принятия, важности семьи и неиссякаемому оптимизму главной героини, который вдохновляет читателей всех возрастов.",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/images/94527763-ac8e-4cb0-aad3-8ee2cdd1ecf7.jpg",
-    "author": "L. M. Montgomery"
+    "genres": "CHILDRENS,CLASSIC",
+    "mode": "параллельный"
   },
   {
-    "title": "The Wonderful Wizard of Oz",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/106bed6d-a678-46c2-a6ff-4df88719593e.jpg",
-    "author": "L. Frank Baum"
-  },
-  {
-    "title": "Peter Pan",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/ee98aae9-2166-42ae-af08-f535fa372f91.jpg",
-    "author": "J. M. Barrie"
-  },
-  {
-    "title": "Winnie-the-Pooh",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1e99c3ee-ebcf-4d73-813e-6e499988dcdf.jpg",
-    "author": "A. A. Milne"
-  },
-  {
-    "title": "Through the Looking-Glass",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/407444a6-52f9-48eb-9eaf-44e7a00e926b.jpg",
-    "author": "Lewis Carroll"
+    "title": "English Fairy Tales",
+    "author": "Joseph Jacobs",
+    "complexity": 3,
+    "description": "English Fairy Tales by Joseph Jacobs is a collection of folk tales and stories compiled in the late 19th century. The book features a variety of traditional English tales, many of which delve into themes of magic, morality, and humor, showcasing characters such as cunning animals, foolish humans, and enchanted beings. Through engaging narratives, these tales reflect the rich oral storytelling tradition of England. The beginning of English Fairy Tales introduces the reader to the concept of English fairy tales, though it clarifies that not all tales feature fairies. In the preface, Jacobs discusses the significance of these stories, emphasizing the gaps in recording English folklore and his desire to contribute to this literature. He outlines his approach to collecting tales, noting that some stories have never been published before and that he has reworked many to suit a younger audience's understanding. The opening portion also includes a selection of whimsical tales such as 'Tom Tit Tot,' where a clever girl outsmarts a mischievous imp, and 'The Three Sillies,' highlighting the foolishness of a farmer's family. Overall, Jacobs aims to preserve and celebrate the innocence and joy of English folk tales for all readers.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/English%20Fairy%20Tales.jpg",
+    "genres": "CHILDRENS,FANTASY,CLASSIC,FICTION",
+    "mode": "параллельный"
   },
   {
     "title": "Fairy Tales of Hans Christian Andersen",
+    "author": "H. C. Andersen",
+    "complexity": 3,
+    "description": "Сборник волшебных сказок Ганса Христиана Андерсена погружает читателя в мир фантазии, где оживают говорящие предметы, животные и мифические существа. Эти истории, часто пронизанные легкой грустью и глубоким моральным смыслом, рассказывают о любви, потере, надежде и внутренней красоте. Книга заслуживает прочтения благодаря своему вневременному качеству: она обращается к читателям всех возрастов, предлагая детям захватывающие приключения, а взрослым — тонкие философские размышления. Язык Андерсена поэтичен и образен, что делает каждую сказку маленьким шедевром.",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/images/10838973-8796-4109-b24b-88dd11dd2168.jpg",
-    "author": "H. C. Andersen"
+    "genres": "FANTASY,CLASSIC,CHILDRENS",
+    "mode": "параллельный"
   },
   {
-    "title": "The King in Yellow",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/2121b73b-5563-46f0-ba8f-65a0c6b725be.webp",
-    "author": "Robert W. Chambers"
-  },
-  {
-    "title": "The Adventures of Sherlock Holmes",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/d29e2a7d-bb73-480a-9808-af194bb6f51c.jpg",
-    "author": "Arthur Conan Doyle"
-  },
-  {
-    "title": "The Fairy Tales of Charles Perrault",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/68311d4a-fcd2-42d1-8f3c-72748a293155.jpg",
-    "author": "Charles Perrault"
-  },
-  {
-    "title": "The oriental story book : a collection of tales by Wilhelm Hauff",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/9b894954-71df-4e47-89ec-8a0480327588.jpg",
-    "author": "Wilhelm Hauff"
-  },
-  {
-    "title": "The Jungle Book",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/cf802056-4aed-4c9d-9530-734a5620910a.jpg",
-    "author": "Rudyard Kipling"
-  },
-  {
-    "title": "The Adventures of Pinocchio",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/54ab6951-6d30-4d10-9ba0-e9fcda15c376.jpg",
-    "author": "Carlo Collodi"
-  },
-  {
-    "title": "The Count of Monte Cristo",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/cfb26c53-b7ea-4a44-b8c9-093eb4c0d5a9.jpg",
-    "author": "Alexandre Dumas"
-  },
-  {
-    "title": "Граф Монте-Кристо",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b9df629f-d1d3-4c90-ad5b-7ac517fcbbe5.jpg",
-    "author": "Александр Дюма"
-  },
-  {
-    "title": "Who Was Edgar Allan Poe",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/ecfe5f65-dcc8-4623-a973-ea4493f2f30d.jpg",
-    "author": "Jim Gigliotti"
-  },
-  {
-    "title": "Who Was Henry Ford",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1b97d02d-2bf7-4fc8-a9f0-1f0791740a3a.jpg",
-    "author": "Michael Burgan"
-  },
-  {
-    "title": "Who Was J.R.R. Tolkien",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/e3cea09c-3b5c-4ac1-8f7f-dea9d1b55a91.jpg",
-    "author": "Pam Pollack and Meg Belviso"
-  },
-  {
-    "title": "Who Was Jane Austen",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/38353a4c-5e93-431f-a93f-abadd89c4845.jpg",
-    "author": "Sarah Fabiny"
-  },
-  {
-    "title": "Богатый папа, бедный папа",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/a78684af-8bde-4ebf-bc19-fc85a2bc5066.webp",
-    "author": "Роберт Кийосаки"
-  },
-  {
-    "title": "The call of the wild",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b826517e-725e-41e9-af38-07940e4c94ec.jpg",
-    "author": "Jack London"
-  },
-  {
-    "title": "White Fang",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/c79424fe-c832-4914-8fa2-94e7c2275310.jpg",
-    "author": "Jack London"
-  },
-  {
-    "title": "Martin Eden",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/4346a07e-59b8-4616-ba01-7b2c00de0e8e.jpg",
-    "author": "Jack London"
-  },
-  {
-    "title": "The iron heel",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/edb4c77f-b77e-4eb5-8425-4c116a65a821.jpg",
-    "author": "Jack London"
-  },
-  {
-    "title": "The Little Lady of the Big House",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/174f2707-ba2b-4406-a417-5b31f0e46f20.jpg",
-    "author": "Jack London"
-  },
-  {
-    "title": "A Tale of Two Cities",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/3affbc21-b9e1-46b8-8f48-aa0b6927d7c6.jpg",
-    "author": "Charles Dickens"
-  },
-  {
-    "title": "Great Expectations",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/654da791-0755-4306-bab7-bc495012167f.jpg",
-    "author": "Charles Dickens"
-  },
-  {
-    "title": "Bleak House",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/4c704038-7f0c-4c03-a840-fb94681bde05.jpg",
-    "author": "Charles Dickens"
-  },
-  {
-    "title": "David Copperfield",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/bba9da2f-ff25-4cb8-9129-5aa502e5e2ba.jpg",
-    "author": "Charles Dickens"
-  },
-  {
-    "title": "Hard Times",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/44b5f2c5-118a-497f-a059-c601998c1749.jpg",
-    "author": "Charles Dickens"
-  },
-  {
-    "title": "A farewell to arms",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/afaf5ed8-a9f6-4e0b-a43e-0a9e5a119098.jpg",
-    "author": "Ernest Hemingway"
-  },
-  {
-    "title": "The Sun Also Rises",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/411dd43b-3f0e-43c4-be74-f2c68614d5cd.jpg",
-    "author": "Ernest Hemingway"
+    "title": "Little Women; Or, Meg, Jo, Beth, and Amy",
+    "author": "Louisa May Alcott",
+    "complexity": 3,
+    "description": "Роман Луизы Мэй Олкотт рассказывает о взрослении четырех сестер из семьи Марч — Мэг, Джо, Бет и Эми — в Новой Англии времен Гражданской войны. Книга с теплотой и юмором исследует темы семьи, дружбы, первых любовных переживаний и поиска своего места в мире. Атмосфера домашнего уюта, искренних чувств и моральных дилемм, через которые проходят героини, делает роман вневременной классикой, воспевающей стойкость, доброту и мечты.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b02742c7-4a74-4651-bc17-60dcf656a4bc.jpg",
+    "genres": "CLASSIC,CHILDRENS,FICTION",
+    "mode": "параллельный"
   },
   {
     "title": "Men without women",
+    "author": "Ernest Hemingway",
+    "complexity": 1,
+    "description": "Сборник рассказов Эрнеста Хемингуэя, исследующий темы одиночества, мужественности и сложных отношений между полами. Лаконичный и сдержанный стиль автора создаёт атмосферу глубокого психологического напряжения, раскрывая внутренний мир мужчин, оказавшихся в эмоциональной изоляции. Книга заслуживает внимания благодаря мастерскому изображению человеческих чувств и универсальных конфликтов, которые остаются актуальными и по сей день.",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/images/231f5235-dfdb-4089-864a-035cf16ac782.jpg",
-    "author": "Ernest Hemingway"
+    "genres": "FICTION,CLASSIC,DRAMA",
+    "mode": "параллельный"
   },
   {
-    "title": "The Moon and Sixpence",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/8c03dff9-28d8-46e1-9cbc-dbcf19ece496.jpg",
-    "author": "W. Somerset Maugham"
-  },
-  {
-    "title": "Of Human Bondage",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/71154804-a174-4d7e-9e39-34ed4be8ad9b.jpg",
-    "author": "W. Somerset Maugham"
-  },
-  {
-    "title": "The Picture of Dorian Gray",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1e1a24f9-2d48-4404-aebe-de50aed03c39.jpg",
-    "author": "Oscar Wilde"
-  },
-  {
-    "title": "The Great Gatsby",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/7150a916-2a13-44e3-b7d5-f9f9ac6edb3f.jpg",
-    "author": "F. Scott Fitzgerald"
-  },
-  {
-    "title": "All quiet on the Western Front",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/024ab39f-e873-4af9-b782-7c9423c969e2.jpg",
-    "author": "Erich Maria Remarque"
-  },
-  {
-    "title": "The murder of Roger Ackroyd",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6985d336-d0d7-4a57-8f2d-083b7f39e844.jpg",
-    "author": "Agatha Christie"
-  },
-  {
-    "title": "The Secret of Chimneys",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/81387b6a-3b98-4afe-a2b8-399a6f954990.webp",
-    "author": "Agatha Christie"
-  },
-  {
-    "title": "The Mysterious Affair at Styles",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b7f79768-9bcc-4b91-88ff-e4a26cb4cc7b.jpg",
-    "author": "Agatha Christie"
-  },
-  {
-    "title": "Poirot Investigates",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/bb42003a-1640-443b-b988-e7e1f83a83e4.jpg",
-    "author": "Agatha Christie"
-  },
-  {
-    "title": "The Murder on the Links",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/308868e8-a8b8-4ebe-9cf2-4b8bce6b9a04.jpg",
-    "author": "Agatha Christie"
-  },
-  {
-    "title": "A Study in Scarlet",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/c5769b80-2078-4c8d-a677-66fafd24f825.jpg",
-    "author": "Arthur Conan Doyle"
-  },
-  {
-    "title": "The Sign of the Four",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6f62f8d8-25e2-49db-8bb6-6dbd40ebd4bf.jpg",
-    "author": "Arthur Conan Doyle"
-  },
-  {
-    "title": "The Red House Mystery",
-    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6f7cd235-f77c-4c27-bfd1-823de7ac4b98.jpg",
-    "author": "A. A. Milne"
+    "title": "Middlemarch",
+    "author": "George Eliot",
+    "complexity": 5,
+    "description": "Vast and crowded, rich in irony and suspense, Middlemarch is richer still in character, with two of the era's most enduring characters, Dorothea Brooke, trapped in a loveless marriage, and Lydgate, an ambitious young doctor.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Middlemarch%20Book.jpg",
+    "genres": "CLASSIC,FICTION,HISTORICAL,ROMANCE",
+    "mode": "параллельный"
   },
   {
     "title": "Now we are six",
+    "author": "A. A. Milne",
+    "complexity": 3,
+    "description": "Сборник стихов А. А. Милна, автора знаменитого 'Винни-Пуха', посвященный миру детства. Книга переносит читателя в беззаботную атмосферу шестилетнего ребенка, где каждый день наполнен маленькими открытиями, играми и фантазиями. Стихи сочетают легкий юмор, нежность и глубокое понимание детской психологии. Иллюстрации Эрнеста Шепарда добавляют произведению очарования. Это произведение заслуживает прочтения как детьми, так и взрослыми, желающими вернуться в мир наивной радости и чистоты.",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6e7cf647-61ad-46f8-8ae4-01ad95c82342.jpg",
-    "author": "A. A. Milne"
+    "genres": "CHILDRENS,POETRY,CLASSIC",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Peter Pan",
+    "author": "J. M. Barrie",
+    "complexity": 3,
+    "description": "«Питер Пэн» — волшебная сказка о мальчике, который никогда не взрослеет и живёт в Нетландии, стране вечного детства. Книга погружает в атмосферу беззаботных приключений, полётов с феей Динь-Динь и противостояния с капитаном Крюком. Основная тема — конфликт между желанием остаться ребёнком и необходимостью взрослеть. Произведение заслуживает прочтения благодаря поэтичности, тонкому юмору и глубоким размышлениям о природе воображения, утрате невинности и ценности мечты.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/ee98aae9-2166-42ae-af08-f535fa372f91.jpg",
+    "genres": "FANTASY,CHILDRENS,ADVENTURE",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The Adventures of Sherlock Holmes",
+    "author": "Arthur Conan Doyle",
+    "complexity": 3,
+    "description": "Сборник рассказов о гениальном детективе-консультанте Шерлоке Холмсе и его друге докторе Ватсоне. Действие разворачивается в атмосферном викторианском Лондоне, где Холмс с помощью острой наблюдательности и дедуктивного метода раскрывает самые замысловатые преступления. Книга является классикой детективного жанра, предлагая читателю интеллектуальное удовольствие от слежки за ходом мыслей великого сыщика и погружение в мир изящных загадок.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/d29e2a7d-bb73-480a-9808-af194bb6f51c.jpg",
+    "genres": "MYSTERY,CLASSIC,ADVENTURE",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The call of the wild",
+    "author": "Jack London",
+    "complexity": 4,
+    "description": "Роман Джека Лондона — это мощная история о борьбе за выживание и пробуждении первобытных инстинктов. Действие происходит на суровом Аляскинском Севере времен золотой лихорадки. Через судьбу пса Бэка, насильно вырванного из цивилизации, автор исследует тонкую грань между дикостью и одомашненностью, законом клыка и силой духа. Книга захватывает мрачной, почти мифической атмосферой и заставляет задуматься о том, что скрыто в глубинах нашей собственной природы. Это не просто приключенческая повесть, а глубокая классика, актуальная во все времена.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b826517e-725e-41e9-af38-07940e4c94ec.jpg",
+    "genres": "ADVENTURE,CLASSIC,FICTION",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "complexity": 4,
+    "description": "Роман «Граф Монте-Кристо» — это мастерски сплетенная история несправедливости, мести и искупления. Молодой моряк Эдмон Дантес становится жертвой заговора и оказывается в мрачной тюрьме, но обретает шанс на свободу и превращение в таинственного и богатого графа. Книга погружает в атмосферу интриг, роскоши и драматических поворотов, исследуя вечные темы справедливости, морали и человеческой природы. Захватывающий сюжет, глубокие персонажи и философская глубина делают этот роман одной из величайших приключенческих классик мировой литературы.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/cfb26c53-b7ea-4a44-b8c9-093eb4c0d5a9.jpg",
+    "genres": "CLASSIC,ADVENTURE,HISTORICAL",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The Fairy Tales of Charles Perrault",
+    "author": "Charles Perrault",
+    "complexity": 4,
+    "description": "Сборник классических сказок Шарля Перро, включающий всемирно известные истории о Красной Шапочке, Золушке и Коте в сапогах. Эти волшебные повествования сочетают народную мудрость с литературным изяществом, создавая удивительный мир, где магия переплетается с реальностью, а добро всегда побеждает зло. Атмосфера сказок — загадочная и поучительная, с лёгким налётом старины и неизменной моралью. Книга — фундамент европейской сказочной традиции, предлагающий мудрые уроки в захватывающих сюжетах, актуальных для читателей любого возраста.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/68311d4a-fcd2-42d1-8f3c-72748a293155.jpg",
+    "genres": "FANTASY,CHILDRENS,CLASSIC",
+    "mode": "параллельный"
   },
   {
     "title": "The house at Pooh Corner",
+    "author": "A. A. Milne",
+    "complexity": 1,
+    "description": "Продолжение приключений любимого медвежонка Винни-Пуха и его друзей в волшебном Лесу. Книга погружает читателя в уютный, лишенный суеты мир детских фантазий, где каждый день приносит маленькие открытия и большие радости. Это трогательная история о дружбе, наивной мудрости и простом счастье, рассказанная с тонким английским юмором и теплотой. Произведение заслуживает прочтения как детьми, так и взрослыми, напоминая о самом важном — ценности искренних отношений и умении находить волшебство в обыденном.",
     "imageUrl": "https://storage.yandexcloud.net/booklogos/images/3fd71370-bd0e-4321-87a1-173cb33ae630.jpg",
-    "author": "A. A. Milne"
+    "genres": "CHILDRENS,CLASSIC,ADVENTURE",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The Jungle Book",
+    "author": "Rudyard Kipling",
+    "complexity": 3,
+    "description": "«Книга джунглей» — это классический сборник рассказов о мальчике Маугли, воспитанном волками в индийских джунглях. Книга погружает читателя в экзотический и опасный мир дикой природы, где действуют свои законы и честь. Основные темы — взросление, поиск своего места, дружба и противостояние силам природы и общества. Произведение заслуживает прочтения благодаря ярким, запоминающимся персонажам (Багира, Балу, Шерхан), мудрым притчам и атмосфере чуда, которая пленяет и детей, и взрослых.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/cf802056-4aed-4c9d-9530-734a5620910a.jpg",
+    "genres": "CLASSIC,CHILDRENS,ADVENTURE",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The King in Yellow",
+    "author": "Robert W. Chambers",
+    "complexity": 3,
+    "description": "«Король в жёлтом» — сборник рассказов Роберта У. Чамберса, объединённых темой запретной пьесы, которая сводит читателей с ума. Основная тема — вторжение иррационального в обыденную жизнь, размывание границ между реальностью и безумием. Атмосфера пронизана декадентской эстетикой, чувством тревоги и неминуемой гибели. Книга заслуживает внимания как ранний образец психологического хоррора, оказавший значительное влияние на развитие жанра, в частности на творчество Г. Ф. Лавкрафта. Её загадочность и недосказанность оставляют простор для воображения.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/2121b73b-5563-46f0-ba8f-65a0c6b725be.webp",
+    "genres": "HORROR,CLASSIC",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The Mysterious Affair at Styles",
+    "author": "Agatha Christie",
+    "complexity": 2,
+    "description": "Этот роман знаменует дебют легендарного детектива Эркюля Пуаро. Действие разворачивается в уединённом английском поместье Стайлз, где загадочная смерть владелицы приводит к расследованию, полному подозрений и скрытых мотивов. Атмосфера классического детектива с ограниченным кругом подозреваемых, изящными умозаключениями и неожиданной развязкой делает книгу обязательной к прочтению для любителей жанра. Кристи мастерски создаёт интригу и представляет одного из самых известных сыщиков в литературе.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/b7f79768-9bcc-4b91-88ff-e4a26cb4cc7b.jpg",
+    "genres": "MYSTERY,CLASSIC",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The oriental story book : a collection of tales by Wilhelm Hauff",
+    "author": "Wilhelm Hauff",
+    "complexity": 5,
+    "description": "Сборник восточных сказок Вильгельма Гауффа погружает читателя в волшебный мир арабских ночей, где джинны исполняют желания, караваны пересекают пустыни, а герои сталкиваются с испытаниями, требующими смекалки и доброты. Атмосфера загадочного Востока, полная экзотики и мудрых притч, захватывает с первых страниц. Книга заслуживает прочтения благодаря увлекательным сюжетам, ярким персонажам и вневременной морали, интересной и детям, и взрослым.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/9b894954-71df-4e47-89ec-8a0480327588.jpg",
+    "genres": "FANTASY,CLASSIC,CHILDRENS",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The Sign of the Four",
+    "author": "Arthur Conan Doyle",
+    "complexity": 3,
+    "description": "«Знак четырёх» — классический детектив Артура Конан Дойла, в котором Шерлок Холмс и доктор Ватсон расследуют загадочное дело, связанное с пропажей человека и таинственным сокровищем. Действие разворачивается в атмосферном Лондоне викторианской эпохи, полном мрачных улиц и скрытых угроз. Книга заслуживает прочтения как образец детективного жанра, демонстрирующий блестящую логику Холмса и увлекательный сюжет с неожиданными поворотами, который завораживает с первой до последней страницы.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/6f62f8d8-25e2-49db-8bb6-6dbd40ebd4bf.jpg",
+    "genres": "MYSTERY,CLASSIC",
+    "mode": "параллельный"
+  },
+  {
+    "title": "The Wonderful Wizard of Oz",
+    "author": "L. Frank Baum",
+    "complexity": 2,
+    "description": "«Удивительный Волшебник Страны Оз» — классическая сказка о девочке Дороти, унесённой ураганом в волшебную страну. Вместе с новыми друзьями она отправляется к Волшебнику, надеясь найти путь домой. Книга погружает в атмосферу чудес и приключений, исследуя темы дружбы, самопознания и храбрости. Это произведение заслуживает прочтения благодаря очаровательному миру, запоминающимся персонажам и вечным ценностям, актуальным для детей и взрослых.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/106bed6d-a678-46c2-a6ff-4df88719593e.jpg",
+    "genres": "FANTASY,CHILDRENS,ADVENTURE",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Through the Looking-Glass",
+    "author": "Lewis Carroll",
+    "complexity": 2,
+    "description": "«Алиса в Зазеркалье» — это сюрреалистическое путешествие девочки Алисы в мир по ту сторону зеркала, где царят обратная логика, шахматные правила и абсурд. Книга наполнена остроумными играми слов, парадоксами и запоминающимися персонажами, создавая атмосферу интеллектуальной сказки. Она заслуживает прочтения благодаря своему уникальному сочетанию детской фантазии, философской глубины и блестящего литературного новаторства, которое продолжает вдохновлять читателей всех возрастов.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/407444a6-52f9-48eb-9eaf-44e7a00e926b.jpg",
+    "genres": "FANTASY,CHILDRENS,CLASSIC",
+    "mode": "параллельный"
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "complexity": 2,
+    "description": "The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it, To Kill A Mockingbird became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic. Compassionate, dramatic, and deeply moving, To Kill A Mockingbird takes readers to the roots of human behavior—to innocence and experience, kindness and cruelty, love and hatred, humor and pathos. Now with over 18 million copies in print and translated into ten languages this regional story by a young Alabama woman claims universal appeal. Harper Lee always considered her book to be a simple love story. Today it is regarded as a masterpiece of American literature.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/To%20Kill%20a%20Mockingbird.jpg",
+    "genres": "CLASSIC,FICTION,DRAMA,HISTORICAL",
+    "mode": "параллельный"
+  },
+  {
+    "title": "User Guide",
+    "author": "Readling",
+    "complexity": 1,
+    "description": "A guide on how to use the app",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/readling_onboarding.png",
+    "genres": "CLASSIC",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Who Was Edgar Allan Poe",
+    "author": "Jim Gigliotti",
+    "complexity": 2,
+    "description": "Эта книга из серии биографий рассказывает о жизни и творчестве Эдгара Аллана По, мастера мрачных рассказов и поэзии. Она погружает читателя в атмосферу загадок, окружавших его судьбу, раскрывает ключевые события и литературное наследие. Написана доступно и увлекательно, идеальна для первого знакомства с легендарным автором.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/ecfe5f65-dcc8-4623-a973-ea4493f2f30d.jpg",
+    "genres": "NON_FICTION,BIOGRAPHY,CHILDRENS",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Who Was Henry Ford",
+    "author": "Michael Burgan",
+    "complexity": 2,
+    "description": "Эта книга рассказывает о жизни Генри Форда, изобретателя и промышленника, который революционизировал автомобильную индустрию с помощью конвейерного производства. Читатели узнают о его детстве, стремлениях и том, как он построил Ford Motor Company. Атмосфера книги — это смесь исторического повествования и мотивационной истории, которая вдохновляет на инновации и упорство. Книга заслуживает прочтения, потому что она просто и увлекательно объясняет сложные экономические и технологические концепции, делая их понятными для детей и подростков.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1b97d02d-2bf7-4fc8-a9f0-1f0791740a3a.jpg",
+    "genres": "BIOGRAPHY,CHILDRENS,HISTORICAL",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Who Was Jane Austen",
+    "author": "Sarah Fabiny",
+    "complexity": 2,
+    "description": "Эта книга из популярной серии 'Who Was?' знакомит юных читателей с жизнью и творчеством Джейн Остин. Автор, Сара Фабини, доступно рассказывает о детстве писательницы, ее семье, эпохе и создании знаменитых романов. Книга написана увлекательно, с иллюстрациями, идеально для первого знакомства с классикой. Она передает атмосферу Англии XVIII-XIX веков и показывает, почему творчество Остин остается важным. Отличный способ заинтересовать детей литературой и историей.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/38353a4c-5e93-431f-a93f-abadd89c4845.jpg",
+    "genres": "BIOGRAPHY,CHILDRENS",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Who Was J.R.R. Tolkien",
+    "author": "Pam Pollack and Meg Belviso",
+    "complexity": 2,
+    "description": "Эта книга из серии 'Who Was?' рассказывает о жизни и творчестве Дж. Р. Р. Толкина — создателя 'Хоббита' и 'Властелина колец'. Читатели узнают о его детстве, увлечении языками, академической карьере и том, как личный опыт повлиял на создание легендарного мира Средиземья. Атмосфера повествования увлекательная и познавательная, идеально подходящая для юной аудитории. Книга заслуживает прочтения, потому что она не только раскрывает историю великого писателя, но и вдохновляет на творчество и любовь к литературе.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/e3cea09c-3b5c-4ac1-8f7f-dea9d1b55a91.jpg",
+    "genres": "NON_FICTION,BIOGRAPHY,CHILDRENS",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Winnie-the-Pooh",
+    "author": "A. A. Milne",
+    "complexity": 1,
+    "description": "«Винни-Пух» — классическая детская книга А. А. Милна о забавных приключениях наивного и добродушного медвежонка и его друзей в Стоакровом Лесу. Атмосфера произведения наполнена теплотой, мягким юмором и мудрой простотой. Книга заслуживает прочтения, потому что через незатейливые истории раскрывает важные темы дружбы, взаимопомощи и радости маленьких открытий. Её обаятельные персонажи и уютный мир продолжают покорять сердца читателей всех возрастов, напоминая о ценности воображения и искренности.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/1e99c3ee-ebcf-4d73-813e-6e499988dcdf.jpg",
+    "genres": "CHILDRENS,CLASSIC,ADVENTURE",
+    "mode": "параллельный"
+  },
+  {
+    "title": "Алиса в Стране чудес",
+    "author": "Льюис Кэрролл",
+    "complexity": 3,
+    "description": "История приключений Алисы, произошедшая одним солнечным днём, очаровывает детей и взрослых уже более 150 лет. Теперь читатели могут заново открыть для себя любимых персонажей: от вредной Королевы Червей до загадочного Чеширского кота – в мире, где всё не так, как кажется.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/33224.jpg",
+    "genres": "CLASSIC,FICTION,FANTASY,CHILDRENS",
+    "mode": "погружение"
+  },
+  {
+    "title": "Алые паруса",
+    "author": "Александр Грин",
+    "complexity": 4,
+    "description": "Она — простая девушка с нежным сердцем. Он — романтик, который не может жить без моря. Под каким парусом пройдёт их будущая жизнь? Пережившие невзгоды герои столкнутся посреди бушующего океана жизни. История любви, достойная Оскара. История, окрашенная в пятьдесят оттенков алого цвета...",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/fbe295fd6cbfc34ec34a225cb1128348.jpg",
+    "genres": "CLASSIC,FICTION,ROMANCE,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Анна Каренина",
+    "author": "Лев Толстой",
+    "complexity": 3,
+    "description": "Роман «Анна Каренина» Льва Николаевича Толстого (1828–1910) является самой читаемой книгой в мире. По словам Достоевского, это произведение поражает «не только вседневностью содержания, но и огромной психологической разработкой души человеческой, страшной глубиной и силой». История любви замужней женщины к блестящему офицеру, губительной для Анны, но завораживающей своей страстностью и самоотверженностью, уже более ста лет не сходит со сценических подмостков и экранизирована множество раз как в России, так и за рубежом.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Anna%20Karenina%20Thumbnail.png",
+    "genres": "CLASSIC,ROMANCE,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Белый клык",
+    "author": "Джек Лондон",
+    "complexity": 4,
+    "description": "«Белый клык» – приключенческая повесть известного американского писателя и общественного деятеля Джека Лондона (англ. Jack London, 1876-1916). *** Это история одомашненного волка, показанная глазами братьев наших меньших. Сменяющаяся череда хозяев Белого Клыка лишь подтверждает многообразие человеческих характеров. Другими выдающимися произведениями Джека Лондона являются «Любовь к жизни», «Зов предков», «Приключение», «До Адама», «Игра», «Железная пята», «Время-не-ждёт» и «Дочь снегов». Джек Лондон стал автором многочисленных «северных» романов, повествующих о судьбе суровых обитателей Аляски с их жизнеутверждающим оптимизмом и верой в будущее.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/1.50x-thumb.png",
+    "genres": "CLASSIC,FICTION,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Богатый папа, бедный папа",
+    "author": "Роберт Кийосаки",
+    "complexity": 3,
+    "description": "Книга Роберта Кийосаки — это мощный манифест финансового образования, построенный на контрасте между двумя отцами: родным, приверженцем традиционных представлений о деньгах, и отцом его друга, предпринимателем, который открывает автору принципы создания богатства. В доступной и мотивирующей форме автор развенчивает мифы о работе за зарплату, объясняет разницу между активами и пассивами и учит, как заставить деньги работать на себя. Это не сухой учебник, а скорее практическое руководство по изменению мышления, необходимое для любого, кто стремится к финансовой независимости.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/images/a78684af-8bde-4ebf-bc19-fc85a2bc5066.webp",
+    "genres": "NON_FICTION,SELF_HELP",
+    "mode": "погружение"
+  },
+  {
+    "title": "Братья Карамазовы",
+    "author": "Фёдор Достоевский",
+    "complexity": 4,
+    "description": "Эпический роман о семье Карамазовых, моральных и духовных поисках, преступлении и искуплении. Достоевский исследует вопросы веры, свободы воли, любви и ненависти, создавая глубокие психологические портреты героев. История переплетает философию, драму и религиозные размышления о жизни и человеческой природе.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Brothers%20Karamazov%20Thumbnail.png",
+    "genres": "CLASSIC,PHILOSOPHY,DRAMA,HISTORICAL",
+    "mode": "погружение"
+  },
+  {
+    "title": "Великий Гэтсби",
+    "author": "Фрэнсис Скотт Фицджеральд",
+    "complexity": 3,
+    "description": "История богатства, любви и иллюзий в Америке 1920-х годов. Роман о мечтах, потерях и ценности человеческих отношений.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Great%20Gatsby%20Book.jpg",
+    "genres": "CLASSIC,ROMANCE,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Война миров",
+    "author": "Герберт Уэллс",
+    "complexity": 4,
+    "description": "Наиболее известный роман английского писателя-фантаста, творчество которого открыло новый этап в развитии жанра научной фантастики. Однажды на территорию Соединенного Королевства упали один за другим несколько капсул-снарядов, которые были выпущены из огромной марсианской пушки. Попытка землян открыть их обернулась сущим кошмаром… И началась Война миров. Книга Герберта Уэллса впервые рассказала жителям Земли о том, какова на самом деле Красная планета, и вслед за английским писателем тема Войны миров захватила умы миллионов людей…",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/192743f36ed5f979deb4a4ecbba6c0bb.jpg",
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Гордость и предубеждение",
+    "author": "Остен Джейн",
+    "complexity": 4,
+    "description": "Гордость женщины, практически нищей и совершенно свободной — в своей бедности, в своей иронии, в силе своего характера... Есть ли нечто равное такой гордости?.. Предубеждение женщины, почти не способной уже, по привычке отвечать ударом на удар, поверить в искренность мужского чувства и перестать об этом думать. Это — «Гордость и предубеждение» Джейн Остен. Книга, без которой сейчас не существовало бы, наверное, ни «психологического» романа, ни «феминистской» литературы, ни — попросту — «элитной» прозы как таковой!",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/2e1c814cd6a9195a2cb09a2092d53c83.jpg",
+    "genres": "CLASSIC,FICTION,ROMANCE,HISTORICAL,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Граф Монте-Кристо",
+    "author": "Александр Дюма",
+    "complexity": 3,
+    "description": "Эдмон Дантес несправедливо заключён в тюрьму, но возвращается, чтобы осуществить месть. Эпопея о предательстве, любви и справедливости.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Monte%20Cristo%20Book%20Thumbnail.png",
+    "genres": "CLASSIC,ADVENTURE,HISTORICAL",
+    "mode": "погружение"
+  },
+  {
+    "title": "Грозовой перевал",
+    "author": "Бронте Эмили",
+    "complexity": 3,
+    "description": "«Грозовой Перевал» Эмили Бронте — не просто золотая классика мировой литературы, но роман, перевернувший в свое время представления о романтической прозе. Проходят годы и десятилетия, но история роковой страсти Хитклифа, приемного сына владельца поместья «Грозовой перевал», к дочери хозяина Кэтрин не поддается ходу времени. «Грозовым Перевалом» зачитывалось уже много поколений женщин — продолжают зачитываться и сейчас. Эта книга не стареет, как не стареет истинная любовь...",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover1__w600.jpg",
+    "genres": "CLASSIC,FICTION,ROMANCE,HISTORICAL,DRAMA,HORROR",
+    "mode": "погружение"
+  },
+  {
+    "title": "Двадцать тысяч лье под водой",
+    "author": "Жюль Верн",
+    "complexity": 5,
+    "description": "Капитан Немо и его 'Наутилус' — одно из первых научно-фантастических приключений.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/3-93.jpg",
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Двенадцать стульев",
+    "author": "Ильф и Петров",
+    "complexity": 4,
+    "description": "Авантюрист Остап Бендер охотится за драгоценностями, спрятанными в одном из двенадцати стульев. Искромётная сатира на советскую эпоху.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%94%D0%B2%D0%B5%D0%BD%D0%B0%D0%B4%D1%86%D0%B0%D1%82%D1%8C%20%D1%81%D1%82%D1%83%D0%BB%D1%8C%D0%B5%D0%B2%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
+    "genres": "CLASSIC,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Джен Эйр",
+    "author": "Шарлотта Бронте",
+    "complexity": 3,
+    "description": "В поисках лучшей доли Джен Эйр, сирота, страдающая от притеснений родственников и школьных наставников, становится гувернанткой и начинает новую счастливую жизнь в Торнфилде. Спустя некоторое время Джен начинает понимать, что Рочестер, хозяин Торнфилда, скрывает от нее какую-то тайну. В нашей библиотеке вы можете бесплатно почитать книгу «Джен Эйр». Чтобы читать онлайн книгу «Джен Эйр» перейдите по указанной ссылке. Приятного Вам чтения.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/294efeae78be59fb8eb0e5c3a387977c.jpeg",
+    "genres": "CLASSIC,FICTION,ROMANCE,HISTORICAL,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Дракула",
+    "author": "Брэм Стокер",
+    "complexity": 3,
+    "description": "Главное детище Брэма Стокера, вампир-аристократ, ставший эталоном для последующих сочинений, причина массового увлечения «вампирским» мифом и получивший массовое же воплощение – от литературы до аниме и видеоигр.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/945136356601840.jpg",
+    "genres": "CLASSIC,FICTION,HORROR,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Дубровский",
+    "author": "Александр Пушкин",
+    "complexity": 4,
+    "description": "Пустячная ссора с соседом и нечестный суд лишают Андрея Дубровского имения – и рассудка. Теперь его сын хочет сотворить суд собственный – справедливый. Но судьба сводит его с дочерью врага… Окажется ли любовь сильнее жажды мести? Роман, вдохновленный реальными событиями, остался незавершенным и увидел свет лишь спустя пять лет после трагической гибели Пушкина. Но это не помешало ему стать одним из самых известных произведений классика и обрести читательскую любовь и признание.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dubrovsky%20Book.jpg",
+    "genres": "CLASSIC,ROMANCE,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Зов предков",
+    "author": "Джек Лондон",
+    "complexity": 4,
+    "description": "«Зов предков» – одно из самых известных произведений замечательного американского писателя Джека Лондона. Подчиняясь «зову предков», домашний пес Бэк одичал и ушел в волчью стаю… Тысячи людей, томимые жаждой наживы, которая пробуждает зов первобытной дикости, устремились в живописный Клондайкский край – неизвестный и загадочный мир Севера, суровых испытаний и золота!",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%97%D0%BE%D0%B2%20%D0%9F%D1%80%D0%B5%D0%B4%D0%BA%D0%BE%D0%B2%20%D0%9A%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
+    "genres": "CLASSIC,FICTION,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Идиот",
+    "author": "Фёдор Достоевский",
+    "complexity": 3,
+    "description": "Всякая классика хороша тем, что она, к счастью, не стареет. «Идиот» Достоевского абсолютно современен, поскольку человеческие характеры и человеческие отношения не меняются. Человек вообще не меняется никогда, а классика выявляет это в наиболее ярком виде. «Главная идея… – писал Достоевский о своем романе, – изобразить положительно прекрасного человека. Труднее этого нет ничего на свете…». Изданный в 1868 году, роман еще при жизни писателя был переведен на многие языки мира, после пережил множество театральных постановок и экранизаций.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/91875HBqLEL._UF1000%2C1000_QL80_.jpg",
+    "genres": "CLASSIC,DRAMA,PHILOSOPHY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Кентервильское привидение",
+    "author": "Оскар Уайльд",
+    "complexity": 5,
+    "description": "«Кентервильское привидение» - рассказ, принадлежащий перу Оскара Уайльда (Oscar Fingal O'Flahertie Wills Wilde, 1854-1900), представителю английской литературы, ирландцу по происхождению.*** Фантастический рассказ о том, что человеческая доброта и участие могут снять даже самые страшные проклятия. Среди творческого наследия Оскара Уайльда — пьесы, статьи об искусстве, сборников сказок. Главное произведение его жизни — роман «Портрет Дориана Грея». Сочинения Оскара Уайльда — часть обязательной школьной программы. На страницах своих произведений Оскар Уайльд обличает лицемерие и несправедливость общественной морали, холодную расчетливость и корыстность большинства людей. Его настоящие герои искренни, способны на высокие чувства и поступки. Именно это подкупает современного читателя в произведениях короля жизни и самого великого остроумца XIX века.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%9A%D0%B5%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B8%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B5%20%D0%BF%D1%80%D0%B8%D0%B2%D0%B8%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0%20thumbnail.png",
+    "genres": "CLASSIC,FANTASY,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Легенда о Сонной Лощине",
+    "author": "Вашингтон Ирвинг",
+    "complexity": 6,
+    "description": "Старые легенды о таинственном всаднике, который ищет свою голову, превращены в классический рассказ о страхе и юморе.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Legend%20of%20Sleepy%20Hollow%20Book.jpg",
+    "genres": "CLASSIC,HORROR,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Маленькие женщины",
+    "author": "Луиза Мэй Олкотт",
+    "complexity": 3,
+    "description": "«Маленькие женщины» Луизы Мэй Олкотт – это роман, на котором воспитывалось не одно поколение читателей по всему миру. Впервые опубликованное в 1868 году в США, это произведение было переведено более чем на 50 языков и положено в основу шести фильмов, четырех телесериалов, нескольких опер и спектаклей. История семейства Марч, в котором подрастают четыре дружные, но непохожие друг на друга сестры, заключает в себе узнаваемые перипетии юности, взросления, дружбы и любви.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Little%20Women%20Book%20Thumbnail.png",
+    "genres": "CLASSIC,DRAMA,ROMANCE,YOUNG_ADULT",
+    "mode": "погружение"
+  },
+  {
+    "title": "Мастер и Маргарита",
+    "author": "Михаил Булгаков",
+    "complexity": 4,
+    "description": "«Мастер и Маргарита» – блистательный шедевр, созданный Михаилом Булгаковым, завораживающая мистическая дьяволиада, обнажающая вечные темы любви, борьбы добра со злом, смерти и бессмертия. Эта книга – на века, она не теряет своей привлекательности; прочтя первую фразу: «В час жаркого весеннего заката на Патриарших прудах появились двое граждан…», мы добровольно, неминуемо и безвозвратно погружаемся в мир Мастера, Маргариты, Пилата, Воланда, Азазелло с Коровьевым и других героев романа.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Master%20and%20Margarita%20Thumbnail.png",
+    "genres": "CLASSIC,PHILOSOPHY,FANTASY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Машина времени",
+    "author": "Герберт Уэллс",
+    "complexity": 4,
+    "description": "“Машина времени” является одним из самых любимых научно-фантастических романов всех времен. Из него берут начало все истории о путешествиях во времени. Герберт Уэллс изобразил яркий и запоминающийся портрет Земли и человечества в далеком будущем, через 800 000 лет. Влияние романа на развитие научной фантастики во всем мире трудно переоценить. Написанный на заре промышленно-технологической революции роман поставил перед человеческой цивилизацией вопрос, актуальный и поныне. Вопрос о том, способны ли передовые технологии поработить людей.\nЯркое, эмоциональное повествование из викторианских времен ничуть не теряет своего обаяния и любимо многочисленными читателями во всем мире.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover_347998.jpg",
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Мёртвые души",
+    "author": "Николай Гоголь",
+    "complexity": 5,
+    "description": "Бесхарактерный мечтатель Манилов, малограмотная накопительница Коробочка, пустозвон Ноздрев, грубый и прямолинейный Собакевич, патологический скупец Плюшкин… Каждый из них являет собой утрированный образ, собранный из пороков и слабостей. И как живо они проявляются, когда заезжий гость Павел Иванович Чичиков решает скупить у них мертвые души крепостных!\n\nИ все же где-то там, впереди, виднеется проблеск надежды, и птица-тройка мчится по бескрайним просторам родины…",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dead%20Souls%20Book%20Image.jpeg",
+    "genres": "CLASSIC,PHILOSOPHY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Моби Дик",
+    "author": "Герман Мелвилл",
+    "complexity": 6,
+    "description": "«Моби Дик» Германа Мелвилла (1819—1891) считается самым великим американским романом XIX века. В центре этого уникального, написанного вопреки всем законам жанра произведения, – погоня за Белым Китом. Захватывающий сюжет, эпические морские картины, описания ярких человеческих характеров в гармоничном сочетании с самыми универсальными философскими обобщениями делают эту книгу подлинным шедевром мировой литературы.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/a5be17bd945495cd8a58081f5604dba5.jpeg",
+    "genres": "CLASSIC,FICTION,ADVENTURE,HISTORICAL",
+    "mode": "погружение"
+  },
+  {
+    "title": "О дивный новый мир",
+    "author": "Олдос Леонард Хаксли",
+    "complexity": 5,
+    "description": "«О дивный новый мир» – изысканная и остроумная антиутопия о генетически программируемом «обществе потребления», в котором разворачивается трагическая история Дикаря – «Гамлета» этого мира.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/10121782_0.jpg",
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Оливер Твист",
+    "author": "Чарльз Диккенс",
+    "complexity": 4,
+    "description": "Старая добрая Англия неласкова к сиротам и нищим детям. Знаменитый роман Чарльза Диккенса о мальчике Оливере, попавшем в шайку лондонских воров-попрошаек, но это история со счастливым концом! Превосходная проза самого известного писателя Англии. Иллюстрации Эрика Кинкейда – эмоциональные, живые и удивительно красивые! Все книги с иллюстрациями Кинкейда пользуются большой популярностью у коллекционеров.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Oliver%20Twist.jpg",
+    "genres": "CLASSIC,DRAMA,HISTORICAL",
+    "mode": "погружение"
+  },
+  {
+    "title": "О мышах и людях",
+    "author": "Джон Стейнбек",
+    "complexity": 2,
+    "description": "«О мышах и людях» – повесть, не выходящая из сотни самых продаваемых книг на портале «Amazon» наряду с «Убить пересмешника» Харпер Ли, «Великим Гэтсби» Фицджеральда и «1984» Оруэлла. Книга, включенная Американской библиотечной ассоциацией в список запрещенных вместе с «451° по Фаренгейту» и «Над пропастью во ржи». Обе ее экранизации стали заметным событием в киномире: картина 1939 года была номинирована на 4 премии «Оскар», фильм 1992-го – на «Золотую пальмовую ветвь».",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/8109.jpg",
+    "genres": "CLASSIC,FICTION,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Остров сокровищ",
+    "author": "Роберт Льюис Стивенсон",
+    "complexity": 3,
+    "description": "В трактире «Адмирал Бенбоу», расположенном неподалеку от английского городка Бристоль, появляется таинственный незнакомец Билли Бонс. Знакомство с ним в корне меняет жизнь Джима Хокинса – сына хозяина таверны. Он становится обладателем загадочной карты и отправляется в увлекательное путешествие в окружении коварных пиратов на поиски сокровищ капитана Флинта, спрятанных на таинственном острове.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/6594017046.jpg",
+    "genres": "CLASSIC,FICTION,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Отцы и дети",
+    "author": "Иван Тургенев",
+    "complexity": 4,
+    "description": "«Отцы и дети» (1862) – этапный, знаковый, культовый роман для своего времени. Но по мере смены исторических эпох он никак не теряет своей актуальности. Конечно, бескомпромиссный Евгений Базаров, главный герой романа, стал образцом для подражания современной ему молодежи – его мировоззрение, убеждения, жизненные принципы и даже манера поведения вдохновили многих будущих «нигилистов». Но в России «в силу ее циклического развития каждые пятнадцать-двадцать лет сменяется идеологическая матрица, и каждое следующее поколение оказывается в идеологическом – да и нравственном – перпендикуляре к “отцам”» (Дмитрий Быков). Драматизм этого противостояния не снижается, и потому вдумчивый современный читатель прочтет эту великую книгу с не меньшим интересом и пользой, чем его сверстник полтора века тому назад. Даже если ее «проходят» в школе. При выпуске классических книг нам, издательству «Время», очень хотелось создать действительно современную серию, показать живую связь неувядающей классики и окружающей действительности. Поэтому мы обратились к известным литераторам, ученым, журналистам и деятелям культуры с просьбой написать к выбранным ими книгам сопроводительные статьи – не сухие пояснительные тексты и не шпаргалки к экзаменам, а своего рода объяснения в любви дорогим их сердцам авторам. У кого-то получилось возвышенно и трогательно, у кого-то посуше и поакадемичней, но это всегда искренне и интересно, а иногда – неожиданно и необычно. В любви к «Отцам и детям» признаётся писатель, поэт, публицист, литературный критик и преподаватель литературы Дмитрий Быков – книгу стоит прочесть уже затем, чтобы сверить своё мнение со статьёй и взглянуть на произведение под другим углом.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Fathers%20and%20Sons%20Thumbnail.png",
+    "genres": "CLASSIC,PHILOSOPHY,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Пигмалион",
+    "author": "Джордж Бернард Шоу",
+    "complexity": 3,
+    "description": "Крупнейший английский драматург конца XIX – первой половины XX в. Джордж Бернард Шоу (1856–1950) в своих произведениях выступает как мастер интеллектуальной драмы-дискуссии, построенной на острых диалогах, полной парадоксальных ситуаций, разрушающей все традиционные представления о театре. Его пьесы бичуют политическую реакцию, нормативную мораль, лицемерие, ханжество. В 1925 г. писателю была присуждена Нобелевская премия.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Pygmalion%20Book.webp",
+    "genres": "CLASSIC,DRAMA,PHILOSOPHY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Портрет Дориана Грея",
+    "author": "Оскар Уайльд",
+    "complexity": 3,
+    "description": "Юный красавец Дориан Грей приезжает в Лондон и окунается в бездну низменных страстей и преступлений. Известный художник пишет портрет Дориана Грея, и молодой человек страстно влюбляется в собственное изображение – ведь оно навек сохранит красоту юности! Однако выходит иначе: порочные страсти не оставляют никакого следа на юном лице Дориана, зато портрет страшно меняется с каждым новым преступлением своего хозяина – ведь душа Дориана Грея, воплощенная в портрете, становится все более порочной и растленной…",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/427.jpg",
+    "genres": "CLASSIC,FICTION,HORROR,PHILOSOPHY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Преступление и наказание",
+    "author": "Фёдор Достоевский",
+    "complexity": 4,
+    "description": "Роман 'Преступление и наказание' Федора Михайловича Достоевского - одно из самых значимых произведений мировой литературы. На глазах у читателя молодой студент Родион Раскольников от нищеты и безысходности решается убить старуху-процентщицу. Но это преступление не приносит ничего, кроме мук, метаний и переживаний. Встречи с разными людьми, переплетение их судеб приводит героя к раскаянию и он сам требует наказания. Писатель определяет содержание своего романа как 'психологический отчет одного преступления' и вложил в него 'все сердце свое с кровью'.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Crime%20and%20Punishment%20Thumbnail.png",
+    "genres": "CLASSIC,FICTION,DRAMA,PHILOSOPHY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Приключения Тома Сойера",
+    "author": "Марк Твен",
+    "complexity": 3,
+    "description": "В книге о приключениях Тома Сойера писатель с большим мастерством нарисовал жизнь американского провинциального городка 40-х годов XIX века. Благодаря напряженному сюжету и блестящему юмору эта книга горячо любима читателями всего мира.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Tom%20Sawyer%20Book.jpg",
+    "genres": "CHILDRENS,ADVENTURE,CLASSIC",
+    "mode": "погружение"
+  },
+  {
+    "title": "Приключения Шерлока Холмса",
+    "author": "Артур Конан Дойл",
+    "complexity": 2,
+    "description": "Английский писатель, публицист и журналист Артур Конан Дойл вошел в мировую литературу в первую очередь как создатель самого Великого Сыщика всех времен и народов – Шерлока Холмса. Благородный и бесстрашный борец со злом, обладатель острого ума и необыкновенной наблюдательности, с помощью своего дедуктивного метода сыщик решает самые запутанные головоломки, зачастую спасая этим человеческие жизни. Он гениально перевоплощается, обладает актерским даром и умеет поставить эффектную точку в конце каждого блестяще проведенного им расследования.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Sherlock%20Holmes%20Book.jpg",
+    "genres": "CLASSIC,FICTION,MYSTERY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Путешествие к центру Земли",
+    "author": "Жюль Верн",
+    "complexity": 4,
+    "description": "«ПУТЕШЕСТВИЕ К ЦЕНТРУ ЗЕМЛИ» [1864] – научно-фантастический роман популярного французского писателя Жюля Верна. Знаменитый ученый профессор геологии Линденброк случайно обнаруживает в образцах лавы из северного вулкана останки организмов, исчезнувших с лица Земли тысячи лет назад. Это потрясающее открытие становится началом захватывающего приключения – уникальной экспедиции к центру Земли. Через кратер потухшего вулкана отважные путешественники спускаются под землю и открывают там удивительный мир, населенный доисторическими животными.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/20227.jpg",
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION,ADVENTURE",
+    "mode": "погружение"
+  },
+  {
+    "title": "Путешествия Гулливера",
+    "author": "Джонатан Свифт",
+    "complexity": 6,
+    "description": "Судовой хирург, а затем капитан корабля Лемюэль Гулливер отправляется в плавание, даже не подозревая о том, что его ждет множество забавных, а порой и опасных приключений. Из каждого путешествия он выносит жизненный урок, который заставляет его, а с ним и читателей, по-новому взглянуть на привычный порядок вещей.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Gulliver's%20Travels%20Book.jpg",
+    "genres": "CLASSIC,ADVENTURE,PHILOSOPHY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Робинзон Крузо",
+    "author": "Даниель Дефо",
+    "complexity": 3,
+    "description": "Книга «Робинзон Крузо» – один из самых жизнеутверждающих романов в мире. Отважный моряк Робинзон Крузо терпит кораблекрушение, оказывается на необитаемом острове и начинает свою вторую жизнь – жизнь в дикой природе. Несмотря на тяготы и лишения, он не теряет веру в себя и обустраивает себе быт, бесстрашно бросается на помощь дикарю Пятнице, спасет капитана корабля, матросы которого подняли бунт… Много опасных приключений выпало на долю Робинзона, но он сумел все преодолеть и вернуться домой.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Robinson%20Crusoe%20Book.jpg",
+    "genres": "ADVENTURE,CLASSIC,PHILOSOPHY",
+    "mode": "погружение"
+  },
+  {
+    "title": "Руководство пользователя",
+    "author": "Readling",
+    "complexity": 2,
+    "description": "Покажем как пользоваться приложением",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/readling_onboarding.png",
+    "genres": "CLASSIC",
+    "mode": "погружение"
+  },
+  {
+    "title": "Сказки братьев Гримм",
+    "author": "Якоб и Вильгельм Гримм",
+    "complexity": 3,
+    "description": "Сборник народных немецких сказок с героями, чудесами и уроками. Истории, которые вдохновляют и учат детей и взрослых.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Grimm%20Brothers%20Tales.jpeg",
+    "genres": "CHILDRENS,FANTASY,CLASSIC",
+    "mode": "погружение"
+  },
+  {
+    "title": "Собачье сердце",
+    "author": "Михаил Булгаков",
+    "complexity": 4,
+    "description": "Повесть «Собачье сердце» – одно из самых известных и запоминающихся произведений в творчестве Михаила Булгакова. С неподражаемым сарказмом и юмором Булгаков описал небывалый рискованный эксперимент профессора Преображенского по превращению собаки в человека, создав великолепную пародию на парадоксальную обстановку Советской России 30-х годов. Жестокий опыт по выведению новой «породы» людей показывает, что нельзя безнаказанно экспериментировать с природой и менять Божий Промысел в угоду политическим целям. Детища подобных экспериментов способны уничтожить своих создателей.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Dog%20Heart%20Book%20Cover.jpeg",
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Собор Парижской Богоматери",
+    "author": "Виктор Гюго",
+    "complexity": 5,
+    "description": "Роман о судьбе горбатого звонаря Квазимодо, красавицы Эсмеральды и противоречиях Парижа XV века. Гюго мастерски переплетает любовную драму, социальную сатиру и исторические детали, показывая, как красота, любовь и преданность сталкиваются с жестокостью и несправедливостью общества. История полна эмоций, трагизма и величественной архитектуры.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Sabor%20Paris%20Book%20Thumbnail.png",
+    "genres": "CLASSIC,ROMANCE,HISTORICAL,DRAMA",
+    "mode": "погружение"
+  },
+  {
+    "title": "Старик Хоттабыч",
+    "author": "Лазарь Лагин",
+    "complexity": 3,
+    "description": "Весёлый роман о школьнике Волке и старике-джинне Хоттабыче, который исполняет желания. Лагин мастерски сочетает юмор, приключения и фантастику, создавая историю о дружбе, чудесах и ответственности за желания. История полна ярких событий, волшебства и моральных уроков для детей и взрослых.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/%D0%A1%D1%82%D0%B0%D1%80%D0%B8%D0%BA%20%D0%A5%D0%BE%D1%82%D1%82%D0%B0%D0%B1%D1%8B%D1%87%20%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0.jpg",
+    "genres": "CHILDRENS,FANTASY,ADVENTURE,CLASSIC",
+    "mode": "погружение"
+  },
+  {
+    "title": "Странная история доктора Джекила и мистера Хайда",
+    "author": "Роберт Льюис Стивенсон",
+    "complexity": 5,
+    "description": "«Странная история доктора Джекила и мистера Хайда» – классика «литературы ужасов», произведение, популярность которого со временем лишь возрастает. Небольшая повесть о викторианском ученом, поставившем над собой дерзкий и опасный эксперимент и тем самым выпустившем на волю из глубин подсознания свое темное «я» – зловещего негодяя и убийцу мистера Хайда, – по-прежнему будоражит умы и сердца, не оставляя равнодушным ни одного читателя.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/101360908_0.jpg",
+    "genres": "CLASSIC,FICTION,HORROR,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Таинственный остров",
+    "author": "Жюль Верн",
+    "complexity": 3,
+    "description": "В романе рассказывается о людях, попавших в результате крушения воздушного шара на необитаемый остров. Используя знания и практический опыт, потерпевшие крушение принимаются за работу и неустанным трудом создают свое благополучие. Намеренно поместив своих героев на необитаемый остров, автор тем самым показывает невозможность свободного труда людей в условиях буржуазного общества.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/10561295_0.jpg",
+    "genres": "CLASSIC,FICTION,ADVENTURE,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Так говорил Заратустра",
+    "author": "Фридрих Ницше",
+    "complexity": 4,
+    "description": "Трактат «Так говорил Заратустра» называют ницшеанской Библией. В нем сформулирована излюбленная идея Ницше – идея Сверхчеловека, который является для автора нравственным образцом, смыслом существования, тем, к чему нужно стремиться. Человек же – лишь мост между животным и Сверхчеловеком. Необычная форма – поэтичная, афористичная – не совсем соответствует нашим представлениям о философском трактате. Однако, вчитываясь, мы улавливаем ход мысли автора, все глубже проникаемся его идеями и убеждениями…",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/3913.jpg",
+    "genres": "CLASSIC,PHILOSOPHY,FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Три мушкетёра",
+    "author": "Александр Дюма",
+    "complexity": 4,
+    "description": "Известнейший историко-приключенческий роман из эпохи Людовика XIII знаменитого французского писателя-классика Александра Дюма-отца входит в золотой фонд мировой литературы. Четверо неразлучных друзей – д'Артаньян, Атос, Портос и Арамис, погружённые во все дворцовые тайны и интриги сильных мира сего, под девизом «Один за всех и все за одного» всегда выходят победителями, спасая честь королевы Анны Австрийской и противостоя многочисленным козням кардинала Ришелье.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Three%20Musketeers%20Book.webp",
+    "genres": "CLASSIC,ADVENTURE,HISTORICAL",
+    "mode": "погружение"
+  },
+  {
+    "title": "Франкенштейн",
+    "author": "Мэри Шелли",
+    "complexity": 4,
+    "description": "Молодой швейцарский ученый, наделенный недюжинным талантом и ненасытной жаждой просвещения, овладевает тайной воспроизведения живой материи. Он создает человеческое существо, обладающее экстраординарной силой и выносливостью, но, пораженный его физическим уродством, способным вызывать лишь ужас, спешит сложить с себя ответственность за дальнейшую судьбу своего творения. В результате демон, или монстр, как именует его автор, отчаявшись обрести свое место среди людей, восстает против создателя и жестоко мстит ему.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/2.00x-thumb%20(1).png",
+    "genres": "CLASSIC,FICTION,HORROR,SCIENCE_FICTION",
+    "mode": "погружение"
+  },
+  {
+    "title": "Человек-невидимка",
+    "author": "Герберт Уэллс",
+    "complexity": 3,
+    "description": "Студент провинциального колледжа изобретает препарат, способный делать предметы и живые существа невидимыми. После череды экспериментов он решается испытать его на себе… Совсем скоро полосы лондонских газет запестрят заголовками о необычайных происшествиях. Но что движет таинственным Невидимкой? И главное – удастся ли его поймать?",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/cover.jpg",
+    "genres": "CLASSIC,FICTION,SCIENCE_FICTION,HORROR",
+    "mode": "погружение"
+  },
+  {
+    "title": "Черный обелиск",
+    "author": "Эрих Мария Ремарк",
+    "complexity": 3,
+    "description": "Роман о жизни и любви в Германии после Первой мировой войны. Ремарк исследует человеческие переживания, моральные дилеммы, страхи и надежды людей в эпоху перемен. История наполнена трагизмом, философией и глубоким пониманием психологии персонажей, создавая напряжённую и эмоционально насыщенную атмосферу.",
+    "imageUrl": "https://storage.yandexcloud.net/booklogos/Black%20Obelisk%20Book.jpg",
+    "genres": "CLASSIC,DRAMA,HISTORICAL,ROMANCE",
+    "mode": "погружение"
   }
 ]
