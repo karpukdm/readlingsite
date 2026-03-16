@@ -1,0 +1,542 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../config/links';
+---
+
+<BaseLayout
+  title="Цены Readling — бесплатно или подписка за $3.99/мес"
+  description="Readling бесплатен для чтения и изучения английского. Подписка открывает весь каталог из 200+ книг и безлимитные тренировки — всего $3.99 в месяц."
+  canonicalPath="/pricing"
+>
+  <!-- HERO -->
+  <section class="section pricing-hero">
+    <div class="container text-center">
+      <h1 class="mb-m">Учитесь бесплатно. Учитесь ещё лучше с подпиской.</h1>
+      <p class="max-w-prose mx-auto mb-l">
+        Readling создан, чтобы помогать учить английский — а не продавать подписки.
+        Бесплатная версия уже даёт многое. Подписка — для тех, кто хочет больше книг и тренировок.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRICING CARDS -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="pricing-grid">
+        <!-- FREE -->
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__title">Бесплатно</h3>
+            <div class="pricing-card__price">$0</div>
+            <p class="pricing-card__period">навсегда</p>
+          </div>
+          <ul class="pricing-card__features">
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">&#10003;</span>
+              Доступ к части каталога книг
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">&#10003;</span>
+              Режим погружения и параллельное чтение
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">&#10003;</span>
+              Перевод слов по нажатию
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">&#10003;</span>
+              Личный словарь
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">&#10003;</span>
+              До 50 карточек фраз в словаре
+            </li>
+            <li class="pricing-card__feature pricing-card__feature--muted">
+              <span class="pricing-card__dash">—</span>
+              Ограниченный каталог книг
+            </li>
+            <li class="pricing-card__feature pricing-card__feature--muted">
+              <span class="pricing-card__dash">—</span>
+              Лимит на словарь и тренировки
+            </li>
+          </ul>
+          <a href={links.onelink} target="_blank" rel="noopener" class="btn btn--secondary pricing-card__btn">Скачать бесплатно</a>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="pricing-card pricing-card--premium">
+          <div class="pricing-card__badge">Дешевле латте</div>
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__title">Подписка</h3>
+            <div class="pricing-card__price">$3.99<span class="pricing-card__per">/мес</span></div>
+            <p class="pricing-card__period">первые 7 дней бесплатно</p>
+          </div>
+          <ul class="pricing-card__features">
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              <strong>Весь каталог — 200+ книг</strong>
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              Режим погружения и параллельное чтение
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              Перевод слов по нажатию
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              Личный словарь
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              <strong>Безлимитные тренировки</strong>
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              <strong>Все типы тренировок</strong>
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              Приоритетная поддержка
+            </li>
+          </ul>
+          <a href={links.onelink} target="_blank" rel="noopener" class="btn btn--primary pricing-card__btn">Попробовать 7 дней бесплатно</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE ANCHOR -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-xxl">
+        <h2 class="mb-m">Дешевле, чем вы думаете</h2>
+        <p class="max-w-prose mx-auto">
+          Подписка Readling стоит дешевле одного латте — но вместо 15 минут удовольствия
+          вы получаете целый месяц обучения английскому через книги.
+        </p>
+      </div>
+      <div class="anchor-grid">
+        <div class="anchor-card">
+          <div class="anchor-card__icon">&#9749;</div>
+          <div class="anchor-card__label">Кофе в кафе</div>
+          <div class="anchor-card__price">~$5</div>
+          <div class="anchor-card__note">15 минут удовольствия</div>
+        </div>
+        <div class="anchor-card">
+          <div class="anchor-card__icon">&#127909;</div>
+          <div class="anchor-card__label">Подписка на кино</div>
+          <div class="anchor-card__price">~$10</div>
+          <div class="anchor-card__note">развлечение</div>
+        </div>
+        <div class="anchor-card anchor-card--highlight">
+          <div class="anchor-card__icon">&#128218;</div>
+          <div class="anchor-card__label">Readling</div>
+          <div class="anchor-card__price">$3.99</div>
+          <div class="anchor-card__note">200+ книг и английский на месяц</div>
+        </div>
+        <div class="anchor-card">
+          <div class="anchor-card__icon">&#127891;</div>
+          <div class="anchor-card__label">Урок с репетитором</div>
+          <div class="anchor-card__price">~$30</div>
+          <div class="anchor-card__note">45 минут</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="section section--alt">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Что вы получаете с подпиской</h2>
+      <div class="value-list">
+        <div class="value-item">
+          <div class="value-item__icon">&#128214;</div>
+          <div>
+            <h3 class="mb-xs">Весь каталог из 200+ книг</h3>
+            <p>Детективы, фантастика, классика, романтика — от уровня A1 до C2. Новые книги добавляются регулярно.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-item__icon">&#9999;&#65039;</div>
+          <div>
+            <h3 class="mb-xs">Безлимитные тренировки</h3>
+            <p>Флэш-карточки, пазлы предложений, вставка слов — без ограничений по количеству. Учите столько, сколько хотите.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-item__icon">&#128200;</div>
+          <div>
+            <h3 class="mb-xs">Быстрый прогресс</h3>
+            <p>Больше книг — больше контекстов. Больше тренировок — лучше запоминание. Подписка убирает потолок роста.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="section">
+    <div class="container text-center">
+      <h2 class="mb-m">Тысячи читателей уже учатся с Readling</h2>
+      <p class="max-w-prose mx-auto mb-xxl">
+        Большинство начинают с бесплатной версии и переходят на подписку, когда понимают, что хотят читать больше.
+        Никакого давления — просто попробуйте.
+      </p>
+      <div class="social-stats">
+        <div class="social-stat">
+          <div class="social-stat__number">4.8</div>
+          <div class="social-stat__label">Средняя оценка</div>
+        </div>
+        <div class="social-stat">
+          <div class="social-stat__number">200+</div>
+          <div class="social-stat__label">Книг в каталоге</div>
+        </div>
+        <div class="social-stat">
+          <div class="social-stat__number">7 дней</div>
+          <div class="social-stat__label">Бесплатный пробный период</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--alt">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-xxl">Вопросы о подписке</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Можно ли пользоваться Readling полностью бесплатно?</summary>
+          <div class="faq-item__answer">
+            Да! Бесплатная версия включает часть каталога, оба режима чтения, перевод слов и личный словарь.
+            Вы можете учиться бесплатно столько, сколько хотите. Подписка нужна только если вы хотите весь каталог и безлимитные тренировки.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Что будет после 7 дней пробного периода?</summary>
+          <div class="faq-item__answer">
+            Ничего не списывается автоматически. Пробный период просто даёт доступ ко всем функциям на 7 дней.
+            После этого вы продолжите пользоваться бесплатной версией — а подписку оформите только если сами захотите.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Как отменить подписку?</summary>
+          <div class="faq-item__answer">
+            Через настройки App Store или Google Play — так же, как любую другую подписку.
+            После отмены вы сможете пользоваться подпиской до конца оплаченного периода.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Сохранится ли мой прогресс, если я отменю подписку?</summary>
+          <div class="faq-item__answer">
+            Да, весь ваш прогресс, личный словарь и закладки сохранятся. Вы просто вернётесь к бесплатной версии
+            с ограниченным каталогом и лимитом тренировок.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Почему подписка, а не разовая покупка?</summary>
+          <div class="faq-item__answer">
+            Подписка позволяет нам постоянно добавлять новые книги, улучшать тренировки и развивать приложение.
+            Вы платите не за продукт один раз — а за сервис, который становится лучше каждый месяц.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container text-center">
+      <h2 class="mb-m">Начните учить английский через книги</h2>
+      <p class="max-w-prose mx-auto mb-l">
+        Скачайте Readling бесплатно и попробуйте. Если понравится — подписка всего $3.99 в месяц.
+      </p>
+      <div class="store-buttons" style="justify-content: center;">
+        <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schema.org -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Readling Premium",
+      "description": "Подписка на приложение Readling — изучение английского через чтение книг. 200+ книг, безлимитные тренировки.",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Бесплатный план",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        {
+          "@type": "Offer",
+          "name": "Подписка",
+          "price": "3.99",
+          "priceCurrency": "USD",
+          "priceValidUntil": "2027-12-31",
+          "availability": "https://schema.org/InStock"
+        }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .pricing-hero {
+    background: var(--gradient-hero);
+    padding-bottom: 0;
+  }
+
+  /* Pricing grid */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+    max-width: 800px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-card-border);
+    padding: var(--space-xl);
+    position: relative;
+  }
+
+  .pricing-card--premium {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 4px 24px rgba(0, 122, 255, 0.15);
+  }
+
+  .pricing-card__badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gradient-accent);
+    color: var(--color-on-primary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: var(--space-xs) var(--space-m);
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+
+  .pricing-card__header {
+    text-align: center;
+    margin-bottom: var(--space-l);
+    padding-bottom: var(--space-l);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+
+  .pricing-card__title {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-s);
+  }
+
+  .pricing-card__price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  .pricing-card__per {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-text-tertiary);
+  }
+
+  .pricing-card__period {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-xs);
+  }
+
+  .pricing-card--premium .pricing-card__period {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .pricing-card__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+
+  .pricing-card__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-s);
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+  }
+
+  .pricing-card__feature--muted {
+    color: var(--color-text-tertiary);
+  }
+
+  .pricing-card__check {
+    flex-shrink: 0;
+    color: var(--color-success);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .pricing-card__check--accent {
+    color: var(--color-primary);
+  }
+
+  .pricing-card__dash {
+    flex-shrink: 0;
+    color: var(--color-text-tertiary);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .pricing-card__btn {
+    width: 100%;
+  }
+
+  /* Anchor comparison */
+  .anchor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-m);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .anchor-card {
+    text-align: center;
+    padding: var(--space-l);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    background: var(--color-surface);
+  }
+
+  .anchor-card--highlight {
+    border: 2px solid var(--color-primary);
+    background: rgba(0, 122, 255, 0.04);
+    box-shadow: 0 2px 12px rgba(0, 122, 255, 0.1);
+  }
+
+  .anchor-card__icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-s);
+  }
+
+  .anchor-card__label {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+
+  .anchor-card__price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+  }
+
+  .anchor-card--highlight .anchor-card__price {
+    color: var(--color-primary);
+  }
+
+  .anchor-card__note {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  /* Value list */
+  .value-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .value-item {
+    display: flex;
+    gap: var(--space-l);
+    align-items: flex-start;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    padding: var(--space-l);
+  }
+
+  .value-item__icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: center;
+  }
+
+  /* Social stats */
+  .social-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3xl);
+    flex-wrap: wrap;
+  }
+
+  .social-stat__number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+  }
+
+  .social-stat__label {
+    font-size: 0.9375rem;
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-xs);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+    }
+
+    .pricing-card--premium {
+      order: -1;
+    }
+
+    .anchor-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .social-stats {
+      gap: var(--space-xl);
+    }
+
+    .social-stat__number {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .anchor-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-s);
+    }
+
+    .anchor-card {
+      padding: var(--space-m);
+    }
+  }
+</style>
