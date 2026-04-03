@@ -2,17 +2,23 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://app.readling.club',
   output: 'static',
   trailingSlash: 'always',
+
   integrations: [sitemap({
     serialize(item) {
       item.lastmod = new Date();
       return item;
     },
   })],
+
   build: {
     assets: '_assets',
   },
+
+  adapter: cloudflare(),
 });
