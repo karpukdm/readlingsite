@@ -29,7 +29,7 @@ const featuredBooks = shuffled.slice(0, 12);
         </div>
       </div>
       <div class="hero__visual">
-        <img src="/screen-immersion.png" alt="Readling — режим погружения" class="hero__phone" />
+        <img src="/screen-immersion.png" alt="Readling — режим погружения" class="hero__phone" width="834" height="1731" />
       </div>
     </div>
   </section>
@@ -41,19 +41,19 @@ const featuredBooks = shuffled.slice(0, 12);
       <div class="grid-3">
         <div class="step-card">
           <div class="step-card__number">1</div>
-          <img src="/screen-catalog.png" alt="Каталог книг Readling" class="step-card__img mb-m" />
+          <img src="/screen-catalog.png" alt="Каталог книг Readling" class="step-card__img mb-m" width="834" height="1731" />
           <h3 class="mb-s">Выберите книгу по своему уровню</h3>
           <p>В каталоге — книги от A1 до C2: детективы, фантастика, классика, романтика. Найдите то, что интересно именно вам.</p>
         </div>
         <div class="step-card">
           <div class="step-card__number">2</div>
-          <img src="/screen-immersion.png" alt="Чтение с переводом по нажатию" class="step-card__img mb-m" />
+          <img src="/screen-immersion.png" alt="Чтение с переводом по нажатию" class="step-card__img mb-m" width="834" height="1731" />
           <h3 class="mb-s">Читайте с переводом по нажатию</h3>
           <p>Встретили незнакомое слово? Нажмите — увидите перевод мгновенно. Слово сохранится в ваш личный словарь.</p>
         </div>
         <div class="step-card">
           <div class="step-card__number">3</div>
-          <img src="/screen-training.png" alt="Тренировки в Readling" class="step-card__img mb-m" />
+          <img src="/screen-training.png" alt="Тренировки в Readling" class="step-card__img mb-m" width="834" height="1731" />
           <h3 class="mb-s">Закрепляйте слова тренировками</h3>
           <p>Карточки, пазлы предложений, вставка слов — всё из книг, которые вы читаете. Учите то, что действительно встречается в тексте.</p>
         </div>
@@ -96,7 +96,7 @@ const featuredBooks = shuffled.slice(0, 12);
         </div>
       </div>
       <div class="text-center" style="margin-top: var(--space-xl);">
-        <a href="/metod-pogruzheniya" class="btn btn--white">Подробнее о методе погружения</a>
+        <a href="/metod-pogruzheniya/" class="btn btn--white">Подробнее о методе погружения</a>
       </div>
     </div>
   </section>
@@ -111,10 +111,10 @@ const featuredBooks = shuffled.slice(0, 12);
             Английский оригинал и русский перевод рядом — сравнивайте конструкции, учите грамматику,
             понимайте каждое предложение. Идеально для уровней B1 и выше.
           </p>
-          <a href="/parallelnoe-chtenie" class="btn btn--secondary">Подробнее о параллельном чтении &rarr;</a>
+          <a href="/parallelnoe-chtenie/" class="btn btn--secondary">Подробнее о параллельном чтении &rarr;</a>
         </div>
         <div class="parallel-section__visual">
-          <img src="/screen-parallel.png" alt="Параллельное чтение в Readling" class="hero__phone" />
+          <img src="/screen-parallel.png" alt="Параллельное чтение в Readling" class="hero__phone" width="834" height="1731" />
         </div>
       </div>
     </div>
@@ -164,17 +164,17 @@ const featuredBooks = shuffled.slice(0, 12);
       </div>
       <div class="grid-3">
         <div class="card">
-          <img src="/screen-flashcards.png" alt="Флэш-карточки" class="step-card__img mb-m" />
+          <img src="/screen-flashcards.png" alt="Флэш-карточки" class="step-card__img mb-m" width="834" height="1731" />
           <h3 class="mb-s">Флэш-карточки</h3>
           <p>Повторяйте слова из книг. Знаете — свайп вправо, не знаете — вернётся снова.</p>
         </div>
         <div class="card">
-          <img src="/screen-sentence-puzzle.png" alt="Собери предложение" class="step-card__img mb-m" />
+          <img src="/screen-sentence-puzzle.png" alt="Собери предложение" class="step-card__img mb-m" width="834" height="1731" />
           <h3 class="mb-s">Собери предложение</h3>
           <p>Расставьте перемешанные слова в правильном порядке. Три уровня сложности.</p>
         </div>
         <div class="card">
-          <img src="/screen-fill-word.png" alt="Вставь слово" class="step-card__img mb-m" />
+          <img src="/screen-fill-word.png" alt="Вставь слово" class="step-card__img mb-m" width="834" height="1731" />
           <h3 class="mb-s">Вставь пропущенное слово</h3>
           <p>Вспомните слово и соберите его по буквам. Отличная тренировка правописания.</p>
         </div>
@@ -195,7 +195,7 @@ const featuredBooks = shuffled.slice(0, 12);
       </p>
       <div class="book-scroll">
         {featuredBooks.map(book => (
-          <a href={`/books/${toSlug(book.title)}`} class="book-card">
+          <a href={`/books/${toSlug(book.title)}/`} class="book-card">
             <img class="book-card__cover" src={book.imageUrl} alt={book.title} loading="lazy" />
             <div class="book-card__title">{book.title}</div>
             <div class="book-card__author">{book.author}</div>
@@ -203,7 +203,7 @@ const featuredBooks = shuffled.slice(0, 12);
         ))}
       </div>
       <div class="text-center" style="margin-top: var(--space-xl);">
-        <a href="/books" class="btn btn--secondary">Все книги каталога &rarr;</a>
+        <a href="/books/" class="btn btn--secondary">Все книги каталога &rarr;</a>
       </div>
     </div>
   </section>

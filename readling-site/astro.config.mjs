@@ -5,7 +5,13 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://app.readling.club',
   output: 'static',
-  integrations: [sitemap()],
+  trailingSlash: 'always',
+  integrations: [sitemap({
+    serialize(item) {
+      item.lastmod = new Date();
+      return item;
+    },
+  })],
   build: {
     assets: '_assets',
   },

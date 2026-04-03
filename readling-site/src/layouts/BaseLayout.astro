@@ -11,7 +11,8 @@ interface Props {
 }
 
 const { title, description, canonicalPath = '', ogImage = '/og-default.png' } = Astro.props;
-const canonicalURL = new URL(canonicalPath, Astro.site);
+const path = canonicalPath && !canonicalPath.endsWith('/') ? canonicalPath + '/' : canonicalPath;
+const canonicalURL = new URL(path, Astro.site);
 ---
 
 <!DOCTYPE html>
@@ -41,7 +42,8 @@ const canonicalURL = new URL(canonicalPath, Astro.site);
   <!-- App links -->
   <!-- <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID" /> -->
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
   <link rel="manifest" href="/site.webmanifest" />

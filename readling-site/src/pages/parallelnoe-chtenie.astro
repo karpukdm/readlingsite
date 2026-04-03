@@ -29,7 +29,7 @@ const featuredBooks = shuffled.slice(0, 8);
         </div>
       </div>
       <div class="hero__visual">
-        <img src="/screen-parallel.png" alt="Параллельное чтение Readling" class="hero__phone" />
+        <img src="/screen-parallel.png" alt="Параллельное чтение Readling" class="hero__phone" width="834" height="1731" />
       </div>
     </div>
   </section>
@@ -55,7 +55,7 @@ const featuredBooks = shuffled.slice(0, 8);
           </p>
         </div>
         <div class="what-section__visual">
-          <img src="/screen-parallel-wide.png" alt="Параллельное чтение — крупно" class="section__img" />
+          <img src="/screen-parallel-wide.png" alt="Параллельное чтение — крупно" class="section__img" width="2000" height="1380" />
         </div>
       </div>
     </div>
@@ -175,7 +175,7 @@ const featuredBooks = shuffled.slice(0, 8);
         Переключайтесь на параллельный, когда хотите разобрать сложный отрывок.
       </p>
       <div class="text-center" style="margin-top: var(--space-l);">
-        <a href="/metod-pogruzheniya" class="btn btn--secondary">Подробнее о методе погружения &rarr;</a>
+        <a href="/metod-pogruzheniya/" class="btn btn--secondary">Подробнее о методе погружения &rarr;</a>
       </div>
     </div>
   </section>
@@ -190,7 +190,7 @@ const featuredBooks = shuffled.slice(0, 8);
       </p>
       <div class="book-scroll">
         {featuredBooks.map(book => (
-          <a href={`/books/${toSlug(book.title)}`} class="book-card">
+          <a href={`/books/${toSlug(book.title)}/`} class="book-card">
             <img class="book-card__cover" src={book.imageUrl} alt={book.title} loading="lazy" />
             <div class="book-card__title">{book.title}</div>
             <div class="book-card__author">{book.author}</div>
