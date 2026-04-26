@@ -39,11 +39,11 @@
   --space-s: 8px;
   --space-sm: 12px;
   --space-m: 16px;
-  --space-l: 24px;
-  --space-xl: 32px;
-  --space-xxl: 40px;
-  --space-3xl: 64px;
-  --space-4xl: 80px;
+  --space-l: 20px;
+  --space-xl: 28px;
+  --space-xxl: 36px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
 
   /* Border Radius */
   --radius-xs: 4px;
@@ -163,7 +163,7 @@ p {
 }
 
 .section {
-  padding: var(--space-4xl) 0;
+  padding: var(--space-3xl) 0;
   background-color: #FFFFFF;
 }
 
@@ -179,31 +179,7 @@ p {
 .section--accent {
   background: linear-gradient(135deg, #0062CC 0%, #007AFF 50%, #5856D6 100%);
   color: var(--color-on-primary);
-  padding: var(--space-4xl) 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.section--accent::before {
-  content: '';
-  position: absolute;
-  top: -60px;
-  left: -10%;
-  width: 120%;
-  height: 120px;
-  background: #FFFFFF;
-  border-radius: 0 0 50% 50%;
-}
-
-.section--accent::after {
-  content: '';
-  position: absolute;
-  bottom: -60px;
-  left: -10%;
-  width: 120%;
-  height: 120px;
-  background: #FFFFFF;
-  border-radius: 50% 50% 0 0;
+  padding: var(--space-3xl) 0;
 }
 
 .section--accent h2 {
@@ -237,7 +213,7 @@ p {
 /* Warm section for testimonials */
 .section--warm {
   background: linear-gradient(135deg, #FFF9F0 0%, #FFF5EB 100%);
-  padding: var(--space-4xl) 0;
+  padding: var(--space-3xl) 0;
 }
 
 /* Wave divider between sections */
@@ -274,23 +250,16 @@ p {
 }
 
 @media (max-width: 768px) {
-  .section--accent::before,
-  .section--accent::after {
-    height: 40px;
-    top: -20px;
-  }
-  .section--accent::after {
-    bottom: -20px;
-    top: auto;
-  }
   .wave-divider {
     height: 32px;
   }
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: var(--space-3xl) 0;
+  .section,
+  .section--accent,
+  .section--warm {
+    padding: var(--space-xl) 0;
   }
 }
 

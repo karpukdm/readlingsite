@@ -23,10 +23,15 @@ const featuredBooks = shuffled.slice(0, 12);
           Readling — приложение для изучения английского через чтение настоящих книг.
           Английский текст появляется в книге постепенно — вы читаете интересную историю, а язык усваивается сам.
         </p>
-        <div class="store-buttons">
+        <div class="store-buttons mb-m">
           <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
           <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
         </div>
+        <ul class="proof-line">
+          <li><span class="proof-line__stars">★★★★★</span> 4.8</li>
+          <li>200+ книг</li>
+          <li>Уровни A1–C2</li>
+        </ul>
       </div>
       <div class="hero__visual">
         <img src="/screen-immersion.png" alt="Readling — режим погружения" class="hero__phone" width="834" height="1731" />
@@ -34,165 +39,143 @@ const featuredBooks = shuffled.slice(0, 12);
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- TWO MODES (equal) -->
   <section class="section">
     <div class="container">
-      <h2 class="text-center mb-xxl">Как учить английский через книги в Readling</h2>
-      <div class="grid-3">
-        <div class="step-card">
-          <div class="step-card__number">1</div>
-          <img src="/screen-catalog.png" alt="Каталог книг Readling" class="step-card__img mb-m" width="834" height="1731" />
-          <h3 class="mb-s">Выберите книгу по своему уровню</h3>
-          <p>В каталоге — книги от A1 до C2: детективы, фантастика, классика, романтика. Найдите то, что интересно именно вам.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-card__number">2</div>
-          <img src="/screen-immersion.png" alt="Чтение с переводом по нажатию" class="step-card__img mb-m" width="834" height="1731" />
-          <h3 class="mb-s">Читайте с переводом по нажатию</h3>
-          <p>Встретили незнакомое слово? Нажмите — увидите перевод мгновенно. Слово сохранится в ваш личный словарь.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-card__number">3</div>
-          <img src="/screen-training.png" alt="Тренировки в Readling" class="step-card__img mb-m" width="834" height="1731" />
-          <h3 class="mb-s">Закрепляйте слова тренировками</h3>
-          <p>Карточки, пазлы предложений, вставка слов — всё из книг, которые вы читаете. Учите то, что действительно встречается в тексте.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- IMMERSION MODE -->
-  <section class="section section--accent" style="padding-top: calc(var(--space-4xl) + 40px); padding-bottom: calc(var(--space-4xl) + 40px);">
-    <div class="container">
-      <div class="text-center mb-xxl">
-        <h2 class="mb-m">Режим погружения — английский появляется в тексте постепенно</h2>
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">Два режима чтения — выбирайте свой</h2>
         <p class="max-w-prose mx-auto">
-          Забудьте о стрессе перед английским текстом. В режиме погружения вы начинаете читать почти полностью на русском —
-          и с каждой страницей английских слов становится больше. Мозг привыкает к языку естественно, как при жизни за рубежом.
+          В каталоге Readling — книги двух типов: одни в параллельном режиме, другие в режиме погружения. Выбирайте подход по уровню и стилю.
         </p>
       </div>
-      <div class="immersion-demo max-w-wide mx-auto">
-        <div class="immersion-step">
-          <div class="immersion-step__label">Начало книги — 10% английского</div>
-          <p class="immersion-step__text">
-            Анна <span class="en">opened</span> дверь и вошла в комнату. На столе лежало <span class="en">the letter</span>.
-            Она <span class="en">looked</span> на конверт и <span class="en">smiled</span>. Нужно было решить, что делать дальше.
+      <div class="modes-grid">
+        <a href="/metod-pogruzheniya/" class="mode-card mode-card--immersion">
+          <div class="mode-card__head">
+            <span class="mode-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 3 a9 9 0 0 1 0 18 z" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <span class="kicker">Режим погружения</span>
+          </div>
+          <h3 class="mode-card__title">Английский появляется в книге постепенно</h3>
+          <p class="mode-card__text">
+            Начало — почти всё на русском. С каждой страницей английских слов всё больше. К концу — вы читаете на английском.
           </p>
-        </div>
-        <div class="immersion-step">
-          <div class="immersion-step__label">Середина — 50% английского</div>
-          <p class="immersion-step__text">
-            <span class="en">Anna opened the door and walked into</span> комнату. <span class="en">On the table</span> лежало
-            <span class="en">a letter. She looked at the envelope and smiled.</span> Нужно было <span class="en">decide what to do next.</span>
-          </p>
-        </div>
-        <div class="immersion-step">
-          <div class="immersion-step__label">Конец книги — 90% английского</div>
-          <p class="immersion-step__text">
-            <span class="en">Anna opened the door and walked into the room. On the table lay a letter.
-            She looked at the envelope and smiled. She had to decide what to do next, but</span> сомнения
-            <span class="en">wouldn't let her think clearly.</span>
-          </p>
-        </div>
-      </div>
-      <div class="text-center" style="margin-top: var(--space-xl);">
-        <a href="/metod-pogruzheniya/" class="btn btn--white">Подробнее о методе погружения</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARALLEL READING -->
-  <section class="section">
-    <div class="container">
-      <div class="parallel-section">
-        <div class="parallel-section__text">
-          <h2 class="mb-m">Или читайте с параллельным переводом</h2>
-          <p class="mb-l">
-            Английский оригинал и русский перевод рядом — сравнивайте конструкции, учите грамматику,
-            понимайте каждое предложение. Идеально для уровней B1 и выше.
-          </p>
-          <a href="/parallelnoe-chtenie/" class="btn btn--secondary">Подробнее о параллельном чтении &rarr;</a>
-        </div>
-        <div class="parallel-section__visual">
-          <img src="/screen-parallel.png" alt="Параллельное чтение в Readling" class="hero__phone" width="834" height="1731" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PHRASE TRANSLATION -->
-  <section class="section section--accent-light">
-    <div class="container">
-      <div class="phrase-translation">
-        <div class="phrase-translation__content">
-          <span class="badge mb-m">Умный перевод</span>
-          <h2 class="mb-m">Фразовый перевод — не дословный, а по смыслу</h2>
-          <p class="mb-l">
-            В Readling перевод всегда учитывает контекст. Это значит, что идиомы, устойчивые выражения
-            и фразовые глаголы переведены так, как их понимает носитель языка — а не слово за словом.
-          </p>
-          <div class="phrase-examples">
-            <div class="phrase-example">
-              <div class="phrase-example__original"><span class="en">It's raining cats and dogs</span></div>
-              <div class="phrase-example__bad">Дословно: «Идёт дождь из кошек и собак»</div>
-              <div class="phrase-example__good">В Readling: «Льёт как из ведра»</div>
+          <div class="mode-demo">
+            <div class="mode-demo__row">
+              <div class="mode-demo__head">
+                <span class="mode-demo__label">Начало книги</span>
+                <span class="mode-demo__pct">10% EN</span>
+              </div>
+              <div class="mode-demo__bar" style="--ratio: 10%"></div>
+              <p>Анна <span class="en">opened</span> дверь и <span class="en">looked</span> на конверт.</p>
             </div>
-            <div class="phrase-example">
-              <div class="phrase-example__original"><span class="en">He kicked the bucket</span></div>
-              <div class="phrase-example__bad">Дословно: «Он пнул ведро»</div>
-              <div class="phrase-example__good">В Readling: «Он отдал концы»</div>
+            <div class="mode-demo__row">
+              <div class="mode-demo__head">
+                <span class="mode-demo__label">Середина</span>
+                <span class="mode-demo__pct">50% EN</span>
+              </div>
+              <div class="mode-demo__bar" style="--ratio: 50%"></div>
+              <p><span class="en">Anna opened the door</span> и <span class="en">looked at the envelope</span>.</p>
             </div>
-            <div class="phrase-example">
-              <div class="phrase-example__original"><span class="en">She got cold feet</span></div>
-              <div class="phrase-example__bad">Дословно: «У неё стали холодные ноги»</div>
-              <div class="phrase-example__good">В Readling: «Она струсила»</div>
+            <div class="mode-demo__row">
+              <div class="mode-demo__head">
+                <span class="mode-demo__label">Конец книги</span>
+                <span class="mode-demo__pct">90% EN</span>
+              </div>
+              <div class="mode-demo__bar" style="--ratio: 90%"></div>
+              <p><span class="en">Anna opened the door and looked at the envelope.</span></p>
             </div>
           </div>
-        </div>
+          <span class="mode-card__link">Подробнее о методе погружения →</span>
+        </a>
+
+        <a href="/parallelnoe-chtenie/" class="mode-card mode-card--parallel">
+          <div class="mode-card__head">
+            <span class="mode-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="7" height="14" rx="1.5"/>
+                <rect x="14" y="5" width="7" height="14" rx="1.5"/>
+                <path d="M10 9 h4 M10 12 h4 M10 15 h4"/>
+              </svg>
+            </span>
+            <span class="kicker">Параллельный режим</span>
+          </div>
+          <h3 class="mode-card__title">Оригинал и русский перевод рядом</h3>
+          <p class="mode-card__text">
+            Английский и русский текст параллельно — предложение за предложением. Удобно сравнивать конструкции и проверять понимание.
+          </p>
+          <div class="parallel-demo">
+            <div class="parallel-demo__col">
+              <span class="parallel-demo__badge">EN</span>
+              <p>Anna opened the door and walked into the room.</p>
+              <p>On the table lay a letter.</p>
+              <p>She looked at the envelope and smiled.</p>
+            </div>
+            <div class="parallel-demo__col">
+              <span class="parallel-demo__badge">RU</span>
+              <p>Анна открыла дверь и вошла в комнату.</p>
+              <p>На столе лежало письмо.</p>
+              <p>Она посмотрела на конверт и улыбнулась.</p>
+            </div>
+          </div>
+          <span class="mode-card__link">Подробнее о параллельном чтении →</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- TRAINING -->
+  <!-- SUPPORTING FEATURES -->
   <section class="section section--alt">
     <div class="container">
-      <div class="text-center mb-xxl">
-        <h2 class="mb-m">Тренировки по вашим словам — запоминайте то, что читаете</h2>
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">Умный перевод и тренировки на ваших словах</h2>
         <p class="max-w-prose mx-auto">
-          Все слова, которые вы посмотрели при чтении, попадают в личный словарь. А тренировки помогают их запомнить.
+          Помимо самих режимов — два инструмента, которые помогают учить эффективнее.
         </p>
       </div>
-      <div class="grid-3">
-        <div class="card">
-          <img src="/screen-flashcards.png" alt="Флэш-карточки" class="step-card__img mb-m" width="834" height="1731" />
-          <h3 class="mb-s">Флэш-карточки</h3>
-          <p>Повторяйте слова из книг. Знаете — свайп вправо, не знаете — вернётся снова.</p>
+      <div class="bento bento--2col">
+        <div class="bento-tile">
+          <span class="kicker">Умный перевод</span>
+          <h3 class="bento-tile__title">Не дословно — а по смыслу</h3>
+          <p class="bento-tile__text">
+            Идиомы и фразовые глаголы переводятся так, как их понимает носитель — а не слово за словом.
+          </p>
+          <ul class="phrase-mini">
+            <li>
+              <span class="en">It's raining cats and dogs</span>
+              <span class="phrase-mini__good">→ Льёт как из ведра</span>
+            </li>
+            <li>
+              <span class="en">He kicked the bucket</span>
+              <span class="phrase-mini__good">→ Он отдал концы</span>
+            </li>
+          </ul>
         </div>
-        <div class="card">
-          <img src="/screen-sentence-puzzle.png" alt="Собери предложение" class="step-card__img mb-m" width="834" height="1731" />
-          <h3 class="mb-s">Собери предложение</h3>
-          <p>Расставьте перемешанные слова в правильном порядке. Три уровня сложности.</p>
-        </div>
-        <div class="card">
-          <img src="/screen-fill-word.png" alt="Вставь слово" class="step-card__img mb-m" width="834" height="1731" />
-          <h3 class="mb-s">Вставь пропущенное слово</h3>
-          <p>Вспомните слово и соберите его по буквам. Отличная тренировка правописания.</p>
+
+        <div class="bento-tile">
+          <span class="kicker">Тренировки</span>
+          <h3 class="bento-tile__title">Закрепляйте слова из ваших книг</h3>
+          <p class="bento-tile__text">
+            Флэшкарточки, пазлы предложений и вставка слов — на словах, которые вы встретили в книге. Не списки из учебника, а ваш живой словарь.
+          </p>
         </div>
       </div>
-      <p class="text-center" style="margin-top: var(--space-l);">
-        <strong>Главное:</strong> тренировки строятся на ваших словах — тех, что вы встретили в книге.
-      </p>
     </div>
   </section>
 
   <!-- BOOK CATALOG -->
   <section class="section">
     <div class="container">
-      <h2 class="text-center mb-m">200+ книг на английском для любого уровня</h2>
-      <p class="text-center max-w-prose mx-auto mb-xl">
-        Выбирайте книги по уровню сложности — от A1 для начинающих до C2 для продвинутых.
-        Детективы, фантастика, классика, романтика, научная фантастика и другие жанры.
-      </p>
+      <div class="catalog-head">
+        <div>
+          <h2 class="mb-xs">200+ книг для любого уровня</h2>
+          <p>От A1 для начинающих до C2 — детективы, фантастика, классика, романтика.</p>
+        </div>
+        <a href="/books/" class="btn btn--secondary">Весь каталог →</a>
+      </div>
       <div class="book-scroll">
         {featuredBooks.map(book => (
           <a href={`/books/${toSlug(book.title)}/`} class="book-card">
@@ -202,35 +185,32 @@ const featuredBooks = shuffled.slice(0, 12);
           </a>
         ))}
       </div>
-      <div class="text-center" style="margin-top: var(--space-xl);">
-        <a href="/books/" class="btn btn--secondary">Все книги каталога &rarr;</a>
-      </div>
     </div>
   </section>
 
   <!-- TESTIMONIALS -->
   <section class="section section--warm">
     <div class="container">
-      <h2 class="text-center mb-xxl">Что говорят наши читатели</h2>
+      <h2 class="text-center mb-l">Что говорят наши читатели</h2>
       <div class="grid-3">
         <div class="testimonial">
-          <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial__stars">★★★★★</div>
           <p class="testimonial__text">
-            &laquo;Наконец-то нашёл способ учить английский, который не бросаешь через неделю. Читаю книги и не замечаю, как учусь.&raquo;
+            «Наконец-то нашёл способ учить английский, который не бросаешь через неделю. Читаю книги и не замечаю, как учусь.»
           </p>
           <p class="testimonial__author">Алексей — App Store</p>
         </div>
         <div class="testimonial">
-          <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial__stars">★★★★★</div>
           <p class="testimonial__text">
-            &laquo;Режим погружения — это гениально. К середине книги вдруг понимаешь, что читаешь по-английски.&raquo;
+            «Режим погружения — это гениально. К середине книги вдруг понимаешь, что читаешь по-английски.»
           </p>
           <p class="testimonial__author">Мария — Google Play</p>
         </div>
         <div class="testimonial">
-          <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial__stars">★★★★★</div>
           <p class="testimonial__text">
-            &laquo;Тренировки по словам из книги — это то, чего не хватало. Учу именно свои слова, а не случайные списки.&raquo;
+            «Тренировки по словам из книги — это то, чего не хватало. Учу именно свои слова, а не случайные списки.»
           </p>
           <p class="testimonial__author">Дмитрий — App Store</p>
         </div>
@@ -241,7 +221,7 @@ const featuredBooks = shuffled.slice(0, 12);
   <!-- FAQ -->
   <section class="section">
     <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-xxl">Частые вопросы о Readling</h2>
+      <h2 class="text-center mb-l">Частые вопросы о Readling</h2>
       <div class="faq-list">
         <details class="faq-item">
           <summary>Для какого уровня английского подходит Readling?</summary>
@@ -268,7 +248,7 @@ const featuredBooks = shuffled.slice(0, 12);
           <summary>Какие книги есть в каталоге?</summary>
           <div class="faq-item__answer">
             Более 200 книг в 25 жанрах: детективы, фантастика, классика, романтика, научпоп и другие.
-            Каждая книга адаптирована для изучения английского и доступна в двух режимах чтения.
+            Часть книг доступна в режиме параллельного чтения, часть — в режиме погружения. У каждой книги в каталоге указан её режим.
           </div>
         </details>
         <details class="faq-item">
@@ -331,7 +311,7 @@ const featuredBooks = shuffled.slice(0, 12);
         {
           "@type": "Question",
           "name": "Какие книги есть в каталоге?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Более 200 книг в 25 жанрах: детективы, фантастика, классика, романтика, научпоп и другие." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Более 200 книг в 25 жанрах. Часть книг доступна в режиме параллельного чтения, часть — в режиме погружения." }
         },
         {
           "@type": "Question",
@@ -351,20 +331,20 @@ const featuredBooks = shuffled.slice(0, 12);
 <style>
   .hero {
     background: var(--gradient-hero);
-    padding: var(--space-4xl) 0;
+    padding: var(--space-xxl) 0;
     border-bottom: 1px solid var(--color-card-border);
   }
 
   .hero__inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-3xl);
+    gap: var(--space-xl);
     align-items: center;
   }
 
   .hero__subtitle {
-    font-size: 1.125rem;
-    line-height: 1.7;
+    font-size: 1.0625rem;
+    line-height: 1.6;
   }
 
   .hero__phone {
@@ -377,79 +357,363 @@ const featuredBooks = shuffled.slice(0, 12);
     display: block;
   }
 
-  .step-card {
-    text-align: center;
-  }
-
-  .step-card__img {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    margin: 0 auto;
-  }
-
-  .step-card__number {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: var(--color-on-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: var(--space-m);
-  }
-
-  .parallel-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3xl);
-    align-items: center;
-  }
-
-  .section--accent-light {
-    background: var(--color-surface-alt, #f0f7ff);
-  }
-
-  .phrase-translation__content {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .phrase-examples {
+  /* ===== Proof line ===== */
+  .proof-line {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-m);
+    flex-wrap: wrap;
+    gap: var(--space-s) var(--space-m);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
   }
 
-  .phrase-example {
-    background: var(--color-card-bg, #fff);
-    border: 1px solid var(--color-card-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-l);
+  .proof-line li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 500;
+    position: relative;
+    padding-left: var(--space-m);
   }
 
-  .phrase-example__original {
-    font-size: 1.1rem;
-    font-weight: 600;
+  .proof-line li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--color-text-tertiary);
+    font-weight: 700;
+  }
+
+  .proof-line li:first-child {
+    padding-left: 0;
+  }
+
+  .proof-line li:first-child::before {
+    display: none;
+  }
+
+  .proof-line__stars {
+    color: var(--color-rating);
+    letter-spacing: 1px;
+  }
+
+  /* ===== Kicker ===== */
+  .kicker {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--color-primary);
     margin-bottom: var(--space-s);
   }
 
-  .phrase-example__bad {
-    color: var(--color-text-secondary, #888);
-    text-decoration: line-through;
-    margin-bottom: var(--space-xs);
-    font-size: 0.95rem;
+  .section--accent .kicker {
+    color: rgba(255, 255, 255, 0.85);
   }
 
-  .phrase-example__good {
+  /* ===== TWO MODES — equal cards ===== */
+  .modes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .mode-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    color: inherit;
+    text-decoration: none;
+    overflow: hidden;
+    transition: border-color var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+  }
+
+  .mode-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-accent);
+    opacity: 0.85;
+  }
+
+  .mode-card--immersion {
+    background: linear-gradient(180deg, #F2F7FF 0%, #FFFFFF 60%);
+  }
+
+  .mode-card--parallel {
+    background: linear-gradient(180deg, #FFF6EE 0%, #FFFFFF 60%);
+  }
+
+  .mode-card--parallel::before {
+    background: linear-gradient(90deg, #FF9F40, #FF6B6B);
+    opacity: 1;
+  }
+
+  .mode-card:hover {
+    border-color: rgba(0, 122, 255, 0.3);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    color: inherit;
+  }
+
+  .mode-card__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    margin-bottom: var(--space-m);
+  }
+
+  .mode-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-tint);
     color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .mode-card__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mode-card--parallel .mode-card__icon {
+    background: rgba(255, 159, 64, 0.15);
+    color: #FF8533;
+  }
+
+  .mode-card__head .kicker {
+    margin-bottom: 0;
+  }
+
+  .mode-card--parallel .kicker {
+    color: #FF8533;
+  }
+
+  .mode-card__title {
+    font-size: 1.375rem;
+    line-height: 1.25;
+    margin-bottom: var(--space-s);
+    letter-spacing: -0.2px;
+  }
+
+  .mode-card__text {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-l);
+  }
+
+  .mode-card__link {
+    margin-top: auto;
+    padding-top: var(--space-m);
+    font-size: 0.9375rem;
     font-weight: 600;
-    font-size: 0.95rem;
+    color: var(--color-primary);
+  }
+
+  .mode-card--parallel .mode-card__link {
+    color: #FF6B6B;
+  }
+
+  /* ===== Immersion demo — progressive rows with bars ===== */
+  .mode-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-m);
+  }
+
+  .mode-demo__row {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(0, 122, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-m);
+  }
+
+  .mode-demo__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    margin-bottom: var(--space-xs);
+  }
+
+  .mode-demo__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  .mode-demo__pct {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: var(--color-primary-tint);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.3px;
+  }
+
+  .mode-demo__bar {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, var(--color-primary) 0 var(--ratio), rgba(0, 122, 255, 0.12) var(--ratio) 100%);
+    margin-bottom: var(--space-s);
+  }
+
+  .mode-demo__row p {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .mode-demo .en {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  /* ===== Parallel demo — clean two-column ===== */
+  .parallel-demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 159, 64, 0.18);
+    border-radius: var(--radius-md);
+    padding: var(--space-m);
+    margin-bottom: var(--space-m);
+    gap: var(--space-m);
+    position: relative;
+  }
+
+  .parallel-demo__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    min-width: 0;
+  }
+
+  .parallel-demo__col + .parallel-demo__col {
+    border-left: 1px dashed rgba(255, 159, 64, 0.35);
+    padding-left: var(--space-m);
+  }
+
+  .parallel-demo__badge {
+    align-self: flex-start;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    background: rgba(255, 159, 64, 0.15);
+    color: #FF8533;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-xs);
+  }
+
+  .parallel-demo__col p {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .parallel-demo__col p + p {
+    margin-top: var(--space-xs);
+  }
+
+  /* ===== BENTO (supporting features) ===== */
+  .bento {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .bento-tile {
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bento-tile__title {
+    font-size: 1.125rem;
+    line-height: 1.3;
+    margin-bottom: var(--space-s);
+  }
+
+  .bento-tile__text {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-m);
+  }
+
+  /* ===== Phrase mini list (in bento tile) ===== */
+  .phrase-mini {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .phrase-mini li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-s) 0;
+    border-bottom: 1px solid var(--color-card-border);
+    font-size: 0.875rem;
+  }
+
+  .phrase-mini li:last-child {
+    border-bottom: none;
+  }
+
+  .phrase-mini .en {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .phrase-mini__good {
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  /* ===== Catalog head ===== */
+  .catalog-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-l);
+    margin-bottom: var(--space-l);
+  }
+
+  .catalog-head h2 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .catalog-head p {
+    color: var(--color-text-secondary);
   }
 
   @media (max-width: 768px) {
@@ -462,12 +726,41 @@ const featuredBooks = shuffled.slice(0, 12);
       order: -1;
     }
 
-    .store-buttons {
+    .hero .store-buttons,
+    .proof-line {
       justify-content: center;
     }
 
-    .parallel-section {
+    .modes-grid,
+    .bento {
       grid-template-columns: 1fr;
+    }
+
+    .mode-card,
+    .bento-tile {
+      padding: var(--space-l);
+    }
+
+    .parallel-demo {
+      grid-template-columns: 1fr;
+      gap: var(--space-s);
+    }
+
+    .parallel-demo__col + .parallel-demo__col {
+      border-left: none;
+      border-top: 1px solid var(--color-card-border);
+      padding-left: 0;
+      padding-top: var(--space-s);
+    }
+
+    .catalog-head {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+
+    .catalog-head .btn {
+      align-self: center;
     }
   }
 </style>
