@@ -8,11 +8,22 @@ interface Props {
   description: string;
   canonicalPath?: string;
   ogImage?: string;
+  ogType?: string;
+  noindex?: boolean;
 }
 
-const { title, description, canonicalPath = '', ogImage = '/og-default.png' } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath = '',
+  ogImage = '/og-default.png',
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
 const path = canonicalPath && !canonicalPath.endsWith('/') ? canonicalPath + '/' : canonicalPath;
 const canonicalURL = new URL(path, Astro.site);
+const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).toString();
 ---
 
 <!DOCTYPE html>
@@ -20,16 +31,21 @@ const canonicalURL = new URL(path, Astro.site);
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#007AFF" />
+  <meta name="format-detection" content="telephone=no" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex
+    ? <meta name="robots" content="noindex, nofollow" />
+    : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
   <link rel="canonical" href={canonicalURL} />
 
   <!-- Open Graph -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
-  <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+  <meta property="og:image" content={ogImageURL} />
   <meta property="og:locale" content="ru_RU" />
   <meta property="og:site_name" content="Readling" />
 
@@ -37,10 +53,11 @@ const canonicalURL = new URL(path, Astro.site);
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+  <meta name="twitter:image" content={ogImageURL} />
 
-  <!-- App links -->
-  <!-- <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID" /> -->
+  <!-- Preconnect to image CDN to speed up book covers -->
+  <link rel="preconnect" href="https://storage.yandexcloud.net" crossorigin />
+  <link rel="dns-prefetch" href="https://storage.yandexcloud.net" />
 
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

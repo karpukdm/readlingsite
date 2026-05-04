@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { links } from '../../config/links';
 import allBooks from '../../data/books.json';
 import { toSlug, complexityToLevel, genreLabels } from '../../utils/slug';
 
@@ -47,6 +46,15 @@ for (const genre of genreOrder) {
   description="Более 200 книг на английском с русским переводом. Классика, детективы, фантастика, романтика — от уровня A1 до C2. Читайте в приложении Readling бесплатно 7 дней."
   canonicalPath="/books"
 >
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <div class="container">
+      <a href="/">Главная</a>
+      <span class="breadcrumbs__sep">/</span>
+      <span>Книги</span>
+    </div>
+  </nav>
+
   <section class="section">
     <div class="container">
       <h1 class="text-center mb-sm">Книги на английском с переводом</h1>
@@ -61,7 +69,14 @@ for (const genre of genreOrder) {
           <div class="books-grid">
             {genreBooks.map(book => (
               <a href={`/books/${toSlug(book.title)}/`} class="book-item">
-                <img class="book-item__cover" src={book.imageUrl} alt={book.title} loading="lazy" />
+                <img
+                  class="book-item__cover"
+                  src={book.imageUrl}
+                  alt={`Обложка «${book.title}» — ${book.author}, ${(genreLabels[genre] || genre).toLowerCase()}, уровень ${complexityToLevel[book.complexity]}`}
+                  loading="lazy"
+                  width="160"
+                  height="240"
+                />
                 <div class="book-item__info">
                   <span class="book-item__level">{complexityToLevel[book.complexity]}</span>
                   <div class="book-item__title">{book.title}</div>
@@ -91,12 +106,47 @@ for (const genre of genreOrder) {
       "@type": "CollectionPage",
       "name": "Книги на английском с переводом — каталог Readling",
       "description": "Более 200 книг на английском с русским переводом для изучения языка.",
-      "url": "https://app.readling.club/books",
+      "url": "https://app.readling.club/books/",
+      "inLanguage": "ru",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Readling",
+        "url": "https://app.readling.club/"
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": books.length,
+        "itemListElement": books.slice(0, 30).map((b, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "url": `https://app.readling.club/books/${toSlug(b.title)}/`,
+          "name": b.title,
+        }))
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://app.readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Книги", "item": "https://app.readling.club/books/" },
+      ]
     })} />
   </Fragment>
 </BaseLayout>
 
 <style>
+  .breadcrumbs {
+    padding: var(--space-m) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
+
   .genre-section {
     margin-bottom: var(--space-xxl);
   }

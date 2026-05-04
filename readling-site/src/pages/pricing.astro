@@ -8,6 +8,15 @@ import { links } from '../config/links';
   description="Readling бесплатен для чтения и изучения английского. Подписка открывает весь каталог из 200+ книг и безлимитные тренировки — всего $3.99 в месяц."
   canonicalPath="/pricing"
 >
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <div class="container">
+      <a href="/">Главная</a>
+      <span class="breadcrumbs__sep">/</span>
+      <span>Цены</span>
+    </div>
+  </nav>
+
   <!-- HERO -->
   <section class="section pricing-hero">
     <div class="container text-center">
@@ -309,27 +318,87 @@ import { links } from '../config/links';
       "@type": "Product",
       "name": "Readling Premium",
       "description": "Подписка на приложение Readling — изучение английского через чтение книг. 200+ книг, безлимитные тренировки.",
+      "url": "https://app.readling.club/pricing/",
+      "brand": { "@type": "Brand", "name": "Readling" },
       "offers": [
         {
           "@type": "Offer",
           "name": "Бесплатный план",
           "price": "0",
-          "priceCurrency": "USD"
+          "priceCurrency": "USD",
+          "url": "https://app.readling.club/pricing/",
+          "availability": "https://schema.org/InStock"
         },
         {
           "@type": "Offer",
-          "name": "Подписка",
+          "name": "Подписка Premium",
           "price": "3.99",
           "priceCurrency": "USD",
           "priceValidUntil": "2027-12-31",
+          "url": "https://app.readling.club/pricing/",
           "availability": "https://schema.org/InStock"
         }
+      ]
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Можно ли пользоваться Readling полностью бесплатно?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Да, бесплатная версия включает часть каталога, оба режима чтения, перевод слов и личный словарь. Подписка нужна только для всего каталога и безлимитных тренировок." }
+        },
+        {
+          "@type": "Question",
+          "name": "Что будет после 7 дней пробного периода?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Ничего не списывается автоматически. После пробного периода вы продолжите пользоваться бесплатной версией, а подписку оформите только если сами захотите." }
+        },
+        {
+          "@type": "Question",
+          "name": "Как отменить подписку Readling?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Через настройки App Store или Google Play — так же, как любую другую подписку. После отмены вы сможете пользоваться подпиской до конца оплаченного периода." }
+        },
+        {
+          "@type": "Question",
+          "name": "Сохранится ли мой прогресс, если я отменю подписку?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Да, весь прогресс, личный словарь и закладки сохраняются. Вы просто вернётесь к бесплатной версии с ограниченным каталогом и лимитом тренировок." }
+        },
+        {
+          "@type": "Question",
+          "name": "Как работает реферальная программа Readling?",
+          "acceptedAnswer": { "@type": "Answer", "text": "За каждого друга, который скачает Readling по вашей ссылке, вы получаете 7 дней бесплатной подписки. Друг тоже получает бонусные дни. Количество приглашений не ограничено." }
+        },
+        {
+          "@type": "Question",
+          "name": "Почему подписка, а не разовая покупка?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Подписка позволяет постоянно добавлять новые книги, улучшать тренировки и развивать приложение." }
+        }
+      ]
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://app.readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Цены", "item": "https://app.readling.club/pricing/" }
       ]
     })} />
   </Fragment>
 </BaseLayout>
 
 <style>
+  .breadcrumbs {
+    padding: var(--space-m) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
+
   .pricing-hero {
     background: var(--gradient-hero);
     padding-bottom: 0;

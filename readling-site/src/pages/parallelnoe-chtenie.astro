@@ -2,11 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
 import allBooks from '../data/books.json';
-import { toSlug } from '../utils/slug';
+import { toSlug, complexityToLevel, pickByHash } from '../utils/slug';
 
 const books = allBooks.filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
-const shuffled = [...books].sort(() => Math.random() - 0.5);
-const featuredBooks = shuffled.slice(0, 8);
+const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
 ---
 
 <BaseLayout
@@ -14,6 +13,15 @@ const featuredBooks = shuffled.slice(0, 8);
   description="Читайте книги на английском с русским переводом рядом. Параллельное чтение в Readling: оригинал и перевод предложение за предложением. Бесплатно 7 дней."
   canonicalPath="/parallelnoe-chtenie"
 >
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <div class="container">
+      <a href="/">Главная</a>
+      <span class="breadcrumbs__sep">/</span>
+      <span>Параллельное чтение</span>
+    </div>
+  </nav>
+
   <!-- HERO -->
   <section class="hero">
     <div class="container hero__inner">
@@ -191,9 +199,16 @@ const featuredBooks = shuffled.slice(0, 8);
       <div class="book-scroll">
         {featuredBooks.map(book => (
           <a href={`/books/${toSlug(book.title)}/`} class="book-card">
-            <img class="book-card__cover" src={book.imageUrl} alt={book.title} loading="lazy" />
+            <img
+              class="book-card__cover"
+              src={book.imageUrl}
+              alt={`Обложка книги «${book.title}» на английском с переводом`}
+              loading="lazy"
+              width="160"
+              height="240"
+            />
             <div class="book-card__title">{book.title}</div>
-            <div class="book-card__author">{book.author}</div>
+            <div class="book-card__author">{book.author} · {complexityToLevel[book.complexity]}</div>
           </a>
         ))}
       </div>
@@ -262,6 +277,29 @@ const featuredBooks = shuffled.slice(0, 8);
   <Fragment slot="schema">
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Параллельное чтение на английском и русском в Readling",
+      "description": "Книги на английском с русским переводом рядом. Параллельное чтение в Readling: оригинал и перевод предложение за предложением.",
+      "image": "https://app.readling.club/screen-parallel.png",
+      "url": "https://app.readling.club/parallelnoe-chtenie/",
+      "author": { "@type": "Organization", "name": "Readling" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Readling",
+        "logo": { "@type": "ImageObject", "url": "https://app.readling.club/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://app.readling.club/parallelnoe-chtenie/" }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://app.readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Параллельное чтение", "item": "https://app.readling.club/parallelnoe-chtenie/" }
+      ]
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
         {
@@ -285,6 +323,17 @@ const featuredBooks = shuffled.slice(0, 8);
 </BaseLayout>
 
 <style>
+  .breadcrumbs {
+    padding: var(--space-m) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
+
   .hero {
     background: var(--gradient-hero);
     padding: var(--space-xxl) 0;

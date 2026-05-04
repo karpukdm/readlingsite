@@ -2,7 +2,14 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { links } from '../../config/links';
 import allBooks from '../../data/books.json';
-import { toSlug, complexityToLevel, genreLabels, genreVocabularyHints, extractSnippet } from '../../utils/slug';
+import {
+  toSlug,
+  complexityToLevel,
+  genreLabels,
+  genreDescriptions,
+  levelDescriptions,
+  extractSnippet,
+} from '../../utils/slug';
 
 export function getStaticPaths() {
   return allBooks
@@ -15,37 +22,79 @@ export function getStaticPaths() {
 
 const { book } = Astro.props;
 const level = complexityToLevel[book.complexity] || 'B1';
+const levelKey = level.toLowerCase();
+const levelInfo = levelDescriptions[levelKey];
 const genres = book.genres.split(',').map((g: string) => g.trim());
 const genreNames = genres.map((g: string) => genreLabels[g] || g).join(', ');
 const isParallel = book.mode === 'параллельный';
 const modeLabel = isParallel ? 'Параллельное чтение' : 'Режим погружения';
 const slug = toSlug(book.title);
 
-const levelDescription = book.complexity === 1 ? 'начальный' : book.complexity <= 3 ? 'средний' : book.complexity <= 5 ? 'продвинутый' : 'профессиональный';
-
-// Related books: same genre or same level, excluding current
-const otherBooks = allBooks.filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство') && b.title !== book.title);
-const bookGenres = new Set(genres);
-// Prioritize same genre + same level, then same genre, then same level
-const scored = otherBooks.map(b => {
-  let score = 0;
-  if (b.genres.split(',').some((g: string) => bookGenres.has(g.trim()))) score += 2;
-  if (b.complexity === book.complexity) score += 1;
-  if (Math.abs(b.complexity - book.complexity) === 1) score += 0.5;
-  return { book: b, score };
-}).filter(s => s.score > 0).sort((a, b) => b.score - a.score);
-const relatedBooks = scored.slice(0, 6).map(s => s.book);
-
-// Other books by the same author
-const sameAuthorBooks = otherBooks.filter(b => b.author === book.author).slice(0, 4);
-
 const primaryGenreCode = genres[0];
 const primaryGenreLabel = genreLabels[primaryGenreCode] || primaryGenreCode;
-const vocabularyHint = genreVocabularyHints[primaryGenreCode] || 'разнообразная лексика';
+const primaryGenreInfo = genreDescriptions[primaryGenreCode];
 
+// Похожие книги: по жанру + уровню
+const otherBooks = allBooks.filter(
+  b => !b.title.includes('Guide') && !b.title.includes('Руководство') && b.title !== book.title,
+);
+const bookGenres = new Set(genres);
+const scored = otherBooks
+  .map(b => {
+    let score = 0;
+    if (b.genres.split(',').some((g: string) => bookGenres.has(g.trim()))) score += 2;
+    if (b.complexity === book.complexity) score += 1;
+    if (Math.abs(b.complexity - book.complexity) === 1) score += 0.5;
+    return { book: b, score };
+  })
+  .filter(s => s.score > 0)
+  .sort((a, b) => b.score - a.score);
+const relatedBooks = scored.slice(0, 6).map(s => s.book);
+
+// Книги того же автора
+const sameAuthorBooks = otherBooks.filter(b => b.author === book.author).slice(0, 4);
+
+// Оценка объёма по описанию (грубая, но даёт уникальный контент)
+const descLen = book.description.length;
+
+// Слов в книге примерно (типичная длина)
+const estimatedWords = book.complexity <= 2 ? '15–30 тыс.' : book.complexity <= 4 ? '50–80 тыс.' : '80–150 тыс.';
+const estimatedReadingHours = book.complexity <= 2 ? '4–8' : book.complexity <= 4 ? '10–16' : '15–25';
+
+// Уникальные «зачем читать» в зависимости от mode и complexity
+const whyRead1 = isParallel
+  ? `В параллельном режиме «${book.title}» вы видите английский оригинал ${book.author} рядом с русским переводом — предложение за предложением. Это идеальный способ разобрать авторский стиль ${book.author} и сравнить, как одни и те же мысли выражаются на двух языках.`
+  : `В режиме погружения «${book.title}» начинается ${book.complexity <= 2 ? 'почти полностью на русском, и английский появляется постепенно — слово за словом, фраза за фразой' : book.complexity <= 4 ? 'с заметной долей английского — около 30–40% текста, и эта доля растёт к финалу' : 'с преобладанием английского — но все сложные конструкции остаются с подсказками, чтобы вы не потерялись в авторском стиле ' + book.author}. Это позволяет читать «${book.title}» даже на уровне ниже ${level} — и понимать каждый сюжетный поворот.`;
+
+const whyRead2 = primaryGenreInfo
+  ? `«${book.title}» относится к жанру «${primaryGenreLabel.toLowerCase()}», а это значит — ${primaryGenreInfo.vocab}. ${book.complexity <= 2 ? 'На уровне ' + level + ' эта лексика осваивается легко: повторов много, контекст понятный.' : book.complexity <= 4 ? 'На уровне ' + level + ' вы расширяете жанровый словарный запас и привыкаете к типичным конструкциям ' + primaryGenreLabel.toLowerCase() + '.' : 'На уровне ' + level + ' вы работаете с тонкостями жанра — стилем, регистром, идиомами, без которых «' + book.title + '» теряет вкус в переводе.'}`
+  : `«${book.title}» — книга жанра «${primaryGenreLabel.toLowerCase()}». В жанровых произведениях лексика повторяется на протяжении всей книги, и слова усваиваются естественно через контекст.`;
+
+const whyRead3 = `Читать «${book.title}» (${book.author}) на уровне ${level} — ${levelInfo?.short || ''}. ${
+  book.complexity <= 2
+    ? 'Это одна из самых доступных книг в каталоге Readling. Простые предложения, частотная лексика, повторяющиеся слова. Подходит даже тем, кто никогда не читал на английском.'
+    : book.complexity <= 4
+    ? 'Сбалансированная книга для уверенного перехода к чтению неадаптированной литературы. Ни слишком просто, ни слишком сложно.'
+    : `Книга для опытных читателей. ${book.author} использует ${primaryGenreInfo?.vocab || 'богатую лексику'} — будет вызов и удовольствие.`
+}`;
+
+// Уникальная сводка для открывающего абзаца
+const synopsisSnippet = extractSnippet(book.description, 110);
 const pageTitle = `${book.title} (${book.author}) на английском с переводом — ${primaryGenreLabel}, уровень ${level} | Readling`;
-const descriptionSnippet = extractSnippet(book.description, 110);
-const pageDescription = `${descriptionSnippet} Читайте «${book.title}» на английском с русским переводом в Readling — ${isParallel ? 'параллельный режим' : 'режим погружения'}, уровень ${level}.`;
+const pageDescription = `${synopsisSnippet} Читайте «${book.title}» на английском с русским переводом в Readling — ${isParallel ? 'параллельный режим' : 'режим погружения'}, уровень ${level}.`;
+
+// Тексты для FAQ (вычисляем в frontmatter, чтобы не использовать `<=` в JSX)
+const previousLevel = complexityToLevel[Math.max(1, book.complexity - 1)];
+const faqLevelAnswer = isParallel
+  ? `В параллельном режиме рядом с английским всегда идёт русский перевод — это страховка для тех, кто пока не уверен в уровне ${level}.`
+  : book.complexity <= 2
+    ? `В режиме погружения текст начинается почти полностью на русском, поэтому «${book.title}» комфортна даже на уровне A1.`
+    : `В режиме погружения сложность нарастает плавно — поэтому «${book.title}» доступна и читателям уровня ${previousLevel}, готовым к небольшому вызову.`;
+
+// Парсинг чтения (для FAQ)
+const readingHoursMax = parseInt(estimatedReadingHours.split('–')[1] || '8', 10);
+const weeksMin = Math.ceil(readingHoursMax / 7);
+const weeksMax = Math.ceil(readingHoursMax / 3);
 ---
 
 <BaseLayout
@@ -53,9 +102,10 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
   description={pageDescription}
   canonicalPath={`/books/${slug}`}
   ogImage={book.imageUrl}
+  ogType="book"
 >
   <!-- BREADCRUMBS -->
-  <nav class="breadcrumbs">
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
     <div class="container">
       <a href="/">Главная</a>
       <span class="breadcrumbs__sep">/</span>
@@ -70,7 +120,7 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     <div class="container">
       <div class="book-hero__inner">
         <div class="book-hero__cover">
-          <img src={book.imageUrl} alt={`Обложка книги «${book.title}»`} width="240" height="360" />
+          <img src={book.imageUrl} alt={`Обложка книги «${book.title}» — ${book.author}, ${primaryGenreLabel.toLowerCase()}, уровень ${level}`} width="240" height="360" />
         </div>
         <div class="book-hero__info">
           <h1 class="mb-s">{book.title}</h1>
@@ -91,38 +141,79 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
       </div>
       <div class="facts-strip">
         <div class="fact"><span class="fact__label">Автор</span><span class="fact__value">{book.author}</span></div>
-        <div class="fact"><span class="fact__label">Уровень</span><span class="fact__value">{level} · {levelDescription}</span></div>
-        <div class="fact"><span class="fact__label">Жанр</span><span class="fact__value">{genreNames}</span></div>
+        <div class="fact"><span class="fact__label">Уровень</span><span class="fact__value">{level} · {levelInfo?.short || ''}</span></div>
+        <div class="fact"><span class="fact__label">Объём</span><span class="fact__value">{estimatedWords} слов · ~{estimatedReadingHours} ч</span></div>
         <div class="fact"><span class="fact__label">Режим чтения</span><span class="fact__value">{modeLabel}</span></div>
       </div>
     </div>
   </section>
 
-  <!-- BODY: main + sticky sidebar -->
+  <!-- BODY -->
   <section class="section">
     <div class="container">
       <div class="book-body">
         <main class="book-body__main">
           <h2 class="mb-m">Зачем читать «{book.title}» на английском</h2>
-          <ul class="benefits-list mb-xxl">
+          <ul class="benefits-list mb-xl">
+            <li>
+              <strong>Режим «{modeLabel.toLowerCase()}» как раз для этой книги.</strong>
+              <span> {whyRead1}</span>
+            </li>
             <li>
               <strong>Лексика жанра «{primaryGenreLabel.toLowerCase()}».</strong>
-              <span> В книге вас ждёт {vocabularyHint}. {book.complexity <= 2 ? 'Лексика подобрана так, чтобы её можно было освоить даже на старте обучения.' : book.complexity <= 4 ? 'Слова запоминаются в контексте живой истории, а не из учебных списков.' : 'Авторский стиль и редкая лексика помогут выйти на C1–C2.'}</span>
+              <span> {whyRead2}</span>
             </li>
             <li>
-              <strong>{isParallel ? 'Грамматика через сравнение языков.' : 'Грамматика через погружение.'}</strong>
-              <span> {isParallel ? 'В параллельном режиме «' + book.title + '» вы видите английскую и русскую версии рядом — удобно сравнивать порядок слов и конструкции, типичные для ' + book.author + '.' : 'В режиме погружения вы встречаете грамматические конструкции «' + book.title + '» десятки раз — мозг запоминает их без зубрёжки правил.'}</span>
-            </li>
-            <li>
-              <strong>Уровень {level} — {levelDescription}.</strong>
-              <span> {book.complexity <= 2 ? '«' + book.title + '» подходит тем, кто только начинает читать на английском. Простые предложения и частотная лексика.' : book.complexity <= 4 ? '«' + book.title + '» подходит читателям со средним уровнем — разнообразные конструкции и расширенный словарный запас.' : '«' + book.title + '» — для продвинутых читателей. Сложные конструкции, редкая лексика, узнаваемый стиль ' + book.author + '.'}</span>
+              <strong>Уровень {level} — {levelInfo?.short || 'оптимальный'}.</strong>
+              <span> {whyRead3}</span>
             </li>
           </ul>
 
+          <h2 class="mt-xxl mb-m">Как читать «{book.title}» в Readling</h2>
+          <p class="mb-m">
+            {isParallel
+              ? `Откройте «${book.title}» в приложении и переключитесь в параллельный режим. Слева — английский оригинал ${book.author}, справа — русский перевод. Двигайтесь по книге в своём темпе. Если непонятно слово — нажмите на него: появится перевод и транскрипция, слово сохранится в личный словарь.`
+              : `Откройте «${book.title}» в приложении и запустите режим погружения. ${book.complexity <= 2 ? 'На первых страницах текст почти полностью русский, английских слов 5–10%' : book.complexity <= 4 ? 'На первых страницах английского около 30–40%' : 'На первых страницах английского 60–80% — но сложные слова остаются с переводом'}. С каждой главой английского становится больше. К концу книги вы читаете преимущественно на английском — и сами не замечаете, как это произошло.`}
+          </p>
+          <p class="mb-l">
+            Любое слово в тексте интерактивное: нажатие — мгновенный перевод и транскрипция. Слово сохраняется в ваш личный словарь, а потом приходит в тренировки — флэш-карточки, пазлы предложений, вставку слов. Так вы учите именно ту лексику, которая встретилась вам в «{book.title}», а не абстрактные списки из учебника.
+          </p>
+
           <div class="callout">
-            <div class="callout__title">Как читать «{book.title}» в Readling</div>
-            <p class="callout__text">{isParallel ? 'Текст показывается параллельно: английский оригинал и русский перевод рядом, предложение за предложением. Нажмите на любое слово — увидите перевод и сохраните его в свой словарь для тренировок.' : 'Текст начинается почти полностью на русском. С каждой страницей английских слов становится больше — к концу книги вы читаете преимущественно на английском. Любое слово можно нажать для перевода и добавить в словарь.'}</p>
-            <a href={isParallel ? '/parallelnoe-chtenie/' : '/metod-pogruzheniya/'} class="callout__link">{isParallel ? 'Подробнее о параллельном чтении' : 'Подробнее о методе погружения'} →</a>
+            <div class="callout__title">{isParallel ? 'Совет: чередуйте параллельное чтение и погружение' : 'Совет: переключайтесь на параллельное чтение для сложных мест'}</div>
+            <p class="callout__text">
+              {isParallel
+                ? `«${book.title}» — параллельный режим вашего основного маршрута. Если хотите попробовать иной подход — попробуйте режим погружения на другой книге того же автора.`
+                : `Если в «${book.title}» вы встречаете непонятный абзац — на сложных книгах ${book.author} это нормально — переключитесь на параллельное чтение и разберите его. Потом вернитесь к погружению.`}
+            </p>
+            <a href={isParallel ? '/parallelnoe-chtenie/' : '/metod-pogruzheniya/'} class="callout__link">
+              {isParallel ? 'Подробнее о параллельном чтении' : 'Подробнее о методе погружения'} →
+            </a>
+          </div>
+
+          <h2 class="mt-xxl mb-m">«{book.title}» — что вы получите от чтения на английском</h2>
+          <div class="learnings">
+            <div class="learning">
+              <div class="learning__num">01</div>
+              <div>
+                <h3>Лексика, которая остаётся надолго</h3>
+                <p>Слова из «{book.title}» вы встречаете десятки раз — сначала в одной главе, потом в другой. Естественное повторение прочнее любых карточек: вы запоминаете слово вместе с ситуацией, эмоцией, персонажем.</p>
+              </div>
+            </div>
+            <div class="learning">
+              <div class="learning__num">02</div>
+              <div>
+                <h3>{isParallel ? 'Понимание авторского стиля' : 'Привычка к английскому ритму'}</h3>
+                <p>{isParallel ? `Сравнивая оригинальные предложения ${book.author} с переводом, вы видите: где автор экономит слова, где использует длинные периоды, как строит диалоги. Это понимание стиля невозможно получить от учебника.` : `Чем дальше в «${book.title}», тем больше английского. Ваш мозг адаптируется к длинным фразам, начинает «слышать» английский ритм даже про себя. Через несколько глав чтение перестаёт быть переводом — становится просто чтением.`}</p>
+              </div>
+            </div>
+            <div class="learning">
+              <div class="learning__num">03</div>
+              <div>
+                <h3>Завершённая книга — а не брошенная на третьей странице</h3>
+                <p>Главная проблема чтения в оригинале — бросить. {book.complexity <= 2 ? 'На уровне ' + level + ' Readling делает так, чтобы вы не сдались: вначале текст почти весь русский, бросать нечего.' : book.complexity <= 4 ? 'На уровне ' + level + ' Readling балансирует сложность: вам интересно, но не невозможно.' : 'На уровне ' + level + ' Readling помогает не утонуть в редкой лексике: подсказки приходят ровно тогда, когда нужны.'} В итоге «{book.title}» — это прочитанная книга, а не отложенный эксперимент.</p>
+              </div>
+            </div>
           </div>
         </main>
 
@@ -134,7 +225,7 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
                 {sameAuthorBooks.map(ab => (
                   <li>
                     <a href={`/books/${toSlug(ab.title)}/`}>
-                      <img src={ab.imageUrl} alt={ab.title} loading="lazy" />
+                      <img src={ab.imageUrl} alt={ab.title} loading="lazy" width="40" height="60" />
                       <div class="author-list__meta">
                         <span class="author-list__title">{ab.title}</span>
                         <span class="author-list__level">{complexityToLevel[ab.complexity]}</span>
@@ -150,18 +241,18 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     </div>
   </section>
 
-  <!-- RELATED BOOKS -->
+  <!-- RELATED -->
   {relatedBooks.length > 0 && (
     <section class="section section--alt">
       <div class="container">
         <h2 class="text-center mb-sm">Похожие книги уровня {level}</h2>
         <p class="text-center max-w-prose mx-auto mb-xl">
-          Если вам нравится «{book.title}», попробуйте также эти книги в жанре {genreNames.split(',')[0].trim().toLowerCase()}.
+          Если вам нравится «{book.title}», обратите внимание на эти книги в жанре {primaryGenreLabel.toLowerCase()} — они подобраны по уровню сложности и теме.
         </p>
         <div class="related-grid">
           {relatedBooks.map(rb => (
             <a href={`/books/${toSlug(rb.title)}/`} class="related-book">
-              <img class="related-book__cover" src={rb.imageUrl} alt={rb.title} loading="lazy" />
+              <img class="related-book__cover" src={rb.imageUrl} alt={`Обложка «${rb.title}»`} loading="lazy" width="160" height="240" />
               <div class="related-book__info">
                 <span class="related-book__level">{complexityToLevel[rb.complexity]}</span>
                 <div class="related-book__title">{rb.title}</div>
@@ -180,54 +271,52 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
       <h2 class="text-center mb-l">Вопросы о чтении «{book.title}» на английском</h2>
       <div class="faq-list">
         <details class="faq-item">
-          <summary>Можно ли читать «{book.title}» ({book.author}) бесплатно?</summary>
-          <div class="faq-item__answer">
-            Да, Readling предоставляет 7 дней бесплатного доступа ко всем книгам и функциям, включая «{book.title}». Скачайте приложение и начните читать.
-          </div>
-        </details>
-        <details class="faq-item">
           <summary>Какой уровень английского нужен для «{book.title}»?</summary>
           <div class="faq-item__answer">
-            «{book.title}» рассчитана на уровень {level} ({levelDescription}). {isParallel ? `В режиме параллельного чтения вы видите русский перевод рядом с каждым предложением — это помогает даже при уровне ниже ${level}.` : `В режиме погружения текст начинается почти полностью на русском и постепенно переходит на английский — поэтому книга комфортна даже при уровне ниже ${level}.`} {book.complexity <= 2 ? 'Это одна из самых простых книг в каталоге — отлично подойдёт для первого чтения на английском.' : book.complexity >= 5 ? 'Это книга для продвинутых читателей — сложная лексика и авторский стиль.' : ''}
+            «{book.title}» рассчитана на уровень {level} ({levelInfo?.short || ''}). {faqLevelAnswer}
           </div>
         </details>
         <details class="faq-item">
-          <summary>Как читать «{book.title}» в {isParallel ? 'параллельном режиме' : 'режиме погружения'}?</summary>
+          <summary>Сколько времени занимает чтение «{book.title}»?</summary>
           <div class="faq-item__answer">
-            {isParallel
-              ? `Откройте «${book.title}» в Readling — вы увидите английский оригинал и русский перевод рядом, предложение за предложением. Нажмите на любое слово для мгновенного перевода и добавления в словарь.`
-              : `Откройте «${book.title}» в Readling — текст начнётся почти на русском. С каждой страницей английских слов будет больше. К концу книги вы будете читать преимущественно на английском.`}
+            Объём «{book.title}» — около {estimatedWords} слов. На уровне {level} среднестатистический читатель проходит её за {estimatedReadingHours} часов чистого времени — это {weeksMin}–{weeksMax} недель по 30 минут в день. Темп зависит от того, сколько слов вы переводите по дороге — а это, в свою очередь, зависит от уровня.
           </div>
         </details>
         <details class="faq-item">
-          <summary>Какой жанр у книги «{book.title}»?</summary>
+          <summary>Можно ли читать «{book.title}» бесплатно?</summary>
           <div class="faq-item__answer">
-            «{book.title}» ({book.author}) относится к жанрам: {genreNames}. В каталоге Readling есть и другие книги этих жанров — выбирайте по уровню и интересам.
+            В Readling действует пробный период 7 дней — вы получаете доступ ко всем книгам каталога, включая «{book.title}», ко всем режимам чтения и тренировкам. После пробного периода никаких автосписаний — продолжать подписку или нет, решаете вы.
           </div>
         </details>
         <details class="faq-item">
-          <summary>Какую лексику я выучу, читая «{book.title}» на английском?</summary>
+          <summary>Какую лексику я выучу, читая «{book.title}»?</summary>
           <div class="faq-item__answer">
-            «{book.title}» ({book.author}) принадлежит к жанру «{primaryGenreLabel.toLowerCase()}», поэтому вас ждёт {vocabularyHint}. {sameAuthorBooks.length > 0 ? `Если стиль ${book.author} вам близок — в Readling есть и другие его произведения.` : 'Каждое незнакомое слово сохраняется в личный словарь и закрепляется тренировками в приложении.'}
+            «{book.title}» относится к жанру «{primaryGenreLabel.toLowerCase()}». {primaryGenreInfo?.vocab ? `Это значит — ${primaryGenreInfo.vocab}.` : 'Это значит — характерная для жанра лексика.'} Каждое слово, на которое вы нажмёте при чтении, попадёт в личный словарь. Дальше — тренировки именно на эту лексику: флэш-карточки, пазлы предложений, вставка слов.
           </div>
         </details>
         <details class="faq-item">
-          <summary>На каких устройствах можно читать «{book.title}»?</summary>
+          <summary>Как переключаться между режимами чтения?</summary>
           <div class="faq-item__answer">
-            Readling доступен на iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play и найдите «{book.title}» в каталоге.
+            У каждой книги в каталоге Readling есть основной режим. У «{book.title}» — это {isParallel ? 'параллельное чтение' : 'режим погружения'}. Если хотите попробовать другой режим — выбирайте книгу с этим режимом в каталоге; режим указан на карточке каждой книги.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>На каких устройствах читать «{book.title}»?</summary>
+          <div class="faq-item__answer">
+            Readling работает на iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play, найдите «{book.title}» в каталоге и начните читать. Прогресс синхронизируется между устройствами по аккаунту.
           </div>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- Final compact CTA -->
+  <!-- CTA -->
   <section class="cta-final">
     <div class="container">
       <div class="cta-final__card">
         <div>
           <div class="cta-final__title">Начните читать «{book.title}» прямо сейчас</div>
-          <div class="cta-final__subtitle">Первые 7 дней бесплатно</div>
+          <div class="cta-final__subtitle">Первые 7 дней — бесплатно. Без автосписаний.</div>
         </div>
         <div class="store-buttons">
           <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
@@ -246,13 +335,17 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
       "author": { "@type": "Person", "name": book.author },
       "description": book.description,
       "image": book.imageUrl,
+      "url": `https://app.readling.club/books/${slug}/`,
       "genre": genres.map((g: string) => genreLabels[g] || g),
-      "inLanguage": "en",
+      "inLanguage": ["en", "ru"],
+      "bookFormat": "https://schema.org/EBook",
+      "isAccessibleForFree": false,
       "audience": {
         "@type": "EducationalAudience",
         "educationalRole": "student",
-        "suggestedMinAge": book.complexity <= 2 ? 10 : 14,
       },
+      "educationalLevel": level,
+      "learningResourceType": "Bilingual reading book",
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -260,39 +353,39 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
       "mainEntity": [
         {
           "@type": "Question",
-          "name": `Можно ли читать «${book.title}» (${book.author}) бесплатно?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `Да, Readling предоставляет 7 дней бесплатного доступа ко всем книгам, включая «${book.title}».` }
-        },
-        {
-          "@type": "Question",
           "name": `Какой уровень английского нужен для «${book.title}»?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `«${book.title}» рассчитана на уровень ${level} (${levelDescription}).` }
+          "acceptedAnswer": { "@type": "Answer", "text": `«${book.title}» рассчитана на уровень ${level} (${levelInfo?.short || ''}). В режиме ${isParallel ? 'параллельного чтения' : 'погружения'} книга комфортна даже на уровне ниже.` },
         },
         {
           "@type": "Question",
-          "name": `Какой жанр у книги «${book.title}»?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `«${book.title}» (${book.author}) относится к жанрам: ${genreNames}.` }
+          "name": `Сколько времени занимает чтение «${book.title}»?`,
+          "acceptedAnswer": { "@type": "Answer", "text": `Объём — около ${estimatedWords} слов, ~${estimatedReadingHours} часов чтения на уровне ${level}.` },
         },
         {
           "@type": "Question",
-          "name": `Какую лексику я выучу, читая «${book.title}» на английском?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `«${book.title}» относится к жанру «${primaryGenreLabel.toLowerCase()}», поэтому в книге встречается ${vocabularyHint}.` }
+          "name": `Можно ли читать «${book.title}» бесплатно?`,
+          "acceptedAnswer": { "@type": "Answer", "text": `Да, Readling предоставляет 7 дней бесплатного доступа ко всем книгам, включая «${book.title}».` },
         },
         {
           "@type": "Question",
-          "name": `На каких устройствах можно читать «${book.title}»?`,
-          "acceptedAnswer": { "@type": "Answer", "text": "Readling доступен на iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play." }
+          "name": `Какую лексику я выучу, читая «${book.title}»?`,
+          "acceptedAnswer": { "@type": "Answer", "text": `«${book.title}» относится к жанру «${primaryGenreLabel.toLowerCase()}» — ${primaryGenreInfo?.vocab || 'характерная жанровая лексика'}.` },
         },
-      ]
+        {
+          "@type": "Question",
+          "name": "На каких устройствах работает Readling?",
+          "acceptedAnswer": { "@type": "Answer", "text": "На iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play." },
+        },
+      ],
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://app.readling.club/" },
-        { "@type": "ListItem", "position": 2, "name": "Книги", "item": "https://app.readling.club/books" },
-        { "@type": "ListItem", "position": 3, "name": book.title, "item": `https://app.readling.club/books/${slug}` },
-      ]
+        { "@type": "ListItem", "position": 2, "name": "Книги", "item": "https://app.readling.club/books/" },
+        { "@type": "ListItem", "position": 3, "name": book.title, "item": `https://app.readling.club/books/${slug}/` },
+      ],
     })} />
   </Fragment>
 </BaseLayout>
@@ -305,25 +398,15 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     background: var(--color-surface);
     border-bottom: 1px solid var(--color-card-border);
   }
-
-  .breadcrumbs a {
-    color: var(--color-text-tertiary);
-  }
-
-  .breadcrumbs a:hover {
-    color: var(--color-primary);
-  }
-
-  .breadcrumbs__sep {
-    margin: 0 var(--space-xs);
-  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
 
   .book-hero {
     background: var(--gradient-hero);
     padding: var(--space-xl) 0;
     border-bottom: 1px solid var(--color-card-border);
   }
-
   .book-hero__inner {
     display: grid;
     grid-template-columns: 240px 1fr;
@@ -331,31 +414,26 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     align-items: start;
     margin-bottom: var(--space-xl);
   }
-
   .book-hero__cover img {
     width: 240px;
     height: auto;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
   }
-
   .book-hero h1 {
     font-size: 2rem;
     line-height: 1.15;
   }
-
   .book-hero__author {
     font-size: 1.125rem;
     color: var(--color-text-secondary);
     font-weight: 500;
   }
-
   .book-hero__tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-xs);
   }
-
   .tag {
     display: inline-block;
     font-size: 0.8125rem;
@@ -366,28 +444,24 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     border: 1px solid var(--color-card-border);
     color: var(--color-text-secondary);
   }
-
   .tag--level {
     background: var(--color-primary);
     color: var(--color-on-primary);
     border-color: var(--color-primary);
     font-weight: 700;
   }
-
   .tag--mode {
     background: var(--color-primary-tint);
     color: var(--color-primary);
     border-color: rgba(0, 122, 255, 0.2);
     font-weight: 600;
   }
-
   .book-hero__desc {
     font-size: 1rem;
     line-height: 1.6;
     color: var(--color-text-secondary);
   }
 
-  /* ===== FACTS STRIP — replaces "О книге" 4-box section ===== */
   .facts-strip {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -397,19 +471,16 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     border-radius: var(--radius-md);
     padding: var(--space-l) var(--space-xl);
   }
-
   .fact {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
     min-width: 0;
   }
-
   .fact + .fact {
     border-left: 1px solid var(--color-card-border);
     padding-left: var(--space-xl);
   }
-
   .fact__label {
     font-size: 0.75rem;
     font-weight: 600;
@@ -417,7 +488,6 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     letter-spacing: 0.5px;
     color: var(--color-text-tertiary);
   }
-
   .fact__value {
     font-size: 0.9375rem;
     font-weight: 500;
@@ -427,25 +497,22 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     white-space: nowrap;
   }
 
-  /* ===== TWO-COLUMN BODY ===== */
   .book-body {
     display: grid;
     grid-template-columns: 1fr 320px;
     gap: var(--space-xl);
     align-items: start;
   }
-
-  /* When no sidebar (no other books by author) — single centered column */
   .book-body:not(:has(.book-body__sidebar)) {
     grid-template-columns: minmax(0, 720px);
     justify-content: center;
   }
-
   .book-body__main h2 {
     font-size: 1.5rem;
   }
+  .mt-xxl { margin-top: var(--space-xxl); }
+  .mb-xl { margin-bottom: var(--space-xl); }
 
-  /* ===== BENEFITS LIST — replaces 3-card grid ===== */
   .benefits-list {
     list-style: none;
     padding: 0;
@@ -454,14 +521,12 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     flex-direction: column;
     gap: var(--space-l);
   }
-
   .benefits-list li {
     position: relative;
     padding-left: var(--space-l);
     line-height: 1.6;
     color: var(--color-text-secondary);
   }
-
   .benefits-list li::before {
     content: '';
     position: absolute;
@@ -472,7 +537,6 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     border-radius: 50%;
     background: var(--color-primary);
   }
-
   .benefits-list strong {
     display: block;
     color: var(--color-text);
@@ -481,7 +545,6 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     margin-bottom: var(--space-xs);
   }
 
-  /* ===== CALLOUT — replaces full mode-section ===== */
   .callout {
     background: var(--color-primary-tint);
     border: 1px solid rgba(0, 122, 255, 0.18);
@@ -489,21 +552,18 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     border-radius: var(--radius-md);
     padding: var(--space-m) var(--space-l);
   }
-
   .callout__title {
     font-size: 1rem;
     font-weight: 600;
     color: var(--color-text);
     margin-bottom: var(--space-xs);
   }
-
   .callout__text {
     font-size: 0.9375rem;
     line-height: 1.55;
     color: var(--color-text-secondary);
     margin-bottom: var(--space-s);
   }
-
   .callout__link {
     display: inline-block;
     font-size: 0.9375rem;
@@ -511,7 +571,40 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     color: var(--color-primary);
   }
 
-  /* ===== SIDEBAR ===== */
+  .learnings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+  .learning {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: var(--space-m);
+    align-items: start;
+  }
+  .learning__num {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: var(--color-primary-tint);
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .learning h3 {
+    font-size: 1.0625rem;
+    margin-bottom: var(--space-xs);
+  }
+  .learning p {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
   .book-body__sidebar {
     display: flex;
     flex-direction: column;
@@ -519,65 +612,22 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     position: sticky;
     top: calc(var(--header-height) + var(--space-m));
   }
-
   .side-card {
     background: var(--color-surface);
     border: 1px solid var(--color-card-border);
     border-radius: var(--radius-md);
     padding: var(--space-l);
   }
-
-  .side-card--cta {
-    background: linear-gradient(135deg, #EBF4FF 0%, #FFF5F0 100%);
-    border-color: rgba(0, 122, 255, 0.2);
-  }
-
-  .side-card__eyebrow {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--color-primary);
-    background: var(--color-surface);
-    padding: 4px 10px;
-    border-radius: var(--radius-pill);
-    margin-bottom: var(--space-s);
-  }
-
   .side-card__title {
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--color-text);
     margin-bottom: var(--space-m);
   }
-
   .side-card__title--sm {
     font-size: 0.9375rem;
     margin-bottom: var(--space-s);
   }
-
-  .side-card__buttons {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-s);
-  }
-
-  .side-card__buttons .store-btn {
-    display: block;
-  }
-
-  .side-card__buttons .store-btn img {
-    height: 38px;
-    width: auto;
-  }
-
-  .side-card__buttons .store-btn--google img {
-    height: 56px;
-    margin: -9px 0;
-  }
-
-  /* ===== AUTHOR LIST (sidebar mini) ===== */
   .author-list {
     list-style: none;
     margin: 0;
@@ -586,7 +636,6 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     flex-direction: column;
     gap: var(--space-s);
   }
-
   .author-list a {
     display: grid;
     grid-template-columns: 40px 1fr;
@@ -598,26 +647,22 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     border-radius: var(--radius-sm);
     transition: background var(--duration-fast) var(--ease-out);
   }
-
   .author-list a:hover {
     background: var(--color-surface-alt);
     color: inherit;
   }
-
   .author-list img {
     width: 40px;
     height: 60px;
     object-fit: cover;
     border-radius: var(--radius-xs);
   }
-
   .author-list__meta {
     display: flex;
     flex-direction: column;
     gap: 2px;
     min-width: 0;
   }
-
   .author-list__title {
     font-size: 0.875rem;
     font-weight: 500;
@@ -629,18 +674,13 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-
   .author-list__level {
     font-size: 0.6875rem;
     font-weight: 700;
     color: var(--color-primary);
   }
 
-  /* ===== CTA FINAL ===== */
-  .cta-final {
-    padding: var(--space-l) 0 var(--space-3xl);
-  }
-
+  .cta-final { padding: var(--space-l) 0 var(--space-3xl); }
   .cta-final__card {
     display: flex;
     align-items: center;
@@ -651,13 +691,11 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     border-radius: var(--radius-lg);
     padding: var(--space-l) var(--space-xl);
   }
-
   .cta-final__title {
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--color-text);
   }
-
   .cta-final__subtitle {
     font-size: 0.9375rem;
     color: var(--color-text-secondary);
@@ -669,7 +707,6 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: var(--space-l);
   }
-
   .related-book {
     text-decoration: none;
     color: inherit;
@@ -677,12 +714,7 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     flex-direction: column;
     transition: transform var(--duration-fast) var(--ease-out);
   }
-
-  .related-book:hover {
-    transform: translateY(-4px);
-    color: inherit;
-  }
-
+  .related-book:hover { transform: translateY(-4px); color: inherit; }
   .related-book__cover {
     width: 100%;
     aspect-ratio: 2 / 3;
@@ -692,13 +724,7 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     background: var(--color-surface-alt);
     margin-bottom: var(--space-s);
   }
-
-  .related-book__info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
+  .related-book__info { display: flex; flex-direction: column; gap: 2px; }
   .related-book__level {
     display: inline-block;
     width: fit-content;
@@ -710,98 +736,68 @@ const pageDescription = `${descriptionSnippet} Читайте «${book.title}» 
     border-radius: var(--radius-pill);
     margin-bottom: var(--space-xs);
   }
-
   .related-book__title {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text);
     line-height: 1.3;
   }
-
   .related-book__author {
     font-size: 0.75rem;
     color: var(--color-text-tertiary);
   }
 
   @media (max-width: 960px) {
-    .book-body {
-      grid-template-columns: 1fr;
-    }
-
+    .book-body { grid-template-columns: 1fr; }
     .book-body__sidebar {
       position: static;
       flex-direction: row;
       flex-wrap: wrap;
     }
-
-    .side-card {
-      flex: 1 1 280px;
-    }
+    .side-card { flex: 1 1 280px; }
   }
 
   @media (max-width: 768px) {
-    .book-hero {
-      padding: var(--space-l) 0;
-    }
-
+    .book-hero { padding: var(--space-l) 0; }
     .book-hero__inner {
       grid-template-columns: 1fr;
       gap: var(--space-m);
       margin-bottom: var(--space-m);
       text-align: center;
     }
-
-    .book-hero__cover img {
-      width: 160px;
-      margin: 0 auto;
-    }
-
-    .book-hero h1 {
-      font-size: 1.5rem;
-    }
-
-    .book-hero__author {
-      font-size: 1rem;
-    }
-
-    .book-hero__tags {
-      justify-content: center;
-    }
-
-    .book-hero .store-buttons {
-      justify-content: center;
-    }
+    .book-hero__cover img { width: 160px; margin: 0 auto; }
+    .book-hero h1 { font-size: 1.5rem; }
+    .book-hero__author { font-size: 1rem; }
+    .book-hero__tags { justify-content: center; }
+    .book-hero .store-buttons { justify-content: center; }
 
     .facts-strip {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-s) var(--space-m);
       padding: var(--space-m);
     }
-
-    .fact + .fact {
-      border-left: none;
-      padding-left: 0;
-    }
-
+    .fact + .fact { border-left: none; padding-left: 0; }
     .fact:nth-child(odd) + .fact {
       border-left: 1px solid var(--color-card-border);
       padding-left: var(--space-m);
     }
 
-    .related-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-m);
-    }
-
+    .related-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-m); }
     .cta-final__card {
       flex-direction: column;
       align-items: stretch;
       text-align: center;
       padding: var(--space-l);
     }
+    .cta-final__card .store-buttons { justify-content: center; }
 
-    .cta-final__card .store-buttons {
-      justify-content: center;
+    .learning {
+      grid-template-columns: 48px 1fr;
+    }
+    .learning__num {
+      font-size: 1.25rem;
+      width: 48px;
+      height: 48px;
     }
   }
 </style>
