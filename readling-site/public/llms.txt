@@ -29,9 +29,9 @@ Readling is a mobile app (iOS & Android) that helps Russian speakers learn Engli
 - 7-day free trial
 
 ## Links
-- Website: https://app.readling.club
-- Book catalog: https://app.readling.club/books/
-- Immersion Method: https://app.readling.club/metod-pogruzheniya/
-- Parallel Reading: https://app.readling.club/parallelnoe-chtenie/
-- Pricing: https://app.readling.club/pricing/
-- Readling vs Duolingo: https://app.readling.club/sravnenie/readling-vs-duolingo/
+- Website: https://readling.club
+- Book catalog: https://readling.club/books/
+- Immersion Method: https://readling.club/metod-pogruzheniya/
+- Parallel Reading: https://readling.club/parallelnoe-chtenie/
+- Pricing: https://readling.club/pricing/
+- Readling vs Duolingo: https://readling.club/sravnenie/readling-vs-duolingo/

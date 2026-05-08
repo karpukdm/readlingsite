@@ -106,12 +106,12 @@ for (const genre of genreOrder) {
       "@type": "CollectionPage",
       "name": "Книги на английском с переводом — каталог Readling",
       "description": "Более 200 книг на английском с русским переводом для изучения языка.",
-      "url": "https://app.readling.club/books/",
+      "url": "https://readling.club/books/",
       "inLanguage": "ru",
       "isPartOf": {
         "@type": "WebSite",
         "name": "Readling",
-        "url": "https://app.readling.club/"
+        "url": "https://readling.club/"
       },
       "mainEntity": {
         "@type": "ItemList",
@@ -119,7 +119,7 @@ for (const genre of genreOrder) {
         "itemListElement": books.slice(0, 30).map((b, i) => ({
           "@type": "ListItem",
           "position": i + 1,
-          "url": `https://app.readling.club/books/${toSlug(b.title)}/`,
+          "url": `https://readling.club/books/${toSlug(b.title)}/`,
           "name": b.title,
         }))
       }
@@ -128,8 +128,8 @@ for (const genre of genreOrder) {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://app.readling.club/" },
-        { "@type": "ListItem", "position": 2, "name": "Книги", "item": "https://app.readling.club/books/" },
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Книги", "item": "https://readling.club/books/" },
       ]
     })} />
   </Fragment>
