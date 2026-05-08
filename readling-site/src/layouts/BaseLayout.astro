@@ -59,10 +59,12 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
   <link rel="preconnect" href="https://storage.yandexcloud.net" crossorigin />
   <link rel="dns-prefetch" href="https://storage.yandexcloud.net" />
 
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+  <link rel="icon" type="image/x-icon" href={new URL('/favicon.ico', Astro.site).toString()} sizes="any" />
+  <link rel="shortcut icon" type="image/x-icon" href={new URL('/favicon.ico', Astro.site).toString()} />
+  <link rel="icon" type="image/svg+xml" href={new URL('/favicon.svg', Astro.site).toString()} />
+  <link rel="icon" type="image/png" sizes="120x120" href={new URL('/favicon-120x120.png', Astro.site).toString()} />
+  <link rel="icon" type="image/png" sizes="192x192" href={new URL('/favicon.png', Astro.site).toString()} />
+  <link rel="apple-touch-icon" sizes="180x180" href={new URL('/apple-touch-icon.png', Astro.site).toString()} />
   <link rel="manifest" href="/site.webmanifest" />
 
   <slot name="head" />
