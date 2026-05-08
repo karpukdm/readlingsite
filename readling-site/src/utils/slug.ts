@@ -16,6 +16,20 @@ export function toSlug(title: string): string {
     .replace(/^-|-$/g, '');
 }
 
+type CoverSize = 'sm' | 'md' | 'lg';
+const COVER_SUFFIX: Record<CoverSize, string> = { sm: '', md: '@2x', lg: '-lg' };
+
+export function coverPath(title: string, size: CoverSize = 'sm'): string {
+  return `/covers/${toSlug(title)}${COVER_SUFFIX[size]}.webp`;
+}
+
+export function coverSrcset(title: string, kind: 'card' | 'hero' = 'card'): string {
+  const slug = toSlug(title);
+  return kind === 'hero'
+    ? `/covers/${slug}@2x.webp 1x, /covers/${slug}-lg.webp 2x`
+    : `/covers/${slug}.webp 1x, /covers/${slug}@2x.webp 2x`;
+}
+
 export const complexityToLevel: Record<number, string> = {
   1: 'A1',
   2: 'A2',

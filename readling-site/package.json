@@ -9,7 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "covers": "node scripts/optimize-covers.mjs",
+    "covers:force": "node scripts/optimize-covers.mjs --force",
+    "screens": "node scripts/optimize-screens.mjs",
+    "screens:force": "node scripts/optimize-screens.mjs --force"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",

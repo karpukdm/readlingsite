@@ -9,6 +9,8 @@ import {
   genreDescriptions,
   levelDescriptions,
   extractSnippet,
+  coverPath,
+  coverSrcset,
 } from '../../utils/slug';
 
 export function getStaticPaths() {
@@ -101,7 +103,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
   title={pageTitle}
   description={pageDescription}
   canonicalPath={`/books/${slug}`}
-  ogImage={book.imageUrl}
+  ogImage={coverPath(book.title, 'lg')}
   ogType="book"
 >
   <!-- BREADCRUMBS -->
@@ -120,7 +122,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
     <div class="container">
       <div class="book-hero__inner">
         <div class="book-hero__cover">
-          <img src={book.imageUrl} alt={`Обложка книги «${book.title}» — ${book.author}, ${primaryGenreLabel.toLowerCase()}, уровень ${level}`} width="240" height="360" />
+          <img src={coverPath(book.title, 'md')} srcset={coverSrcset(book.title, 'hero')} alt={`Обложка книги «${book.title}» — ${book.author}, ${primaryGenreLabel.toLowerCase()}, уровень ${level}`} width="240" height="360" fetchpriority="high" decoding="async" />
         </div>
         <div class="book-hero__info">
           <h1 class="mb-s">{book.title}</h1>
@@ -225,7 +227,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
                 {sameAuthorBooks.map(ab => (
                   <li>
                     <a href={`/books/${toSlug(ab.title)}/`}>
-                      <img src={ab.imageUrl} alt={ab.title} loading="lazy" width="40" height="60" />
+                      <img src={coverPath(ab.title, 'sm')} alt={ab.title} loading="lazy" decoding="async" width="40" height="60" />
                       <div class="author-list__meta">
                         <span class="author-list__title">{ab.title}</span>
                         <span class="author-list__level">{complexityToLevel[ab.complexity]}</span>
@@ -252,7 +254,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
         <div class="related-grid">
           {relatedBooks.map(rb => (
             <a href={`/books/${toSlug(rb.title)}/`} class="related-book">
-              <img class="related-book__cover" src={rb.imageUrl} alt={`Обложка «${rb.title}»`} loading="lazy" width="160" height="240" />
+              <img class="related-book__cover" src={coverPath(rb.title, 'sm')} srcset={coverSrcset(rb.title, 'card')} alt={`Обложка «${rb.title}»`} loading="lazy" decoding="async" width="160" height="240" />
               <div class="related-book__info">
                 <span class="related-book__level">{complexityToLevel[rb.complexity]}</span>
                 <div class="related-book__title">{rb.title}</div>
@@ -334,7 +336,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
       "name": book.title,
       "author": { "@type": "Person", "name": book.author },
       "description": book.description,
-      "image": book.imageUrl,
+      "image": `https://readling.club${coverPath(book.title, 'lg')}`,
       "url": `https://readling.club/books/${slug}/`,
       "genre": genres.map((g: string) => genreLabels[g] || g),
       "inLanguage": ["en", "ru"],

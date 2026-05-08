@@ -32,7 +32,10 @@ import { links } from '../config/links';
         </div>
       </div>
       <div class="hero__visual">
-        <img src="/screen-immersion.png" alt="Режим погружения Readling" class="hero__phone" width="834" height="1731" />
+        <picture>
+          <source srcset="/screen-immersion.webp" type="image/webp" />
+          <img src="/screen-immersion.png" alt="Режим погружения Readling" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+        </picture>
       </div>
     </div>
   </section>
@@ -193,7 +196,10 @@ import { links } from '../config/links';
           </p>
         </div>
         <div class="tap-section__visual">
-          <img src="/screen-immersion-wide.png" alt="Перевод слова по нажатию" class="section__img" width="2000" height="1380" />
+          <picture>
+            <source srcset="/screen-immersion-wide.webp" type="image/webp" />
+            <img src="/screen-immersion-wide.png" alt="Перевод слова по нажатию" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
     </div>

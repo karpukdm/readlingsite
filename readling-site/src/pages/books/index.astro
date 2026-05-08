@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import allBooks from '../../data/books.json';
-import { toSlug, complexityToLevel, genreLabels } from '../../utils/slug';
+import { toSlug, complexityToLevel, genreLabels, coverPath, coverSrcset } from '../../utils/slug';
 
 const books = allBooks
   .filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
@@ -71,9 +71,11 @@ for (const genre of genreOrder) {
               <a href={`/books/${toSlug(book.title)}/`} class="book-item">
                 <img
                   class="book-item__cover"
-                  src={book.imageUrl}
+                  src={coverPath(book.title, 'sm')}
+                  srcset={coverSrcset(book.title, 'card')}
                   alt={`Обложка «${book.title}» — ${book.author}, ${(genreLabels[genre] || genre).toLowerCase()}, уровень ${complexityToLevel[book.complexity]}`}
                   loading="lazy"
+                  decoding="async"
                   width="160"
                   height="240"
                 />

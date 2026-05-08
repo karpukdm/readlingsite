@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
 import allBooks from '../data/books.json';
-import { toSlug, complexityToLevel, pickByHash } from '../utils/slug';
+import { toSlug, complexityToLevel, pickByHash, coverPath, coverSrcset } from '../utils/slug';
 
 const books = allBooks.filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
 const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
@@ -33,7 +33,10 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
         </ul>
       </div>
       <div class="hero__visual">
-        <img src="/screen-immersion.png" alt="Readling — режим погружения" class="hero__phone" width="834" height="1731" />
+        <picture>
+          <source srcset="/screen-immersion.webp" type="image/webp" />
+          <img src="/screen-immersion.png" alt="Readling — режим погружения" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+        </picture>
       </div>
     </div>
   </section>
@@ -180,9 +183,11 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
           <a href={`/books/${toSlug(book.title)}/`} class="book-card">
             <img
               class="book-card__cover"
-              src={book.imageUrl}
+              src={coverPath(book.title, 'sm')}
+              srcset={coverSrcset(book.title, 'card')}
               alt={`Обложка книги «${book.title}» — ${book.author}, уровень ${complexityToLevel[book.complexity]}`}
               loading="lazy"
+              decoding="async"
               width="160"
               height="240"
             />

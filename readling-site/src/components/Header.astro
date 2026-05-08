@@ -12,7 +12,10 @@ const navItems = [
 <header class="header">
   <div class="container header__inner">
     <a href="/" class="header__logo">
-      <img src="/logo.png" alt="Readling" class="header__logo-icon" width="32" height="32" />
+      <picture>
+        <source srcset="/logo.webp" type="image/webp" />
+        <img src="/logo.png" alt="Readling" class="header__logo-icon" width="32" height="32" decoding="async" />
+      </picture>
       <span class="header__logo-text">Readling</span>
     </a>
     <nav class="header__nav" id="nav">

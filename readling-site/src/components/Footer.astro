@@ -27,7 +27,10 @@ const currentYear = new Date().getFullYear();
     <div class="container footer-links__inner">
       <div class="footer-col footer-col--brand">
         <a href="/" class="footer__logo">
-          <img src="/logo.png" alt="Readling" class="footer__logo-icon" width="32" height="32" />
+          <picture>
+            <source srcset="/logo.webp" type="image/webp" />
+            <img src="/logo.png" alt="Readling" class="footer__logo-icon" width="32" height="32" loading="lazy" decoding="async" />
+          </picture>
           Readling
         </a>
         <p class="footer__desc">Приложение для изучения английского через чтение книг</p>

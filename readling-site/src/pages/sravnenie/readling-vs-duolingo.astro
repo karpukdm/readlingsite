@@ -27,12 +27,18 @@ import { links } from '../../config/links';
       </p>
       <div class="vs-badges">
         <div class="vs-badge">
-          <img src="/logo.png" alt="Readling" class="vs-badge__icon" />
+          <picture>
+            <source srcset="/logo.webp" type="image/webp" />
+            <img src="/logo.png" alt="Readling" class="vs-badge__icon" decoding="async" />
+          </picture>
           <span class="vs-badge__name">Readling</span>
         </div>
         <span class="vs-divider">vs</span>
         <div class="vs-badge">
-          <img src="/duolingo-logo.png" alt="Duolingo" class="vs-badge__icon" />
+          <picture>
+            <source srcset="/duolingo-logo.webp" type="image/webp" />
+            <img src="/duolingo-logo.png" alt="Duolingo" class="vs-badge__icon" decoding="async" />
+          </picture>
           <span class="vs-badge__name">Duolingo</span>
         </div>
       </div>
@@ -213,7 +219,10 @@ import { links } from '../../config/links';
       <h2 class="text-center mb-l">Три вещи, которые есть в Readling и нет в Duolingo</h2>
       <div class="grid-3">
         <div class="card">
-          <img src="/screen-immersion.png" alt="Режим погружения" class="comparison-screen mb-m" width="834" height="1731" />
+          <picture>
+            <source srcset="/screen-immersion.webp" type="image/webp" />
+            <img src="/screen-immersion.png" alt="Режим погружения" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
+          </picture>
           <h3 class="mb-s">Режим плавного погружения</h3>
           <p>
             Английский текст появляется в книге постепенно — вы привыкаете к языку без стресса.
@@ -221,7 +230,10 @@ import { links } from '../../config/links';
           </p>
         </div>
         <div class="card">
-          <img src="/screen-catalog.png" alt="Каталог книг" class="comparison-screen mb-m" width="834" height="1731" />
+          <picture>
+            <source srcset="/screen-catalog.webp" type="image/webp" />
+            <img src="/screen-catalog.png" alt="Каталог книг" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
+          </picture>
           <h3 class="mb-s">Настоящие книги</h3>
           <p>
             В Readling вы читаете детективы, фантастику, классику — полноценные истории.
@@ -229,7 +241,10 @@ import { links } from '../../config/links';
           </p>
         </div>
         <div class="card">
-          <img src="/screen-training.png" alt="Тренировки" class="comparison-screen mb-m" width="834" height="1731" />
+          <picture>
+            <source srcset="/screen-training.webp" type="image/webp" />
+            <img src="/screen-training.png" alt="Тренировки" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
+          </picture>
           <h3 class="mb-s">Тренировки из ваших книг</h3>
           <p>
             Каждое слово, которое вы посмотрели при чтении, попадает в словарь.
