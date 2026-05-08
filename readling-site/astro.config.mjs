@@ -5,7 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 
-const SITE = 'https://app.readling.club';
+const SITE = 'https://readling.club';
 const PROJECT_ROOT = dirname(fileURLToPath(import.meta.url));
 const BUILD_TIME = new Date();
 
