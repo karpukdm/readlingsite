@@ -64,7 +64,7 @@ export default defineConfig({
         const lastmod = resolveLastmod(url).toISOString();
 
         // Главная — высший приоритет, обновляется еженедельно
-        if (/\/$/.test(url) && url.replace(/\/$/, '') === 'https://app.readling.club') {
+        if (/\/$/.test(url) && url.replace(/\/$/, '') === SITE) {
           return { ...item, lastmod, priority: 1.0, changefreq: 'weekly' };
         }
 
