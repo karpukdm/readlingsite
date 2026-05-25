@@ -3,9 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
 import allBooks from '../data/books.json';
 import { toSlug, complexityToLevel, pickByHash, coverPath, coverSrcset } from '../utils/slug';
+import { getPageDates } from '../utils/dates';
 
 const books = allBooks.filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
 const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
+const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chtenie.astro');
 ---
 
 <BaseLayout
@@ -28,8 +30,10 @@ const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
       <div class="hero__content">
         <h1 class="mb-m">Параллельное чтение: книги на английском с русским переводом рядом</h1>
         <p class="hero__subtitle mb-l">
-          Английский оригинал и русский перевод — предложение за предложением.
-          Читайте, сравнивайте, учите грамматику и новые слова в контексте настоящих книг.
+          <strong>Параллельное чтение — это метод изучения языка, при котором английский оригинал
+          и русский перевод располагаются рядом, абзац напротив абзаца.</strong>
+          Вы читаете, сравниваете конструкции, проверяете понимание — и учите грамматику и новые слова
+          в контексте настоящих книг, а не упражнений.
         </p>
         <div class="store-buttons">
           <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
@@ -39,7 +43,7 @@ const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
       <div class="hero__visual">
         <picture>
           <source srcset="/screen-parallel.webp" type="image/webp" />
-          <img src="/screen-parallel.png" alt="Параллельное чтение Readling" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+          <img src="/screen-parallel.png" alt="Скриншот режима параллельного чтения Readling: на экране смартфона английский оригинал книги и русский перевод расположены параграфами друг под другом" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
         </picture>
       </div>
     </div>
@@ -68,7 +72,7 @@ const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
         <div class="what-section__visual">
           <picture>
             <source srcset="/screen-parallel-wide.webp" type="image/webp" />
-            <img src="/screen-parallel-wide.png" alt="Параллельное чтение — крупно" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
+            <img src="/screen-parallel-wide.png" alt="Развёрнутый интерфейс параллельного чтения Readling: английский оригинал и русский перевод книги показаны параграф за параграфом, с подсветкой текущего параграфа" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
           </picture>
         </div>
       </div>
@@ -223,21 +227,6 @@ const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
     </div>
   </section>
 
-  <!-- TESTIMONIAL -->
-  <section class="section section--alt">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Отзыв о параллельном чтении в Readling</h2>
-      <div class="testimonial" style="max-width: 600px; margin: 0 auto;">
-        <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial__text">
-          &laquo;Наконец-то нашёл приложение, где параллельный перевод сделан удобно.
-          Не PDF с двумя колонками, а нормальный интерактивный текст с переводом слов. Читаю каждый день.&raquo;
-        </p>
-        <p class="testimonial__author">Дмитрий — Google Play</p>
-      </div>
-    </div>
-  </section>
-
   <!-- CTA -->
   <section class="section" style="padding-bottom: 0;">
     <div class="container text-center">
@@ -290,10 +279,19 @@ const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
       "description": "Книги на английском с русским переводом рядом. Параллельное чтение в Readling: оригинал и перевод предложение за предложением.",
       "image": "https://readling.club/screen-parallel.png",
       "url": "https://readling.club/parallelnoe-chtenie/",
-      "author": { "@type": "Organization", "name": "Readling" },
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+      "inLanguage": "ru",
+      "author": {
+        "@type": "Person",
+        "name": "Дзмитрий Карпук",
+        "jobTitle": "Основатель Readling",
+        "url": "https://readling.club/o-readling/"
+      },
       "publisher": {
         "@type": "Organization",
         "name": "Readling",
+        "url": "https://readling.club/",
         "logo": { "@type": "ImageObject", "url": "https://readling.club/logo.png" }
       },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://readling.club/parallelnoe-chtenie/" }

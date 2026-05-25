@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Страница не найдена — Readling"
+  description="К сожалению, эта страница не существует. Вернитесь на главную или загляните в каталог книг."
+  noindex={true}
+>
+  <section class="section not-found">
+    <div class="container text-center">
+      <div class="not-found__code">404</div>
+      <h1 class="mb-m">Страница не найдена</h1>
+      <p class="not-found__text mb-l">
+        Похоже, эта страница переехала или никогда не существовала. Но не страшно — вот куда можно перейти:
+      </p>
+      <div class="not-found__links">
+        <a href="/" class="btn btn--primary">На главную</a>
+        <a href="/books/" class="btn btn--secondary">Каталог книг</a>
+      </div>
+
+      <div class="not-found__nav">
+        <h2 class="mb-m">Популярные разделы</h2>
+        <ul>
+          <li><a href="/metod-pogruzheniya/">Метод погружения</a></li>
+          <li><a href="/parallelnoe-chtenie/">Параллельное чтение</a></li>
+          <li><a href="/sravnenie/readling-vs-duolingo/">Readling vs Duolingo</a></li>
+          <li><a href="/pricing/">Цены</a></li>
+          <li><a href="/o-readling/">О Readling</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: var(--space-xxl) 0;
+  }
+
+  .not-found__code {
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-primary);
+    margin-bottom: var(--space-m);
+    letter-spacing: -2px;
+  }
+
+  .not-found__text {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    max-width: 480px;
+    margin: 0 auto var(--space-l);
+  }
+
+  .not-found__links {
+    display: flex;
+    gap: var(--space-m);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xxl);
+  }
+
+  .not-found__nav {
+    border-top: 1px solid var(--color-card-border);
+    padding-top: var(--space-xl);
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .not-found__nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    text-align: left;
+  }
+
+  .not-found__nav a {
+    display: block;
+    padding: var(--space-s) var(--space-m);
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 500;
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .not-found__nav a:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 480px) {
+    .not-found__code {
+      font-size: 4.5rem;
+    }
+  }
+</style>

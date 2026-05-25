@@ -19,23 +19,24 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
         <span class="badge mb-m">7 дней бесплатно</span>
         <h1 class="mb-m">Учите английский через книги — легко, интересно, без зубрёжки</h1>
         <p class="hero__subtitle mb-l">
-          Readling — приложение для изучения английского через чтение настоящих книг.
-          Английский текст появляется в книге постепенно — вы читаете интересную историю, а язык усваивается сам.
+          <strong>Readling — мобильное приложение для изучения английского через чтение настоящих книг.</strong>
+          Английский текст появляется в книге постепенно, слова запоминаются в контексте истории,
+          а тренировки строятся на тех словах, которые вы встретили сами.
         </p>
         <div class="store-buttons mb-m">
           <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
           <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
         </div>
         <ul class="proof-line">
-          <li><span class="proof-line__stars">★★★★★</span> 4.8</li>
           <li>200+ книг</li>
           <li>Уровни A1–C2</li>
+          <li>iOS и Android</li>
         </ul>
       </div>
       <div class="hero__visual">
         <picture>
           <source srcset="/screen-immersion.webp" type="image/webp" />
-          <img src="/screen-immersion.png" alt="Readling — режим погружения" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+          <img src="/screen-immersion.png" alt="Скриншот приложения Readling в режиме погружения: страница книги, где английские слова постепенно вплетаются в русский текст" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
         </picture>
       </div>
     </div>
@@ -199,36 +200,6 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="section section--warm">
-    <div class="container">
-      <h2 class="text-center mb-l">Что говорят наши читатели</h2>
-      <div class="grid-3">
-        <div class="testimonial">
-          <div class="testimonial__stars">★★★★★</div>
-          <p class="testimonial__text">
-            «Наконец-то нашёл способ учить английский, который не бросаешь через неделю. Читаю книги и не замечаю, как учусь.»
-          </p>
-          <p class="testimonial__author">Алексей — App Store</p>
-        </div>
-        <div class="testimonial">
-          <div class="testimonial__stars">★★★★★</div>
-          <p class="testimonial__text">
-            «Режим погружения — это гениально. К середине книги вдруг понимаешь, что читаешь по-английски.»
-          </p>
-          <p class="testimonial__author">Мария — Google Play</p>
-        </div>
-        <div class="testimonial">
-          <div class="testimonial__stars">★★★★★</div>
-          <p class="testimonial__text">
-            «Тренировки по словам из книги — это то, чего не хватало. Учу именно свои слова, а не случайные списки.»
-          </p>
-          <p class="testimonial__author">Дмитрий — App Store</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- FAQ -->
   <section class="section">
     <div class="container max-w-wide mx-auto">
@@ -288,11 +259,19 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
       "name": "Readling",
       "url": "https://readling.club/",
       "logo": "https://readling.club/logo.png",
+      "description": "Мобильное приложение для изучения английского через чтение книг с режимом погружения и параллельным переводом.",
+      "foundingDate": "2024",
       "sameAs": [
         "https://apps.apple.com/by/app/readling-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9-%D0%BF%D0%BE-%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0%D0%BC/id6752216664",
         "https://play.google.com/store/apps/details?id=com.karpukdm.readling",
         "https://t.me/readlingapp"
-      ]
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://t.me/readlingapp",
+        "availableLanguage": ["Russian", "English"]
+      }
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -315,13 +294,6 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "500",
-        "bestRating": "5",
-        "worstRating": "1"
       }
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({

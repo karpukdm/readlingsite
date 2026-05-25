@@ -45,6 +45,7 @@ function resolveLastmod(url) {
   if (path === '/metod-pogruzheniya') return gitLastmod('src/pages/metod-pogruzheniya.astro');
   if (path === '/parallelnoe-chtenie') return gitLastmod('src/pages/parallelnoe-chtenie.astro');
   if (path === '/pricing') return gitLastmod('src/pages/pricing.astro');
+  if (path === '/o-readling') return gitLastmod('src/pages/o-readling.astro');
   if (path === '/sravnenie/readling-vs-duolingo') {
     return gitLastmod('src/pages/sravnenie/readling-vs-duolingo.astro');
   }
@@ -71,6 +72,11 @@ export default defineConfig({
         // Тематические лендинги (метод, параллельное чтение, цены, сравнения) — высокий приоритет
         if (/\/(metod-pogruzheniya|parallelnoe-chtenie|pricing|sravnenie)\//.test(url)) {
           return { ...item, lastmod, priority: 0.9, changefreq: 'monthly' };
+        }
+
+        // О компании — средне-высокий приоритет, обновляется редко
+        if (/\/o-readling\/$/.test(url)) {
+          return { ...item, lastmod, priority: 0.7, changefreq: 'yearly' };
         }
 
         // Каталог книг

@@ -10,6 +10,7 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   noindex?: boolean;
+  keywords?: string;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   ogImage = '/og-default.png',
   ogType = 'website',
   noindex = false,
+  keywords,
 } = Astro.props;
 
 const path = canonicalPath && !canonicalPath.endsWith('/') ? canonicalPath + '/' : canonicalPath;
@@ -35,10 +37,14 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
   <meta name="format-detection" content="telephone=no" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {keywords && <meta name="keywords" content={keywords} />}
+  <meta name="author" content="Readling" />
   {noindex
     ? <meta name="robots" content="noindex, nofollow" />
-    : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
+    : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
   <link rel="canonical" href={canonicalURL} />
+  <link rel="alternate" hreflang="ru" href={canonicalURL} />
+  <link rel="alternate" hreflang="x-default" href={canonicalURL} />
 
   <!-- Open Graph -->
   <meta property="og:type" content={ogType} />

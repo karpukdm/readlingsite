@@ -1,4 +1,24 @@
 User-agent: *
 Allow: /
 
+# Allow Google's AI training/grounding crawler explicitly
+User-agent: Google-Extended
+Allow: /
+
+# Allow common AI crawlers (helps Readling appear in AI-assisted answers)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
 Sitemap: https://readling.club/sitemap-index.xml

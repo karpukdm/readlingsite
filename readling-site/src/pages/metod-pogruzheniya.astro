@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
+import { getPageDates } from '../utils/dates';
+
+const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheniya.astro');
 ---
 
 <BaseLayout
@@ -23,8 +26,10 @@ import { links } from '../config/links';
       <div class="hero__content">
         <h1 class="mb-m">Метод погружения: как выучить английский, читая книги</h1>
         <p class="hero__subtitle mb-l">
-          Вы читаете книгу на русском, а английские слова и фразы появляются всё чаще.
-          К концу книги — вы читаете на английском. И всё понимаете. Это метод погружения в Readling.
+          <strong>Метод погружения — это способ изучения английского через чтение книг,
+          в котором английский текст постепенно замещает русский.</strong>
+          Вы начинаете книгу почти полностью на русском, а заканчиваете её на английском —
+          и понимаете каждое слово, потому что язык появлялся плавно, через контекст истории.
         </p>
         <div class="store-buttons">
           <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
@@ -34,7 +39,7 @@ import { links } from '../config/links';
       <div class="hero__visual">
         <picture>
           <source srcset="/screen-immersion.webp" type="image/webp" />
-          <img src="/screen-immersion.png" alt="Режим погружения Readling" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+          <img src="/screen-immersion.png" alt="Скриншот режима погружения Readling: страница книги, где английский текст постепенно замещает русский — видно, как процент английского растёт от начала к концу" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
         </picture>
       </div>
     </div>
@@ -198,7 +203,7 @@ import { links } from '../config/links';
         <div class="tap-section__visual">
           <picture>
             <source srcset="/screen-immersion-wide.webp" type="image/webp" />
-            <img src="/screen-immersion-wide.png" alt="Перевод слова по нажатию" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
+            <img src="/screen-immersion-wide.png" alt="Скриншот Readling крупным планом: пользователь нажимает на английское слово в тексте книги, открывается окно с переводом, транскрипцией и кнопкой сохранения в личный словарь" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
           </picture>
         </div>
       </div>
@@ -234,21 +239,6 @@ import { links } from '../config/links';
             Читаете почти как на оригинале, но с удобной страховочной сеткой.
           </p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIAL -->
-  <section class="section section--alt">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Что говорят пользователи о методе погружения</h2>
-      <div class="testimonial" style="max-width: 600px; margin: 0 auto;">
-        <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial__text">
-          &laquo;Сначала не верил, что получится. Но к середине книги вдруг понял — я читаю на английском и всё понимаю.
-          Это магия какая-то.&raquo;
-        </p>
-        <p class="testimonial__author">Алексей — App Store</p>
       </div>
     </div>
   </section>
@@ -310,10 +300,19 @@ import { links } from '../config/links';
       "description": "Как выучить английский через чтение книг. Режим погружения в Readling: английский плавно появляется в тексте.",
       "image": "https://readling.club/screen-immersion.png",
       "url": "https://readling.club/metod-pogruzheniya/",
-      "author": { "@type": "Organization", "name": "Readling" },
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+      "inLanguage": "ru",
+      "author": {
+        "@type": "Person",
+        "name": "Дзмитрий Карпук",
+        "jobTitle": "Основатель Readling",
+        "url": "https://readling.club/o-readling/"
+      },
       "publisher": {
         "@type": "Organization",
         "name": "Readling",
+        "url": "https://readling.club/",
         "logo": { "@type": "ImageObject", "url": "https://readling.club/logo.png" }
       },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://readling.club/metod-pogruzheniya/" }

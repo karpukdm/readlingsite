@@ -41,8 +41,8 @@ async function main() {
   let done = 0, skipped = 0, failed = 0;
   for (const book of books) {
     const slug = toSlug(book.title);
-    const url = book.imageUrl;
-    if (!url) { console.warn(`! no imageUrl for ${slug}`); failed++; continue; }
+    const url = book.image_url || book.imageUrl;
+    if (!url) { console.warn(`! no image_url for ${slug}`); failed++; continue; }
 
     const targets = VARIANTS.map(v => ({
       ...v,

@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { links } from '../../config/links';
+import { getPageDates } from '../../utils/dates';
+
+const { datePublished, dateModified } = getPageDates('src/pages/sravnenie/readling-vs-duolingo.astro');
 ---
 
 <BaseLayout
@@ -22,7 +25,8 @@ import { links } from '../../config/links';
     <div class="container text-center">
       <h1 class="mb-m">Readling vs Duolingo: два подхода к изучению английского</h1>
       <p class="hero__subtitle max-w-prose mx-auto mb-l">
-        Duolingo учит языку через упражнения. Readling — через чтение книг.
+        <strong>Главное отличие: Duolingo учит языку через короткие упражнения,
+        Readling — через чтение настоящих книг с переводом и режимом погружения.</strong>
         Оба подхода работают, но для разных целей. Разберёмся, какой подходит вам.
       </p>
       <div class="vs-badges">
@@ -221,7 +225,7 @@ import { links } from '../../config/links';
         <div class="card">
           <picture>
             <source srcset="/screen-immersion.webp" type="image/webp" />
-            <img src="/screen-immersion.png" alt="Режим погружения" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
+            <img src="/screen-immersion.png" alt="Скриншот режима погружения Readling: страница книги с постепенно растущей долей английского текста" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
           </picture>
           <h3 class="mb-s">Режим плавного погружения</h3>
           <p>
@@ -232,7 +236,7 @@ import { links } from '../../config/links';
         <div class="card">
           <picture>
             <source srcset="/screen-catalog.webp" type="image/webp" />
-            <img src="/screen-catalog.png" alt="Каталог книг" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
+            <img src="/screen-catalog.png" alt="Скриншот каталога Readling: список книг с обложками, авторами и метками уровней английского от A1 до C2" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
           </picture>
           <h3 class="mb-s">Настоящие книги</h3>
           <p>
@@ -243,7 +247,7 @@ import { links } from '../../config/links';
         <div class="card">
           <picture>
             <source srcset="/screen-training.webp" type="image/webp" />
-            <img src="/screen-training.png" alt="Тренировки" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
+            <img src="/screen-training.png" alt="Скриншот тренировок Readling: интерфейс флэшкарточки со словом из недавно прочитанной книги, переводом и кнопками оценки запоминания" class="comparison-screen mb-m" width="834" height="1731" loading="lazy" decoding="async" />
           </picture>
           <h3 class="mb-s">Тренировки из ваших книг</h3>
           <p>
@@ -251,21 +255,6 @@ import { links } from '../../config/links';
             Тренировки построены на ваших реальных пробелах, а не на случайных списках.
           </p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIAL -->
-  <section class="section section--alt">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Что говорят пользователи, попробовавшие оба приложения</h2>
-      <div class="testimonial" style="max-width: 600px; margin: 0 auto;">
-        <div class="testimonial__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial__text">
-          &laquo;Сидел на Duolingo два года. Прогресс остановился. В Readling за месяц прочитал первую книгу
-          на английском — и запомнил больше слов, чем за полгода упражнений.&raquo;
-        </p>
-        <p class="testimonial__author">Михаил — App Store</p>
       </div>
     </div>
   </section>
@@ -336,10 +325,19 @@ import { links } from '../../config/links';
       "description": "Честное сравнение Readling и Duolingo: методы обучения, фичи, цены. Два разных подхода к изучению английского.",
       "url": "https://readling.club/sravnenie/readling-vs-duolingo/",
       "image": "https://readling.club/og-default.png",
-      "author": { "@type": "Organization", "name": "Readling" },
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+      "inLanguage": "ru",
+      "author": {
+        "@type": "Person",
+        "name": "Дзмитрий Карпук",
+        "jobTitle": "Основатель Readling",
+        "url": "https://readling.club/o-readling/"
+      },
       "publisher": {
         "@type": "Organization",
         "name": "Readling",
+        "url": "https://readling.club/",
         "logo": { "@type": "ImageObject", "url": "https://readling.club/logo.png" }
       },
       "mainEntityOfPage": { "@type": "WebPage", "@id": "https://readling.club/sravnenie/readling-vs-duolingo/" }
@@ -349,8 +347,7 @@ import { links } from '../../config/links';
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://readling.club/" },
-        { "@type": "ListItem", "position": 2, "name": "Сравнения", "item": "https://readling.club/sravnenie/readling-vs-duolingo/" },
-        { "@type": "ListItem", "position": 3, "name": "Readling vs Duolingo", "item": "https://readling.club/sravnenie/readling-vs-duolingo/" }
+        { "@type": "ListItem", "position": 2, "name": "Readling vs Duolingo", "item": "https://readling.club/sravnenie/readling-vs-duolingo/" }
       ]
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
