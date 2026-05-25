@@ -15,6 +15,9 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
   description="Читайте книги на английском с русским переводом рядом. Параллельное чтение в Readling: оригинал и перевод предложение за предложением. Бесплатно 7 дней."
   canonicalPath="/parallelnoe-chtenie"
 >
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/screen-parallel.webp" type="image/webp" fetchpriority="high" />
+  </Fragment>
   <!-- BREADCRUMBS -->
   <nav class="breadcrumbs" aria-label="Хлебные крошки">
     <div class="container">
@@ -122,7 +125,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
       <!-- Parallel demo -->
       <div class="parallel-demo max-w-wide mx-auto">
         <div class="parallel-demo__row">
-          <div class="parallel-demo__en">
+          <div class="parallel-demo__en" lang="en">
             <div class="parallel-demo__lang">English</div>
             <p>Anna opened the door and walked into the room. On the table lay a letter. She looked at the envelope and smiled.</p>
           </div>

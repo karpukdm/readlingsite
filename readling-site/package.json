@@ -13,7 +13,9 @@
     "covers": "node scripts/optimize-covers.mjs",
     "covers:force": "node scripts/optimize-covers.mjs --force",
     "screens": "node scripts/optimize-screens.mjs",
-    "screens:force": "node scripts/optimize-screens.mjs --force"
+    "screens:force": "node scripts/optimize-screens.mjs --force",
+    "og": "node scripts/generate-og.mjs",
+    "og:force": "node scripts/generate-og.mjs --force"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",

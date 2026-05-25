@@ -11,6 +11,9 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
   description="Как выучить английский через чтение? Режим погружения в Readling: английский плавно появляется в тексте книги. Без зубрёжки, через контекст. Попробуйте бесплатно."
   canonicalPath="/metod-pogruzheniya"
 >
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/screen-immersion.webp" type="image/webp" fetchpriority="high" />
+  </Fragment>
   <!-- BREADCRUMBS -->
   <nav class="breadcrumbs" aria-label="Хлебные крошки">
     <div class="container">
@@ -86,8 +89,8 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
           </p>
           <div class="stage__example">
             <p>
-              Анна <span class="en">opened</span> дверь и вошла в комнату. На столе лежало <span class="en">the letter</span>.
-              Она <span class="en">looked</span> на конверт и <span class="en">smiled</span>.
+              Анна <span class="en" lang="en">opened</span> дверь и вошла в комнату. На столе лежало <span class="en" lang="en">the letter</span>.
+              Она <span class="en" lang="en">looked</span> на конверт и <span class="en" lang="en">smiled</span>.
             </p>
           </div>
         </div>
@@ -105,9 +108,9 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
           </p>
           <div class="stage__example">
             <p>
-              <span class="en">Anna opened the door and walked into</span> комнату.
-              <span class="en">On the table</span> лежало <span class="en">a letter.
-              She looked at the envelope and smiled.</span> Нужно было <span class="en">decide what to do next.</span>
+              <span class="en" lang="en">Anna opened the door and walked into</span> комнату.
+              <span class="en" lang="en">On the table</span> лежало <span class="en" lang="en">a letter.
+              She looked at the envelope and smiled.</span> Нужно было <span class="en" lang="en">decide what to do next.</span>
             </p>
           </div>
         </div>
@@ -125,9 +128,9 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
           </p>
           <div class="stage__example">
             <p>
-              <span class="en">Anna opened the door and walked into the room. On the table lay a letter.</span>
-              Она <span class="en">looked at the envelope and smiled. She had to decide what to do next, but</span>
-              сомнения <span class="en">wouldn't let her think clearly.</span>
+              <span class="en" lang="en">Anna opened the door and walked into the room. On the table lay a letter.</span>
+              Она <span class="en" lang="en">looked at the envelope and smiled. She had to decide what to do next, but</span>
+              сомнения <span class="en" lang="en">wouldn't let her think clearly.</span>
             </p>
           </div>
         </div>
@@ -145,7 +148,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
           </p>
           <div class="stage__example">
             <p>
-              <span class="en">Anna opened the door and walked into the room. On the table lay a letter.
+              <span class="en" lang="en">Anna opened the door and walked into the room. On the table lay a letter.
               She looked at the envelope and smiled. She had to decide what to do next,
               but doubt wouldn't let her think clearly.</span>
             </p>

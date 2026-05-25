@@ -12,6 +12,9 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
   title="Readling — учите английский язык, читая любимые книги"
   description="Изучение английского через чтение книг в приложении Readling. Режим плавного погружения, параллельное чтение, тренировки слов в контексте. 7 дней бесплатно."
 >
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/screen-immersion.webp" type="image/webp" fetchpriority="high" />
+  </Fragment>
   <!-- HERO -->
   <section class="hero">
     <div class="container hero__inner">
@@ -73,7 +76,7 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
                 <span class="mode-demo__pct">10% EN</span>
               </div>
               <div class="mode-demo__bar" style="--ratio: 10%"></div>
-              <p>Анна <span class="en">opened</span> дверь и <span class="en">looked</span> на конверт.</p>
+              <p>Анна <span class="en" lang="en">opened</span> дверь и <span class="en" lang="en">looked</span> на конверт.</p>
             </div>
             <div class="mode-demo__row">
               <div class="mode-demo__head">
@@ -81,7 +84,7 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
                 <span class="mode-demo__pct">50% EN</span>
               </div>
               <div class="mode-demo__bar" style="--ratio: 50%"></div>
-              <p><span class="en">Anna opened the door</span> и <span class="en">looked at the envelope</span>.</p>
+              <p><span class="en" lang="en">Anna opened the door</span> и <span class="en" lang="en">looked at the envelope</span>.</p>
             </div>
             <div class="mode-demo__row">
               <div class="mode-demo__head">
@@ -89,7 +92,7 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
                 <span class="mode-demo__pct">90% EN</span>
               </div>
               <div class="mode-demo__bar" style="--ratio: 90%"></div>
-              <p><span class="en">Anna opened the door and looked at the envelope.</span></p>
+              <p><span class="en" lang="en">Anna opened the door and looked at the envelope.</span></p>
             </div>
           </div>
           <span class="mode-card__link">Подробнее о методе погружения →</span>
@@ -111,7 +114,7 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
             Английский и русский текст параллельно — предложение за предложением. Удобно сравнивать конструкции и проверять понимание.
           </p>
           <div class="parallel-demo">
-            <div class="parallel-demo__col">
+            <div class="parallel-demo__col" lang="en">
               <span class="parallel-demo__badge">EN</span>
               <p>Anna opened the door and walked into the room.</p>
               <p>On the table lay a letter.</p>
@@ -148,11 +151,11 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
           </p>
           <ul class="phrase-mini">
             <li>
-              <span class="en">It's raining cats and dogs</span>
+              <span class="en" lang="en">It's raining cats and dogs</span>
               <span class="phrase-mini__good">→ Льёт как из ведра</span>
             </li>
             <li>
-              <span class="en">He kicked the bucket</span>
+              <span class="en" lang="en">He kicked the bucket</span>
               <span class="phrase-mini__good">→ Он отдал концы</span>
             </li>
           </ul>
