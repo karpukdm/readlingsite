@@ -1,37 +1,25 @@
-import { execFileSync } from 'node:child_process';
+// Даты страниц для Article schema.
+//
+// Раньше пробовали тянуть даты через `git log` (execFileSync),
+// но это ломает билд на Cloudflare Pages (shallow clone / нет git binary).
+// Безопасный фолбэк: используем дату текущей сборки.
+// Это правдиво (страница действительно собрана сегодня), и не ломает рендер.
 
-const BUILD_TIME = new Date();
-const cache = new Map<string, { published: Date; modified: Date }>();
+const BUILD_TIME = new Date().toISOString();
 
-function gitDate(relPath: string, filterAdded: boolean): Date {
-  try {
-    const args = ['log'];
-    if (filterAdded) args.push('--diff-filter=A');
-    args.push('--follow', '--format=%aI', '--', relPath);
-    const out = execFileSync('git', args, {
-      cwd: process.cwd(),
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim();
-    if (!out) return BUILD_TIME;
-    const lines = out.split('\n').filter(Boolean);
-    const iso = filterAdded ? lines[lines.length - 1] : lines[0];
-    return iso ? new Date(iso) : BUILD_TIME;
-  } catch {
-    return BUILD_TIME;
-  }
-}
+// Если хотите задать ручные даты создания страниц — добавьте сюда.
+// Иначе по умолчанию используется BUILD_TIME.
+const MANUAL_DATES: Record<string, { datePublished?: string; dateModified?: string }> = {
+  'src/pages/metod-pogruzheniya.astro': { datePublished: '2026-03-15T00:00:00Z' },
+  'src/pages/parallelnoe-chtenie.astro': { datePublished: '2026-03-15T00:00:00Z' },
+  'src/pages/sravnenie/readling-vs-duolingo.astro': { datePublished: '2026-03-15T00:00:00Z' },
+  'src/pages/o-readling.astro': { datePublished: '2026-05-25T00:00:00Z' },
+};
 
 export function getPageDates(relPath: string): { datePublished: string; dateModified: string } {
-  if (!cache.has(relPath)) {
-    cache.set(relPath, {
-      published: gitDate(relPath, true),
-      modified: gitDate(relPath, false),
-    });
-  }
-  const { published, modified } = cache.get(relPath)!;
+  const manual = MANUAL_DATES[relPath] || {};
   return {
-    datePublished: published.toISOString(),
-    dateModified: modified.toISOString(),
+    datePublished: manual.datePublished || BUILD_TIME,
+    dateModified: manual.dateModified || BUILD_TIME,
   };
 }
