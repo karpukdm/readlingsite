@@ -1,0 +1,293 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { links } from '../../config/links';
+import allBooks from '../../data/books.json';
+import {
+  toSlug,
+  complexityToLevel,
+  levelDescriptions,
+  genreLabels,
+  coverPath,
+  coverSrcset,
+} from '../../utils/slug';
+
+export function getStaticPaths() {
+  const levels = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'];
+  return levels.map(level => ({ params: { level }, props: { level } }));
+}
+
+const { level } = Astro.props;
+const levelUpper = level.toUpperCase();
+const info = levelDescriptions[level];
+
+const books = allBooks
+  .filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'))
+  .filter(b => complexityToLevel[b.complexity] === levelUpper);
+
+// Соседние уровни для перелинковки
+const order = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'];
+const idx = order.indexOf(level);
+const prevLevel = idx > 0 ? order[idx - 1] : null;
+const nextLevel = idx < order.length - 1 ? order[idx + 1] : null;
+
+const isBeginner = level === 'a1' || level === 'a2';
+const titlePrefix = isBeginner
+  ? `Книги на английском уровня ${levelUpper} для начинающих с переводом`
+  : `Книги на английском уровня ${levelUpper} с переводом`;
+const pageTitle = `${titlePrefix} — каталог Readling`;
+const pageDescription = `${books.length > 0 ? books.length + ' книг' : 'Книги'} на английском уровня ${levelUpper} (${info.fullName}) с русским переводом. ${info.long} Читайте с переводом по нажатию в Readling.`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath={`/uroven/${level}`}>
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <div class="container">
+      <a href="/">Главная</a>
+      <span class="breadcrumbs__sep">/</span>
+      <a href="/books/">Книги</a>
+      <span class="breadcrumbs__sep">/</span>
+      <span>Уровень {levelUpper}</span>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="text-center mb-sm">{titlePrefix}</h1>
+      <p class="text-center max-w-prose mx-auto mb-l">
+        <strong>{info.long}</strong>
+      </p>
+      <div class="level-facts max-w-wide mx-auto mb-xl">
+        <div class="level-fact"><span class="level-fact__label">Уровень</span><span class="level-fact__value">{levelUpper} · {info.fullName}</span></div>
+        <div class="level-fact"><span class="level-fact__label">Словарный запас</span><span class="level-fact__value">{info.vocab}</span></div>
+        <div class="level-fact"><span class="level-fact__label">Кому подходит</span><span class="level-fact__value">{info.best}</span></div>
+      </div>
+
+      {books.length > 0 ? (
+        <div class="books-grid">
+          {books.map(book => (
+            <a href={`/books/${toSlug(book.title)}/`} class="book-item">
+              <img
+                class="book-item__cover"
+                src={coverPath(book.title, 'sm')}
+                srcset={coverSrcset(book.title, 'card')}
+                alt={`Обложка «${book.title}» — ${book.author}, уровень ${levelUpper}`}
+                loading="lazy"
+                decoding="async"
+                width="160"
+                height="240"
+              />
+              <div class="book-item__info">
+                <span class="book-item__level">{levelUpper}</span>
+                <div class="book-item__title">{book.title}</div>
+                <div class="book-item__author">{book.author}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-center max-w-prose mx-auto">
+          Книги уровня {levelUpper} сейчас готовятся. Загляните в <a href="/books/">полный каталог</a> —
+          там более 100 книг от A1 до C2.
+        </p>
+      )}
+
+      <!-- Перелинковка по уровням -->
+      <div class="level-nav">
+        {prevLevel && <a href={`/uroven/${prevLevel}/`} class="btn btn--secondary">&larr; Уровень {prevLevel.toUpperCase()}</a>}
+        <a href="/books/" class="btn btn--ghost">Все книги</a>
+        {nextLevel && <a href={`/uroven/${nextLevel}/`} class="btn btn--secondary">Уровень {nextLevel.toUpperCase()} &rarr;</a>}
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO READ -->
+  <section class="section section--alt">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-l">Как читать на английском на уровне {levelUpper}</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 class="mb-s">Параллельное чтение</h3>
+          <p>
+            Английский оригинал и русский перевод рядом. Если что-то непонятно — взгляд скользит на перевод.
+            {isBeginner ? ' На уровне ' + levelUpper + ' это страховка: вы не застрянете на незнакомом слове.' : ' Удобно разбирать сложные конструкции и авторский стиль.'}
+          </p>
+          <a href="/parallelnoe-chtenie/" class="callout__link">Подробнее →</a>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Режим погружения</h3>
+          <p>
+            Английский появляется в тексте постепенно — от нескольких слов до целых страниц.
+            {isBeginner ? ' Идеально для начинающих: на старте почти всё на русском, бросать нечего.' : ' Помогает выйти на беглое чтение без перевода.'}
+          </p>
+          <a href="/metod-pogruzheniya/" class="callout__link">Подробнее →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-l">Вопросы о чтении на уровне {levelUpper}</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Какие книги на английском читать на уровне {levelUpper}?</summary>
+          <div class="faq-item__answer">
+            На уровне {levelUpper} ({info.short}) подойдут книги, отмеченные этим уровнем в каталоге Readling.
+            {isBeginner ? ' Для начинающих это короткие и адаптированные тексты с частотной лексикой.' : ' Лексика и конструкции соответствуют вашему уровню, а перевод всегда под рукой.'}
+            Каждое слово в Readling можно перевести по нажатию.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Что значит уровень {levelUpper}?</summary>
+          <div class="faq-item__answer">{info.long} Это {info.vocab}.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Можно ли читать книги выше своего уровня?</summary>
+          <div class="faq-item__answer">
+            Да. В режиме погружения текст начинается с большой долей русского, а в параллельном режиме
+            перевод всегда рядом — поэтому книгу можно взять даже на уровень выше текущего.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schema.org -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": pageTitle,
+      "description": pageDescription,
+      "url": `https://readling.club/uroven/${level}/`,
+      "inLanguage": "ru",
+      "isPartOf": { "@type": "WebSite", "name": "Readling", "url": "https://readling.club/" },
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": books.length,
+        "itemListElement": books.slice(0, 30).map((b, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "url": `https://readling.club/books/${toSlug(b.title)}/`,
+          "name": b.title,
+        }))
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Книги", "item": "https://readling.club/books/" },
+        { "@type": "ListItem", "position": 3, "name": `Уровень ${levelUpper}`, "item": `https://readling.club/uroven/${level}/` }
+      ]
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `Какие книги на английском читать на уровне ${levelUpper}?`,
+          "acceptedAnswer": { "@type": "Answer", "text": `На уровне ${levelUpper} (${info.short}) подойдут книги, отмеченные этим уровнем в каталоге Readling. Каждое слово можно перевести по нажатию.` }
+        },
+        {
+          "@type": "Question",
+          "name": `Что значит уровень ${levelUpper}?`,
+          "acceptedAnswer": { "@type": "Answer", "text": `${info.long} Это ${info.vocab}.` }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли читать книги выше своего уровня?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Да. В режиме погружения текст начинается с большой долей русского, а в параллельном режиме перевод всегда рядом — поэтому книгу можно взять даже на уровень выше текущего." }
+        }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .breadcrumbs {
+    padding: var(--space-m) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
+
+  .level-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+  }
+  .level-fact {
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .level-fact__label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-tertiary);
+    font-weight: 600;
+  }
+  .level-fact__value { font-size: 0.9375rem; line-height: 1.5; }
+
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-l);
+  }
+  .book-item { text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform var(--duration-fast) var(--ease-out); }
+  .book-item:hover { transform: translateY(-4px); color: inherit; }
+  .book-item__cover {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-card-border);
+    background: var(--color-surface-alt);
+    margin-bottom: var(--space-s);
+  }
+  .book-item__info { display: flex; flex-direction: column; gap: 2px; }
+  .book-item__level {
+    display: inline-block;
+    width: fit-content;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    margin-bottom: var(--space-xs);
+  }
+  .book-item__title { font-size: 0.875rem; font-weight: 600; color: var(--color-text); line-height: 1.3; }
+  .book-item__author { font-size: 0.75rem; color: var(--color-text-tertiary); }
+
+  .level-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-m);
+    margin-top: var(--space-xxl);
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); }
+
+  @media (max-width: 768px) {
+    .level-facts { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .books-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-m); }
+  }
+</style>

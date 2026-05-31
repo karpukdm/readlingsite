@@ -44,6 +44,7 @@ function resolveLastmod(url) {
   }
   if (path === '/metod-pogruzheniya') return gitLastmod('src/pages/metod-pogruzheniya.astro');
   if (path === '/parallelnoe-chtenie') return gitLastmod('src/pages/parallelnoe-chtenie.astro');
+  if (path.startsWith('/uroven/')) return gitLastmod('src/pages/uroven/[level].astro');
   if (path === '/pricing') return gitLastmod('src/pages/pricing.astro');
   if (path === '/o-readling') return gitLastmod('src/pages/o-readling.astro');
   if (path === '/sravnenie/readling-vs-duolingo') {
@@ -72,6 +73,11 @@ export default defineConfig({
         // Тематические лендинги (метод, параллельное чтение, цены, сравнения) — высокий приоритет
         if (/\/(metod-pogruzheniya|parallelnoe-chtenie|pricing|sravnenie)\//.test(url)) {
           return { ...item, lastmod, priority: 0.9, changefreq: 'monthly' };
+        }
+
+        // Страницы по уровням (A1–C2) — высокий приоритет
+        if (/\/uroven\/[^/]+\/$/.test(url)) {
+          return { ...item, lastmod, priority: 0.8, changefreq: 'monthly' };
         }
 
         // О компании — средне-высокий приоритет, обновляется редко

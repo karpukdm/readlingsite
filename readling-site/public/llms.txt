@@ -8,7 +8,7 @@ Readling is a mobile app (iOS & Android) that helps Russian speakers learn Engli
 - Immersion mode: English gradually replaces Russian text as you read
 - Parallel reading: side-by-side English and Russian translation
 - 3 training types: flash cards, sentence puzzles, fill-in-the-word
-- Book catalog: A1-C2 CEFR levels, 25 genres, 200+ books
+- Book catalog: A1-C2 CEFR levels, 25 genres, 100+ books
 - Personal dictionary: auto-saved from reading, used in training
 - Daily reading streaks for motivation
 
