@@ -5,6 +5,8 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 
+import cloudflare from '@astrojs/cloudflare';
+
 const SITE = 'https://readling.club';
 const PROJECT_ROOT = dirname(fileURLToPath(import.meta.url));
 const BUILD_TIME = new Date();
@@ -57,6 +59,7 @@ export default defineConfig({
   site: SITE,
   output: 'static',
   trailingSlash: 'always',
+
   integrations: [
     sitemap({
       changefreq: 'weekly',
@@ -99,7 +102,10 @@ export default defineConfig({
       },
     }),
   ],
+
   build: {
     assets: '_assets',
   },
+
+  adapter: cloudflare()
 });
