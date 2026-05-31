@@ -78,7 +78,7 @@ const pageDescription = `${books.length > 0 ? books.length + ' книг' : 'Кн
               />
               <div class="book-item__info">
                 <span class="book-item__level">{levelUpper}</span>
-                <div class="book-item__title">{book.title}</div>
+                <div class="book-item__title">{book.title}<span class="visually-hidden"> на английском {book.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
                 <div class="book-item__author">{book.author}</div>
               </div>
             </a>

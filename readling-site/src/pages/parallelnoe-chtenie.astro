@@ -222,7 +222,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
               width="160"
               height="240"
             />
-            <div class="book-card__title">{book.title}</div>
+            <div class="book-card__title">{book.title}<span class="visually-hidden"> на английском {book.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
             <div class="book-card__author">{book.author} · {complexityToLevel[book.complexity]}</div>
           </a>
         ))}

@@ -645,6 +645,19 @@ p {
   max-width: 900px;
 }
 
+/* Текст для скринридеров и поисковых краулеров, скрытый визуально */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .mb-xs { margin-bottom: var(--space-xs); }
 .mb-s { margin-bottom: var(--space-s); }
 .mb-sm { margin-bottom: var(--space-sm); }

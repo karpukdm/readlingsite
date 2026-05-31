@@ -126,6 +126,13 @@ const synopsisSnippet = extractSnippet(book.description, 110);
 const pageTitle = `${book.title} (${book.author}) на английском с переводом — ${primaryGenreLabel}, уровень ${level} | Readling`;
 const pageDescription = `${synopsisSnippet} Читайте «${book.title}» на английском с русским переводом в Readling — ${isParallel ? 'параллельный режим' : 'режим погружения'}, уровень ${level}.`;
 
+// H1 и лид-абзац под ключевые запросы («[книга] на английском с [параллельным] переводом»)
+const translationPhrase = isParallel ? 'с параллельным переводом' : 'с переводом';
+const pageH1 = `${book.title} на английском ${translationPhrase}`;
+const heroLead = isParallel
+  ? `«${book.title}» (${book.author}) — читать на английском с параллельным русским переводом онлайн: английский оригинал и перевод рядом. ${primaryGenreLabel}, уровень ${level}.`
+  : `«${book.title}» (${book.author}) — читать на английском с русским переводом онлайн в режиме погружения. ${primaryGenreLabel}, уровень ${level}.`;
+
 // Тексты для FAQ (вычисляем в frontmatter, чтобы не использовать `<=` в JSX)
 const previousLevel = complexityToLevel[Math.max(1, complexity - 1)];
 const faqLevelAnswer = isParallel
@@ -166,7 +173,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
           <img src={coverPath(book.title, 'md')} srcset={coverSrcset(book.title, 'hero')} alt={`Обложка книги «${book.title}» — ${book.author}, ${primaryGenreLabel.toLowerCase()}, уровень ${level}`} width="240" height="360" fetchpriority="high" decoding="async" />
         </div>
         <div class="book-hero__info">
-          <h1 class="mb-s">{book.title}</h1>
+          <h1 class="mb-s">{pageH1}</h1>
           <p class="book-hero__author mb-m">{book.author}</p>
           <div class="book-hero__tags mb-m">
             <span class="tag tag--level">{level}</span>
@@ -175,6 +182,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
               <span class="tag">{genreLabels[g] || g}</span>
             ))}
           </div>
+          <p class="book-hero__lead mb-m">{heroLead}</p>
           <p class="book-hero__desc mb-m">{book.description}</p>
           <div class="store-buttons">
             <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
@@ -316,7 +324,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
             </li>
           </ul>
 
-          <h2 class="mt-xxl mb-m">Как читать «{book.title}» в Readling</h2>
+          <h2 class="mt-xxl mb-m">Как читать «{book.title}» на английском с переводом в Readling</h2>
           <p class="mb-m">
             {isParallel
               ? `Откройте «${book.title}» в приложении и переключитесь в параллельный режим. Слева — английский оригинал ${book.author}, справа — русский перевод. Двигайтесь по книге в своём темпе. Если непонятно слово — нажмите на него: появится перевод и транскрипция, слово сохранится в личный словарь.`
@@ -374,7 +382,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
                     <a href={`/books/${toSlug(ab.title)}/`}>
                       <img src={coverPath(ab.title, 'sm')} alt={ab.title} loading="lazy" decoding="async" width="40" height="60" />
                       <div class="author-list__meta">
-                        <span class="author-list__title">{ab.title}</span>
+                        <span class="author-list__title">{ab.title}<span class="visually-hidden"> на английском {ab.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></span>
                         <span class="author-list__level">{complexityToLevel[ab.complexity]}</span>
                       </div>
                     </a>
@@ -402,7 +410,7 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
               <img class="related-book__cover" src={coverPath(rb.title, 'sm')} srcset={coverSrcset(rb.title, 'card')} alt={`Обложка «${rb.title}»`} loading="lazy" decoding="async" width="160" height="240" />
               <div class="related-book__info">
                 <span class="related-book__level">{complexityToLevel[rb.complexity]}</span>
-                <div class="related-book__title">{rb.title}</div>
+                <div class="related-book__title">{rb.title}<span class="visually-hidden"> на английском {rb.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
                 <div class="related-book__author">{rb.author}</div>
               </div>
             </a>
@@ -770,6 +778,12 @@ const weeksMax = Math.ceil(readingHoursMax / 3);
     color: var(--color-primary);
     border-color: rgba(0, 122, 255, 0.2);
     font-weight: 600;
+  }
+  .book-hero__lead {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    font-weight: 500;
   }
   .book-hero__desc {
     font-size: 1rem;
