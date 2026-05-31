@@ -1,0 +1,14 @@
+{
+  // Static-assets deploy on Cloudflare Workers.
+  // Committing this config stops `wrangler deploy` from running its
+  // "astro add cloudflare" auto-setup, which was injecting a SESSION KV
+  // binding (and failing to provision it) on every build.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "readlingsite",
+  "compatibility_date": "2025-05-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
