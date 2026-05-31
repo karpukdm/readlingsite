@@ -71,6 +71,8 @@ const rows = psqlJson(`
   SELECT COALESCE(json_agg(j), '[]'::json) FROM (
     SELECT b.image_url AS img,
            b.original_language AS lang,
+           b.pages_count AS pages,
+           (SELECT count(*) FROM chapters WHERE book_id = b.id) AS chapters,
            ( SELECT json_agg(
                jsonb_build_object('t', s.value->>'text', 'tt', s.value->>'translatedText', 'ph', s.value->'phrases')
                ORDER BY p.pord, (s.value->>'orderId')::int
@@ -88,13 +90,19 @@ const rows = psqlJson(`
   ) j
 `);
 
-// 3. Собираем excerpts.json: { [slug]: { mode, sentences: [{ en, ru, phrases:[{ru,en,cx}] }] } }
+// 3. Собираем excerpts.json и book-stats.json (реальные данные книги: страницы, главы).
 const excerpts = {};
+const stats = {};
 let matched = 0;
 for (const row of rows || []) {
   const meta = metaByImg.get(normUrl(row.img));
   if (!meta || !Array.isArray(row.sents)) continue;
   const fromEnglish = row.lang === 'ENGLISH';
+
+  // Реальная статистика — для всех совпавших книг (даже без отрывка)
+  const pages = Number(row.pages) || 0;
+  const chapters = Number(row.chapters) || 0;
+  if (pages || chapters) stats[meta.slug] = { pages, chapters };
 
   const sentences = [];
   let ruChars = 0;
@@ -127,5 +135,6 @@ for (const row of rows || []) {
 }
 
 writeFileSync(join(ROOT, 'src/data/excerpts.json'), JSON.stringify(excerpts) + '\n');
+writeFileSync(join(ROOT, 'src/data/book-stats.json'), JSON.stringify(stats) + '\n');
 const sz = (JSON.stringify(excerpts).length / 1024).toFixed(0);
-console.log(`Готово: ${matched} отрывков из ${siteBooks.length} книг сайта -> src/data/excerpts.json (${sz} KB)`);
+console.log(`Готово: ${matched} отрывков (${sz} KB) + ${Object.keys(stats).length} stat-записей из ${siteBooks.length} книг сайта.`);
