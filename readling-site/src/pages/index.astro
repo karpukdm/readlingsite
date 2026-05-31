@@ -9,8 +9,8 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
 ---
 
 <BaseLayout
-  title="Readling — учите английский язык, читая любимые книги"
-  description="Изучение английского через чтение книг в приложении Readling. Режим плавного погружения, параллельное чтение, тренировки слов в контексте. 7 дней бесплатно."
+  title="Книги на английском с переводом — читать и учить язык | Readling"
+  description="Readling — читайте книги на английском с русским переводом: параллельный режим (оригинал и перевод рядом) и плавное погружение. 100+ книг от A1 до C2, тренировки слов. 7 дней бесплатно."
 >
   <Fragment slot="head">
     <link rel="preload" as="image" href="/screen-immersion.webp" type="image/webp" fetchpriority="high" />
@@ -20,11 +20,12 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
     <div class="container hero__inner">
       <div class="hero__content">
         <span class="badge mb-m">7 дней бесплатно</span>
-        <h1 class="mb-m">Учите английский через книги — легко, интересно, без зубрёжки</h1>
+        <h1 class="mb-m">Книги на английском с переводом — читайте и учите язык без зубрёжки</h1>
         <p class="hero__subtitle mb-l">
-          <strong>Readling — мобильное приложение для изучения английского через чтение настоящих книг.</strong>
-          Английский текст появляется в книге постепенно, слова запоминаются в контексте истории,
-          а тренировки строятся на тех словах, которые вы встретили сами.
+          <strong>Readling — приложение для чтения книг на английском с русским переводом.</strong>
+          Выбирайте параллельный режим (оригинал и перевод рядом) или плавное погружение, где английский
+          появляется в тексте постепенно. Слова запоминаются в контексте истории, а тренировки строятся
+          на тех, что вы встретили сами.
         </p>
         <div class="store-buttons mb-m">
           <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
@@ -49,9 +50,9 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
   <section class="section">
     <div class="container">
       <div class="text-center mb-xl">
-        <h2 class="mb-s">Два режима чтения — выбирайте свой</h2>
+        <h2 class="mb-s">Книги на английском с переводом — два режима чтения</h2>
         <p class="max-w-prose mx-auto">
-          В каталоге Readling — книги двух типов: одни в параллельном режиме, другие в режиме погружения. Выбирайте подход по уровню и стилю.
+          В каталоге Readling — книги двух типов: одни в параллельном режиме (оригинал и перевод рядом), другие в режиме погружения. Выбирайте подход по уровню и стилю.
         </p>
       </div>
       <div class="modes-grid">
@@ -177,7 +178,7 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
     <div class="container">
       <div class="catalog-head">
         <div>
-          <h2 class="mb-xs">100+ книг для любого уровня</h2>
+          <h2 class="mb-xs">100+ книг на английском с переводом для любого уровня</h2>
           <p>От A1 для начинающих до C2 — детективы, фантастика, классика, романтика.</p>
         </div>
         <a href="/books/" class="btn btn--secondary">Весь каталог →</a>
