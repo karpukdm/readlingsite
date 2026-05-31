@@ -8,17 +8,26 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "covers": "node scripts/optimize-covers.mjs",
     "covers:force": "node scripts/optimize-covers.mjs --force",
     "screens": "node scripts/optimize-screens.mjs",
     "screens:force": "node scripts/optimize-screens.mjs --force",
     "og": "node scripts/generate-og.mjs",
-    "og:force": "node scripts/generate-og.mjs --force"
+    "og:force": "node scripts/generate-og.mjs --force",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.6.0",
     "@astrojs/sitemap": "^3.7.1",
     "astro": "^6.0.4"
+  },
+  "devDependencies": {
+    "wrangler": "^4.95.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
