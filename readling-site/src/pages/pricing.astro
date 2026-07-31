@@ -312,30 +312,41 @@ import { links } from '../config/links';
 
   <!-- Schema.org -->
   <Fragment slot="schema">
+    {/*
+      Здесь был `Product`, и Google проверял его как товарный листинг магазина:
+      требовал image, shippingDetails, hasMerchantReturnPolicy и review или
+      aggregateRating. Подписка на приложение не отправляется и не возвращается,
+      а отзывов и оценок мы не выдумываем — поэтому описываем то, чем это на
+      самом деле является: приложение с двумя тарифами.
+
+      `@id` тот же, что на главной: это одна сущность, описанная с двух страниц,
+      а не два разных приложения.
+    */}
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Readling Premium",
+      "@type": "MobileApplication",
+      "@id": "https://readling.club/#app",
+      "name": "Readling — английский по книгам",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "iOS, Android",
       "description": "Подписка на приложение Readling — изучение английского через чтение книг. 100+ книг, безлимитные тренировки.",
       "url": "https://readling.club/pricing/",
-      "brand": { "@type": "Brand", "name": "Readling" },
+      "image": "https://readling.club/logo.png",
+      "publisher": { "@type": "Organization", "name": "Readling", "url": "https://readling.club/" },
       "offers": [
         {
           "@type": "Offer",
           "name": "Бесплатный план",
           "price": "0",
           "priceCurrency": "USD",
-          "url": "https://readling.club/pricing/",
-          "availability": "https://schema.org/InStock"
+          "url": "https://readling.club/pricing/"
         },
         {
           "@type": "Offer",
           "name": "Подписка Premium",
           "price": "3.99",
           "priceCurrency": "USD",
-          "priceValidUntil": "2027-12-31",
-          "url": "https://readling.club/pricing/",
-          "availability": "https://schema.org/InStock"
+          "url": "https://readling.club/pricing/"
         }
       ]
     })} />

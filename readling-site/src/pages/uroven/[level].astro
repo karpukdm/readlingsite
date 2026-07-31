@@ -1,15 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { links } from '../../config/links';
-import allBooks from '../../data/books.json';
-import {
-  toSlug,
-  complexityToLevel,
-  levelDescriptions,
-  genreLabels,
-  coverPath,
-  coverSrcset,
-} from '../../utils/slug';
+import { levelDescriptions, coverPath, coverSrcset, extractSnippet } from '../../utils/slug';
+import { booksByLevel } from '../../utils/catalog';
 
 export function getStaticPaths() {
   const levels = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'];
@@ -20,9 +12,16 @@ const { level } = Astro.props;
 const levelUpper = level.toUpperCase();
 const info = levelDescriptions[level];
 
-const books = allBooks
-  .filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'))
-  .filter(b => complexityToLevel[b.complexity] === levelUpper);
+const books = booksByLevel(levelUpper);
+
+/**
+ * Уровень с горсткой книг не выполняет обещание из H1 («Книги на английском
+ * уровня A1») — такая страница читается как пустая и тянет вниз оценку раздела.
+ * Держим её доступной для навигации, но не отдаём в индекс, пока каталог не
+ * наполнится.
+ */
+const MIN_BOOKS_TO_INDEX = 3;
+const noindex = books.length < MIN_BOOKS_TO_INDEX;
 
 // Соседние уровни для перелинковки
 const order = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'];
@@ -34,11 +33,18 @@ const isBeginner = level === 'a1' || level === 'a2';
 const titlePrefix = isBeginner
   ? `Книги на английском уровня ${levelUpper} для начинающих с переводом`
   : `Книги на английском уровня ${levelUpper} с переводом`;
-const pageTitle = `${titlePrefix} — каталог Readling`;
-const pageDescription = `${books.length > 0 ? books.length + ' книг' : 'Книги'} на английском уровня ${levelUpper} (${info.fullName}) с русским переводом. ${info.long} Читайте с переводом по нажатию в Readling.`;
+// «— каталог Readling» добавляем только если title остаётся в пределах показа:
+// у A1/A2 префикс длиннее («для начинающих»), и хвост всё равно обрезался бы.
+const pageTitle = `${titlePrefix} — каталог Readling`.length <= 60
+  ? `${titlePrefix} — каталог Readling`
+  : titlePrefix;
+// Держим description в пределах ~160 символов — иначе Google обрезает его на
+// середине описания уровня, и сниппет теряет смысл.
+const DESCRIPTION_PREFIX = `${books.length > 0 ? books.length + ' книг' : 'Книги'} на английском уровня ${levelUpper} (${info.fullName}) с русским переводом. `;
+const pageDescription = DESCRIPTION_PREFIX + extractSnippet(info.long, 160 - DESCRIPTION_PREFIX.length);
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} canonicalPath={`/uroven/${level}`}>
+<BaseLayout title={pageTitle} description={pageDescription} canonicalPath={`/uroven/${level}`} noindex={noindex}>
   <!-- BREADCRUMBS -->
   <nav class="breadcrumbs" aria-label="Хлебные крошки">
     <div class="container">
@@ -65,12 +71,12 @@ const pageDescription = `${books.length > 0 ? books.length + ' книг' : 'Кн
       {books.length > 0 ? (
         <div class="books-grid">
           {books.map(book => (
-            <a href={`/books/${toSlug(book.title)}/`} class="book-item">
+            <a href={`/books/${book.slug}/`} class="book-item">
               <img
                 class="book-item__cover"
                 src={coverPath(book.title, 'sm')}
                 srcset={coverSrcset(book.title, 'card')}
-                alt={`Обложка «${book.title}» — ${book.author}, уровень ${levelUpper}`}
+                alt={`Обложка «${book.displayTitle}» — ${book.displayAuthor}, уровень ${levelUpper}`}
                 loading="lazy"
                 decoding="async"
                 width="160"
@@ -78,8 +84,8 @@ const pageDescription = `${books.length > 0 ? books.length + ' книг' : 'Кн
               />
               <div class="book-item__info">
                 <span class="book-item__level">{levelUpper}</span>
-                <div class="book-item__title">{book.title}<span class="visually-hidden"> на английском {book.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
-                <div class="book-item__author">{book.author}</div>
+                <div class="book-item__title">{book.displayTitle}<span class="visually-hidden"> на английском с переводом</span></div>
+                <div class="book-item__author">{book.displayAuthor}</div>
               </div>
             </a>
           ))}
@@ -166,11 +172,11 @@ const pageDescription = `${books.length > 0 ? books.length + ' книг' : 'Кн
       "mainEntity": {
         "@type": "ItemList",
         "numberOfItems": books.length,
-        "itemListElement": books.slice(0, 30).map((b, i) => ({
+        "itemListElement": books.filter(b => !b.noindex).slice(0, 30).map((b, i) => ({
           "@type": "ListItem",
           "position": i + 1,
-          "url": `https://readling.club/books/${toSlug(b.title)}/`,
-          "name": b.title,
+          "url": `https://readling.club/books/${b.slug}/`,
+          "name": b.displayTitle,
         }))
       }
     })} />

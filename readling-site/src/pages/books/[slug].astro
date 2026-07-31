@@ -1,11 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { links } from '../../config/links';
-import allBooks from '../../data/books.json';
-import excerpts from '../../data/excerpts.json';
-import bookStats from '../../data/book-stats.json';
 import {
-  toSlug,
   complexityToLevel,
   genreLabels,
   genreDescriptions,
@@ -14,32 +10,43 @@ import {
   coverPath,
   coverSrcset,
 } from '../../utils/slug';
+import { catalog, booksBySameAuthor, type CatalogBook, type ExcerptSentence } from '../../utils/catalog';
 
 export function getStaticPaths() {
-  return allBooks
-    .filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'))
-    .map(book => ({
-      params: { slug: toSlug(book.title) },
-      props: { book },
-    }));
+  return catalog.map(book => ({
+    params: { slug: book.slug },
+    props: { book },
+  }));
 }
 
-const { book } = Astro.props;
-const complexity = book.complexity ?? 4;
-const level = complexityToLevel[complexity] || 'B1';
-const levelKey = level.toLowerCase();
-const levelInfo = levelDescriptions[levelKey];
-const genres = book.genres.split(',').map((g: string) => g.trim());
-const genreNames = genres.map((g: string) => genreLabels[g] || g).join(', ');
-const isParallel = book.mode === 'параллельный';
-const modeLabel = isParallel ? 'Параллельное чтение' : 'Режим погружения';
-const slug = toSlug(book.title);
+const { book } = Astro.props as { book: CatalogBook };
+const { slug, level, complexity, genres, immersion, parallel, stat, russianTitle } = book;
+const levelInfo = levelDescriptions[level.toLowerCase()];
 
-// Отрывок книги (первые ~2 страницы) из БД приложения — см. scripts/export-excerpts.mjs.
-type ExcerptPhrase = { ru: string; en: string; cx: number };
-type ExcerptSentence = { en: string; ru: string; phrases: ExcerptPhrase[] };
-type Excerpt = { mode: 'parallel' | 'immersion'; sentences: ExcerptSentence[] };
-const excerpt = (excerpts as Record<string, Excerpt>)[slug] ?? null;
+// В текстах страницы книга называется по-русски (`displayTitle`) — так её ищут.
+// `book.title` — название канонической записи, оно нужно для имён файлов обложек:
+// у объединённых пар это английский оригинал.
+const name = book.displayTitle;
+const author = book.displayAuthor;
+/**
+ * Полное название канонической записи — показываем под H1, когда оно отличается
+ * от отображаемого: либо это английский оригинал русского названия, либо полное
+ * название с подзаголовком, который в H1 обрезан.
+ */
+const originalTitle = book.title !== book.displayTitle ? book.title : null;
+
+// Режимы чтения: у объединённых записей книга доступна и в погружении, и
+// в параллельном чтении, поэтому показываем оба отрывка — см. utils/catalog.ts.
+const hasImmersionMode = book.modes.includes('immersion');
+const hasParallelMode = book.modes.includes('parallel');
+const bothModes = hasImmersionMode && hasParallelMode;
+const modeLabel = bothModes
+  ? 'Погружение и параллельное чтение'
+  : hasParallelMode
+    ? 'Параллельное чтение'
+    : 'Режим погружения';
+// «Параллельный перевод» в заголовках — только когда это единственный режим.
+const isParallel = hasParallelMode && !hasImmersionMode;
 
 // Доля английского для показа режима погружения — как ранняя ступень в приложении.
 const IMMERSION_SHARE = 0.25;
@@ -71,22 +78,19 @@ function weaveSentence(sent: ExcerptSentence) {
   return { tokens, tail };
 }
 
-const isParallelExcerpt = excerpt?.mode === 'parallel';
-const immersionData = excerpt && !isParallelExcerpt ? excerpt.sentences.map(weaveSentence) : [];
+const immersionData = immersion ? immersion.sentences.map(weaveSentence) : [];
 
 const primaryGenreCode = genres[0];
 const primaryGenreLabel = genreLabels[primaryGenreCode] || primaryGenreCode;
 const primaryGenreInfo = genreDescriptions[primaryGenreCode];
 
 // Похожие книги: по жанру + уровню
-const otherBooks = allBooks.filter(
-  b => !b.title.includes('Guide') && !b.title.includes('Руководство') && b.title !== book.title,
-);
+const otherBooks = catalog.filter(b => b.slug !== slug);
 const bookGenres = new Set(genres);
 const scored = otherBooks
   .map(b => {
     let score = 0;
-    if (b.genres.split(',').some((g: string) => bookGenres.has(g.trim()))) score += 2;
+    if (b.genres.some(g => bookGenres.has(g))) score += 2;
     if (b.complexity === complexity) score += 1;
     if (Math.abs(b.complexity - complexity) === 1) score += 0.5;
     return { book: b, score };
@@ -96,10 +100,8 @@ const scored = otherBooks
 const relatedBooks = scored.slice(0, 6).map(s => s.book);
 
 // Книги того же автора
-const sameAuthorBooks = otherBooks.filter(b => b.author === book.author).slice(0, 4);
+const sameAuthorBooks = booksBySameAuthor(book);
 
-// Реальные данные книги (объём) — уникальны для каждой книги, держат текст не-шаблонным.
-const stat = (bookStats as Record<string, { pages: number; chapters: number }>)[slug] ?? null;
 function plural(n: number, one: string, few: string, many: string) {
   const m10 = n % 10, m100 = n % 100;
   if (m10 === 1 && m100 !== 11) return one;
@@ -109,33 +111,75 @@ function plural(n: number, one: string, few: string, many: string) {
 const pagesPhrase = stat?.pages ? `${stat.pages} ${plural(stat.pages, 'страница', 'страницы', 'страниц')}` : '';
 
 // Блок «Зачем читать» — мотивирующий: жанровый крючок + посильная цель + что получишь.
-const modeReassurance = isParallel
-  ? 'русский перевод всегда рядом — вы не застрянете на трудной фразе и не бросите на середине'
-  : 'английский входит в текст постепенно, и вы втягиваетесь незаметно — без барьера «слишком сложно»';
-const whyHook = `${primaryGenreInfo?.appeal || 'Прочитать любимую историю в оригинале — отдельное удовольствие, которого не даёт перевод.'} И «${book.title}» ${book.author ? `(${book.author}) ` : ''}на английском — это посильная цель:${pagesPhrase ? ` ${pagesPhrase}` : ''} на уровне ${level} (${levelInfo?.short || ''}), где ${modeReassurance}.`;
+const modeReassurance = bothModes
+  ? 'можно взять параллельный режим с переводом рядом или плавное погружение — и переключаться по ходу'
+  : isParallel
+    ? 'русский перевод всегда рядом — вы не застрянете на трудной фразе и не бросите на середине'
+    : 'английский входит в текст постепенно, и вы втягиваетесь незаметно — без барьера «слишком сложно»';
+const whyHook = `${primaryGenreInfo?.appeal || 'Прочитать любимую историю в оригинале — отдельное удовольствие, которого не даёт перевод.'} И «${name}» ${author ? `(${author}) ` : ''}на английском — это посильная цель:${pagesPhrase ? ` ${pagesPhrase}` : ''} на уровне ${level} (${levelInfo?.short || ''}), где ${modeReassurance}.`;
 const whyPayoff = primaryGenreInfo?.vocab
-  ? `А дочитав «${book.title}» до конца, вы не просто закроете книгу в оригинале — попутно освоите характерную лексику жанра (${primaryGenreInfo.vocab}), причём не зубрёжкой, а вместе с сюжетом.`
-  : `А дочитав «${book.title}» до конца, вы закроете настоящую книгу в оригинале — и почувствуете язык совсем иначе, чем на учебных текстах.`;
+  ? `А дочитав «${name}» до конца, вы не просто закроете книгу в оригинале — попутно освоите характерную лексику жанра (${primaryGenreInfo.vocab}), причём не зубрёжкой, а вместе с сюжетом.`
+  : `А дочитав «${name}» до конца, вы закроете настоящую книгу в оригинале — и почувствуете язык совсем иначе, чем на учебных текстах.`;
 
-// Уникальная сводка для открывающего абзаца
-const synopsisSnippet = extractSnippet(book.description, 110);
-const pageTitle = `${book.title} (${book.author}) на английском с переводом — ${primaryGenreLabel}, уровень ${level} | Readling`;
-const pageDescription = `${synopsisSnippet} Читайте «${book.title}» на английском с русским переводом в Readling — ${isParallel ? 'параллельный режим' : 'режим погружения'}, уровень ${level}.`;
+// Title и description держим в пределах, которые Google показывает целиком
+// (~60 и ~160 символов). Ключевая фраза идёт первой, поэтому обрезка у длинных
+// названий книг не съедает главное.
+// Бренд в конце — приятный бонус, но у длинных названий он вылезает за границу
+// показа и обрезается вместе с уровнем. Поэтому у длинных названий его убираем:
+// лучше показать «...с переводом — B2» целиком, чем оборванное «| Readl…».
+const titleCore = `${name} на английском с переводом — ${level}`;
+const pageTitle = titleCore.length + ' | Readling'.length <= 60
+  ? `${titleCore} | Readling`
+  : titleCore;
 
-// H1 и лид-абзац под ключевые запросы («[книга] на английском с [параллельным] переводом»)
+// В meta description английский синопсис из БД не пускаем: страница русская, и
+// сниппет на английском не совпадает ни с запросом, ни с языком страницы.
+// Пока у книги нет русского описания, собираем сниппет из того, что достоверно:
+// автор, жанр, уровень и режимы чтения.
+const DESCRIPTION_SUFFIX = ` Читайте на английском с русским переводом в Readling, уровень ${level}.`;
+const pageDescription = book.descriptionLang === 'ru'
+  ? extractSnippet(book.description, 160 - DESCRIPTION_SUFFIX.length) + DESCRIPTION_SUFFIX
+  : extractSnippet(
+      `«${name}» — ${author}, ${primaryGenreLabel.toLowerCase()}${pagesPhrase ? `, ${pagesPhrase}` : ''}.`,
+      160 - DESCRIPTION_SUFFIX.length,
+    ) + DESCRIPTION_SUFFIX;
+
+// H1 и лид-абзац под ключевые запросы («[книга] на английском с [параллельным] переводом»).
+// У объединённых пар в H1 идут оба названия: русское — то, что ищут, английское —
+// то, что читатель увидит на обложке в приложении.
 const translationPhrase = isParallel ? 'с параллельным переводом' : 'с переводом';
-const pageH1 = `${book.title} на английском ${translationPhrase}`;
-const heroLead = isParallel
-  ? `«${book.title}» (${book.author}) — читать на английском с параллельным русским переводом онлайн: английский оригинал и перевод рядом. ${primaryGenreLabel}, уровень ${level}.`
-  : `«${book.title}» (${book.author}) — читать на английском с русским переводом онлайн в режиме погружения. ${primaryGenreLabel}, уровень ${level}.`;
+const pageH1 = `${name} на английском ${translationPhrase}`;
+const heroLead = bothModes
+  ? `«${name}»${originalTitle ? ` (${originalTitle})` : ''} — ${author}. Читать на английском с русским переводом онлайн: параллельный режим с переводом рядом или плавное погружение. ${primaryGenreLabel}, уровень ${level}.`
+  : isParallel
+    ? `«${name}»${originalTitle ? ` (${originalTitle})` : ''} — ${author}. Читать на английском с параллельным русским переводом онлайн: английский оригинал и перевод рядом. ${primaryGenreLabel}, уровень ${level}.`
+    : `«${name}» (${author}) — читать на английском с русским переводом онлайн в режиме погружения. ${primaryGenreLabel}, уровень ${level}.`;
 
 // Тексты для FAQ (вычисляем в frontmatter, чтобы не использовать `<=` в JSX)
 const previousLevel = complexityToLevel[Math.max(1, complexity - 1)];
-const faqLevelAnswer = isParallel
+const faqLevelAnswer = hasParallelMode
   ? `В параллельном режиме рядом с английским всегда идёт русский перевод — это страховка для тех, кто пока не уверен в уровне ${level}.`
   : complexity <= 2
-    ? `В режиме погружения текст начинается почти полностью на русском, поэтому «${book.title}» комфортна даже на уровне A1.`
-    : `В режиме погружения сложность нарастает плавно — поэтому «${book.title}» доступна и читателям уровня ${previousLevel}, готовым к небольшому вызову.`;
+    ? `В режиме погружения текст начинается почти полностью на русском, поэтому «${name}» комфортна даже на уровне A1.`
+    : `В режиме погружения сложность нарастает плавно — поэтому «${name}» доступна и читателям уровня ${previousLevel}, готовым к небольшому вызову.`;
+
+// FAQ рендерится и в разметку, и в JSON-LD из одного массива: структурированные
+// данные обязаны дословно совпадать с видимым текстом, иначе Google считает их
+// недостоверными и игнорирует всю схему страницы.
+const faqItems = [
+  {
+    q: `Какой уровень английского нужен для «${name}»?`,
+    a: `«${name}» рассчитана на уровень ${level} (${levelInfo?.short || ''}). ${faqLevelAnswer}`,
+  },
+  {
+    q: `Можно ли читать «${name}» бесплатно?`,
+    a: `В Readling действует пробный период 7 дней — вы получаете доступ ко всем книгам каталога, включая «${name}», ко всем режимам чтения и тренировкам. После пробного периода никаких автосписаний — продолжать подписку или нет, решаете вы.`,
+  },
+  {
+    q: `Какую лексику я выучу, читая «${name}»?`,
+    a: `«${name}» относится к жанру «${primaryGenreLabel.toLowerCase()}». ${primaryGenreInfo?.vocab ? `Это значит — ${primaryGenreInfo.vocab}.` : 'Это значит — характерная для жанра лексика.'} Каждое слово, на которое вы нажмёте при чтении, попадёт в личный словарь. Дальше — тренировки именно на эту лексику: флэш-карточки, пазлы предложений, вставка слов.`,
+  },
+];
 ---
 
 <BaseLayout
@@ -144,6 +188,7 @@ const faqLevelAnswer = isParallel
   canonicalPath={`/books/${slug}`}
   ogImage={`/og-books/${slug}.png`}
   ogType="book"
+  noindex={book.noindex}
 >
   <!-- BREADCRUMBS -->
   <nav class="breadcrumbs" aria-label="Хлебные крошки">
@@ -152,7 +197,7 @@ const faqLevelAnswer = isParallel
       <span class="breadcrumbs__sep">/</span>
       <a href="/books/">Книги</a>
       <span class="breadcrumbs__sep">/</span>
-      <span>{book.title}</span>
+      <span>{name}</span>
     </div>
   </nav>
 
@@ -161,11 +206,14 @@ const faqLevelAnswer = isParallel
     <div class="container">
       <div class="book-hero__inner">
         <div class="book-hero__cover">
-          <img src={coverPath(book.title, 'md')} srcset={coverSrcset(book.title, 'hero')} alt={`Обложка книги «${book.title}» — ${book.author}, ${primaryGenreLabel.toLowerCase()}, уровень ${level}`} width="240" height="360" fetchpriority="high" decoding="async" />
+          <img src={coverPath(book.title, 'md')} srcset={coverSrcset(book.title, 'hero')} alt={`Обложка книги «${name}» — ${author}, ${primaryGenreLabel.toLowerCase()}, уровень ${level}`} width="240" height="360" fetchpriority="high" decoding="async" />
         </div>
         <div class="book-hero__info">
           <h1 class="mb-s">{pageH1}</h1>
-          <p class="book-hero__author mb-m">{book.author}</p>
+          {originalTitle && (
+            <p class="book-hero__original" lang="en">{originalTitle}</p>
+          )}
+          <p class="book-hero__author mb-m">{author}</p>
           <div class="book-hero__tags mb-m">
             <span class="tag tag--level">{level}</span>
             <span class="tag tag--mode">{modeLabel}</span>
@@ -174,7 +222,9 @@ const faqLevelAnswer = isParallel
             ))}
           </div>
           <p class="book-hero__lead mb-m">{heroLead}</p>
-          <p class="book-hero__desc mb-m">{book.description}</p>
+          {/* У части книг синопсис в БД пока только английский — помечаем его
+              языком, чтобы страница не заявляла русский текст там, где его нет. */}
+          <p class="book-hero__desc mb-m" lang={book.descriptionLang}>{book.description}</p>
           <div class="store-buttons">
             <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
             <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
@@ -182,7 +232,7 @@ const faqLevelAnswer = isParallel
         </div>
       </div>
       <div class="facts-strip">
-        <div class="fact"><span class="fact__label">Автор</span><span class="fact__value">{book.author}</span></div>
+        <div class="fact"><span class="fact__label">Автор</span><span class="fact__value">{author}</span></div>
         <div class="fact"><span class="fact__label">Уровень</span><span class="fact__value">{level} · {levelInfo?.short || ''}</span></div>
         <div class="fact"><span class="fact__label">Жанр</span><span class="fact__value">{primaryGenreLabel}</span></div>
         <div class="fact"><span class="fact__label">Режим чтения</span><span class="fact__value">{modeLabel}</span></div>
@@ -190,65 +240,101 @@ const faqLevelAnswer = isParallel
     </div>
   </section>
 
-  <!-- EXCERPT (реальный отрывок книги в её режиме чтения) -->
-  {excerpt && (
+  <!-- EXCERPT (реальные отрывки книги — по одному на каждый доступный режим) -->
+  {(immersion || parallel) && (
     <section class="section excerpt-section" aria-labelledby="excerpt-title">
       <div class="container mx-auto">
         <h2 id="excerpt-title" class="text-center mb-sm">
-          Отрывок «{book.title}» — {isParallelExcerpt ? 'параллельное чтение' : 'режим погружения'}
+          Отрывок «{name}» — {immersion && parallel
+            ? 'два режима чтения'
+            : parallel ? 'параллельное чтение' : 'режим погружения'}
         </h2>
         <p class="text-center max-w-prose mx-auto mb-l">
-          {isParallelExcerpt
-            ? 'Первая страница книги в параллельном режиме: английский оригинал и русский перевод рядом — так это выглядит в приложении Readling.'
-            : 'Первая страница книги в режиме погружения: английский вплетён в русский текст. Здесь около 25% английского — в приложении его доля растёт с каждой главой.'}
+          {immersion && parallel
+            ? 'Первая страница книги в каждом из режимов Readling — сравните и выберите, как читать «' + name + '».'
+            : parallel
+              ? 'Первая страница книги в параллельном режиме: английский оригинал и русский перевод рядом — так это выглядит в приложении Readling.'
+              : 'Первая страница книги в режиме погружения: английский вплетён в русский текст. Здесь около 25% английского — в приложении его доля растёт с каждой главой.'}
         </p>
 
-        <div class={`reader ${isParallelExcerpt ? 'reader--parallel' : 'reader--immersion'}`}>
-          <div class="reader__head">
-            <span class="reader__dot" aria-hidden="true"></span>
-            <span class="reader__dot" aria-hidden="true"></span>
-            <span class="reader__dot" aria-hidden="true"></span>
-            <span class="reader__mode">{isParallelExcerpt ? 'Параллельный режим' : 'Режим погружения'}</span>
-            <span class="reader__level">{level}</span>
-          </div>
-
-          {isParallelExcerpt ? (
-            <div class="reader__cols">
-              <div class="reader__colhead" aria-hidden="true">
-                <span>English</span>
-                <span>Русский</span>
-              </div>
-              {excerpt.sentences.map((s: ExcerptSentence) => (
-                <div class="prow">
-                  <p class="prow__en" lang="en">{s.en}</p>
-                  <p class="prow__ru" lang="ru">{s.ru}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div class="reader__page">
-              <p class="reader__text" lang="ru">
-                {immersionData.map(({ tokens, tail }) => (
-                  <Fragment>
-                    {tokens.map((tok, idx) => (
-                      <Fragment>
-                        {idx > 0 ? ' ' : ''}
-                        {tok.en
-                          ? <button type="button" class="ph" lang="en" data-ru={tok.ru} aria-label={`${tok.t} — перевод: ${tok.ru}`}>{tok.t}</button>
-                          : tok.t}
-                      </Fragment>
-                    ))}
-                    {tail}{' '}
-                  </Fragment>
-                ))}
+        {immersion && (
+          <div class:list={['excerpt-mode', { 'excerpt-mode--paired': immersion && parallel }]}>
+            {parallel && (
+              <h3 class="excerpt-mode__title">Режим погружения</h3>
+            )}
+            {parallel && (
+              <p class="excerpt-mode__hint">
+                Английский вплетён в русский текст. Здесь около 25% английского — в приложении его
+                доля растёт с каждой главой.
               </p>
-              <p class="reader__tip">Нажмите на <span class="ph ph--demo">английскую фразу</span>, чтобы увидеть перевод</p>
+            )}
+            <div class="reader reader--immersion">
+              <div class="reader__head">
+                <span class="reader__dot" aria-hidden="true"></span>
+                <span class="reader__dot" aria-hidden="true"></span>
+                <span class="reader__dot" aria-hidden="true"></span>
+                <span class="reader__mode">Режим погружения</span>
+                <span class="reader__level">{level}</span>
+              </div>
+              <div class="reader__page">
+                <p class="reader__text" lang="ru">
+                  {immersionData.map(({ tokens, tail }) => (
+                    <Fragment>
+                      {tokens.map((tok, idx) => (
+                        <Fragment>
+                          {idx > 0 ? ' ' : ''}
+                          {tok.en
+                            ? <button type="button" class="ph" lang="en" data-ru={tok.ru} aria-label={`${tok.t} — перевод: ${tok.ru}`}>{tok.t}</button>
+                            : tok.t}
+                        </Fragment>
+                      ))}
+                      {tail}{' '}
+                    </Fragment>
+                  ))}
+                </p>
+                <p class="reader__tip">Нажмите на <span class="ph ph--demo">английскую фразу</span>, чтобы увидеть перевод</p>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+
+        {parallel && (
+          <div class:list={['excerpt-mode', { 'excerpt-mode--paired': immersion && parallel }]}>
+            {immersion && (
+              <h3 class="excerpt-mode__title">Параллельное чтение</h3>
+            )}
+            {immersion && (
+              <p class="excerpt-mode__hint">
+                Английский оригинал и русский перевод строка в строку — удобно разбирать грамматику
+                и не терять нить сюжета.
+              </p>
+            )}
+            <div class="reader reader--parallel">
+              <div class="reader__head">
+                <span class="reader__dot" aria-hidden="true"></span>
+                <span class="reader__dot" aria-hidden="true"></span>
+                <span class="reader__dot" aria-hidden="true"></span>
+                <span class="reader__mode">Параллельный режим</span>
+                <span class="reader__level">{level}</span>
+              </div>
+              <div class="reader__cols">
+                <div class="reader__colhead" aria-hidden="true">
+                  <span>English</span>
+                  <span>Русский</span>
+                </div>
+                {parallel.sentences.map((s: ExcerptSentence) => (
+                  <div class="prow">
+                    <p class="prow__en" lang="en">{s.en}</p>
+                    <p class="prow__ru" lang="ru">{s.ru}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <p class="excerpt__note text-center">
-          Это начало «{book.title}». Полный текст с переводом по нажатию на любое слово, личным словарём
+          Это начало «{name}». Полный текст с переводом по нажатию на любое слово, личным словарём
           и тренировками — в приложении Readling.
         </p>
         <div class="store-buttons" style="justify-content: center;">
@@ -298,28 +384,28 @@ const faqLevelAnswer = isParallel
   <section class="section">
     <div class="container">
       <div class="book-body">
-        <main class="book-body__main">
-          <h2 class="mb-m">Зачем читать «{book.title}» на английском</h2>
+        <div class="book-body__main">
+          <h2 class="mb-m">Зачем читать «{name}» на английском</h2>
           <p class="mb-m">{whyHook}</p>
           <p class="mb-l">{whyPayoff}</p>
 
           <p class="book-body__more">
             Подробнее о режимах чтения: <a href="/parallelnoe-chtenie/">параллельное чтение</a> и <a href="/metod-pogruzheniya/">метод погружения</a>.
           </p>
-        </main>
+        </div>
 
         {sameAuthorBooks.length > 0 && (
           <aside class="book-body__sidebar">
             <div class="side-card">
-              <div class="side-card__title side-card__title--sm">Другие книги {book.author}</div>
+              <div class="side-card__title side-card__title--sm">Другие книги {author}</div>
               <ul class="author-list">
                 {sameAuthorBooks.map(ab => (
                   <li>
-                    <a href={`/books/${toSlug(ab.title)}/`}>
+                    <a href={`/books/${ab.slug}/`}>
                       <img src={coverPath(ab.title, 'sm')} alt={ab.title} loading="lazy" decoding="async" width="40" height="60" />
                       <div class="author-list__meta">
-                        <span class="author-list__title">{ab.title}<span class="visually-hidden"> на английском {ab.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></span>
-                        <span class="author-list__level">{complexityToLevel[ab.complexity]}</span>
+                        <span class="author-list__title">{ab.title}<span class="visually-hidden"> на английском с переводом</span></span>
+                        <span class="author-list__level">{ab.level}</span>
                       </div>
                     </a>
                   </li>
@@ -338,15 +424,15 @@ const faqLevelAnswer = isParallel
       <div class="container">
         <h2 class="text-center mb-sm">Похожие книги уровня {level}</h2>
         <p class="text-center max-w-prose mx-auto mb-xl">
-          Если вам нравится «{book.title}», обратите внимание на эти книги в жанре {primaryGenreLabel.toLowerCase()} — они подобраны по уровню сложности и теме.
+          Если вам нравится «{name}», обратите внимание на эти книги в жанре {primaryGenreLabel.toLowerCase()} — они подобраны по уровню сложности и теме.
         </p>
         <div class="related-grid">
           {relatedBooks.map(rb => (
-            <a href={`/books/${toSlug(rb.title)}/`} class="related-book">
+            <a href={`/books/${rb.slug}/`} class="related-book">
               <img class="related-book__cover" src={coverPath(rb.title, 'sm')} srcset={coverSrcset(rb.title, 'card')} alt={`Обложка «${rb.title}»`} loading="lazy" decoding="async" width="160" height="240" />
               <div class="related-book__info">
-                <span class="related-book__level">{complexityToLevel[rb.complexity]}</span>
-                <div class="related-book__title">{rb.title}<span class="visually-hidden"> на английском {rb.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
+                <span class="related-book__level">{rb.level}</span>
+                <div class="related-book__title">{rb.title}<span class="visually-hidden"> на английском с переводом</span></div>
                 <div class="related-book__author">{rb.author}</div>
               </div>
             </a>
@@ -359,26 +445,14 @@ const faqLevelAnswer = isParallel
   <!-- FAQ -->
   <section class="section">
     <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Вопросы о чтении «{book.title}» на английском</h2>
+      <h2 class="text-center mb-l">Вопросы о чтении «{name}» на английском</h2>
       <div class="faq-list">
-        <details class="faq-item">
-          <summary>Какой уровень английского нужен для «{book.title}»?</summary>
-          <div class="faq-item__answer">
-            «{book.title}» рассчитана на уровень {level} ({levelInfo?.short || ''}). {faqLevelAnswer}
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Можно ли читать «{book.title}» бесплатно?</summary>
-          <div class="faq-item__answer">
-            В Readling действует пробный период 7 дней — вы получаете доступ ко всем книгам каталога, включая «{book.title}», ко всем режимам чтения и тренировкам. После пробного периода никаких автосписаний — продолжать подписку или нет, решаете вы.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Какую лексику я выучу, читая «{book.title}»?</summary>
-          <div class="faq-item__answer">
-            «{book.title}» относится к жанру «{primaryGenreLabel.toLowerCase()}». {primaryGenreInfo?.vocab ? `Это значит — ${primaryGenreInfo.vocab}.` : 'Это значит — характерная для жанра лексика.'} Каждое слово, на которое вы нажмёте при чтении, попадёт в личный словарь. Дальше — тренировки именно на эту лексику: флэш-карточки, пазлы предложений, вставка слов.
-          </div>
-        </details>
+        {faqItems.map(item => (
+          <details class="faq-item">
+            <summary>{item.q}</summary>
+            <div class="faq-item__answer">{item.a}</div>
+          </details>
+        ))}
       </div>
     </div>
   </section>
@@ -388,7 +462,7 @@ const faqLevelAnswer = isParallel
     <div class="container">
       <div class="cta-final__card">
         <div>
-          <div class="cta-final__title">Начните читать «{book.title}» прямо сейчас</div>
+          <div class="cta-final__title">Начните читать «{name}» прямо сейчас</div>
           <div class="cta-final__subtitle">Первые 7 дней — бесплатно. Без автосписаний.</div>
         </div>
         <div class="store-buttons">
@@ -404,8 +478,14 @@ const faqLevelAnswer = isParallel
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Book",
-      "name": book.title,
-      "author": { "@type": "Person", "name": book.author },
+      "name": name,
+      // Английский оригинал названия — второе имя той же сущности, а не отдельная книга.
+      ...(originalTitle ? { "alternateName": originalTitle } : {}),
+      "author": {
+        "@type": "Person",
+        "name": author,
+        ...(book.authors.length > 1 ? { "alternateName": book.authors.filter(a => a !== author) } : {}),
+      },
       "description": book.description,
       "image": `https://readling.club${coverPath(book.title, 'lg')}`,
       "url": `https://readling.club/books/${slug}/`,
@@ -419,36 +499,35 @@ const faqLevelAnswer = isParallel
       },
       "educationalLevel": level,
       "learningResourceType": "Bilingual reading book",
-      ...(excerpt ? {
-        "hasPart": {
-          "@type": "CreativeWork",
-          "name": `Отрывок «${book.title}» на английском с переводом`,
-          "isAccessibleForFree": true,
-          "inLanguage": ["en", "ru"],
-          "text": excerpt.sentences.map((s: ExcerptSentence) => s.en).join(' '),
-        },
+      ...(stat?.pages ? { "numberOfPages": stat.pages } : {}),
+      // Отрывок(и), реально опубликованные на странице — по одному на режим.
+      ...((immersion || parallel) ? {
+        "hasPart": [
+          ...(immersion ? [{
+            "@type": "CreativeWork",
+            "name": `Отрывок «${name}» — режим погружения`,
+            "isAccessibleForFree": true,
+            "inLanguage": ["en", "ru"],
+            "text": immersion.sentences.map((s: ExcerptSentence) => s.en).join(' '),
+          }] : []),
+          ...(parallel ? [{
+            "@type": "CreativeWork",
+            "name": `Отрывок «${name}» — параллельное чтение`,
+            "isAccessibleForFree": true,
+            "inLanguage": ["en", "ru"],
+            "text": parallel.sentences.map((s: ExcerptSentence) => s.en).join(' '),
+          }] : []),
+        ],
       } : {}),
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": `Какой уровень английского нужен для «${book.title}»?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `«${book.title}» рассчитана на уровень ${level} (${levelInfo?.short || ''}). В режиме ${isParallel ? 'параллельного чтения' : 'погружения'} книга комфортна даже на уровне ниже.` },
-        },
-        {
-          "@type": "Question",
-          "name": `Можно ли читать «${book.title}» бесплатно?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `Да, Readling предоставляет 7 дней бесплатного доступа ко всем книгам, включая «${book.title}».` },
-        },
-        {
-          "@type": "Question",
-          "name": `Какую лексику я выучу, читая «${book.title}»?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `«${book.title}» относится к жанру «${primaryGenreLabel.toLowerCase()}» — ${primaryGenreInfo?.vocab || 'характерная жанровая лексика'}.` },
-        },
-      ],
+      "mainEntity": faqItems.map(item => ({
+        "@type": "Question",
+        "name": item.q,
+        "acceptedAnswer": { "@type": "Answer", "text": item.a },
+      })),
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -456,7 +535,7 @@ const faqLevelAnswer = isParallel
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://readling.club/" },
         { "@type": "ListItem", "position": 2, "name": "Книги", "item": "https://readling.club/books/" },
-        { "@type": "ListItem", "position": 3, "name": book.title, "item": `https://readling.club/books/${slug}/` },
+        { "@type": "ListItem", "position": 3, "name": name, "item": `https://readling.club/books/${slug}/` },
       ],
     })} />
   </Fragment>
@@ -476,6 +555,24 @@ const faqLevelAnswer = isParallel
 
   /* ── Отрывок: карточка-ридер ── */
   .excerpt-section { background: var(--color-surface-alt); }
+
+  /* Когда у книги оба режима, отрывки идут друг за другом с подзаголовками. */
+  .excerpt-mode + .excerpt-mode { margin-top: var(--space-xxl); }
+  /* Одиночный параллельный ридер тянется на всю ширину, но рядом с ридером
+     погружения (820px) это выглядело бы как ошибка вёрстки — выравниваем. */
+  .excerpt-mode--paired .reader--parallel { max-width: 820px; }
+  .excerpt-mode__title {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: var(--space-xs);
+  }
+  .excerpt-mode__hint {
+    max-width: 60ch;
+    margin: 0 auto var(--space-m);
+    text-align: center;
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+  }
 
   .reader {
     max-width: 820px;
@@ -659,6 +756,12 @@ const faqLevelAnswer = isParallel
     font-size: 1.125rem;
     color: var(--color-text-secondary);
     font-weight: 500;
+  }
+  /* Английский оригинал названия под H1 — у книг, объединённых из двух записей. */
+  .book-hero__original {
+    font-size: 1rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--space-xs);
   }
   .book-hero__tags {
     display: flex;

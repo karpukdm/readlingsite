@@ -1,18 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
-import allBooks from '../data/books.json';
-import { toSlug, complexityToLevel, pickByHash, coverPath, coverSrcset } from '../utils/slug';
+import { pickByHash, coverPath, coverSrcset } from '../utils/slug';
+import { indexableCatalog } from '../utils/catalog';
 import { getPageDates } from '../utils/dates';
 
-const books = allBooks.filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
-const featuredBooks = pickByHash(books, 8, 'parallel-featured-v1');
+// Страница про параллельное чтение — показываем книги, доступные в этом режиме.
+const parallelBooks = indexableCatalog.filter(b => b.modes.includes('parallel'));
+const featuredBooks = pickByHash(parallelBooks, 8, 'parallel-featured-v1');
 const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chtenie.astro');
 ---
 
 <BaseLayout
-  title="Книги на английском с параллельным переводом — параллельное чтение | Readling"
-  description="Книги на английском с параллельным переводом: читайте оригинал и русский перевод рядом, предложение за предложением. Параллельное чтение в Readling — 100+ книг от A1 до C2. Бесплатно 7 дней."
+  title="Книги на английском с параллельным переводом | Readling"
+  description="Книги на английском с параллельным переводом: оригинал и русский перевод рядом, предложение за предложением. 100+ книг от A1 до C2 в Readling."
   canonicalPath="/parallelnoe-chtenie"
 >
   <Fragment slot="head">
@@ -211,19 +212,19 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
       </p>
       <div class="book-scroll">
         {featuredBooks.map(book => (
-          <a href={`/books/${toSlug(book.title)}/`} class="book-card">
+          <a href={`/books/${book.slug}/`} class="book-card">
             <img
               class="book-card__cover"
               src={coverPath(book.title, 'sm')}
               srcset={coverSrcset(book.title, 'card')}
-              alt={`Обложка книги «${book.title}» на английском с переводом`}
+              alt={`Обложка книги «${book.displayTitle}» на английском с параллельным переводом`}
               loading="lazy"
               decoding="async"
               width="160"
               height="240"
             />
-            <div class="book-card__title">{book.title}<span class="visually-hidden"> на английском {book.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
-            <div class="book-card__author">{book.author} · {complexityToLevel[book.complexity]}</div>
+            <div class="book-card__title">{book.displayTitle}<span class="visually-hidden"> на английском с параллельным переводом</span></div>
+            <div class="book-card__author">{book.displayAuthor} · {book.level}</div>
           </a>
         ))}
       </div>

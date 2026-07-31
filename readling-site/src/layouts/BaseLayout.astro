@@ -27,6 +27,11 @@ const {
 const path = canonicalPath && !canonicalPath.endsWith('/') ? canonicalPath + '/' : canonicalPath;
 const canonicalURL = new URL(path, Astro.site);
 const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).toString();
+
+// Подтверждение прав в Search Console и Яндекс.Вебмастере. Задаётся переменными
+// сборки (см. .env.example) — без них мету просто не выводим.
+const verification = import.meta.env.PUBLIC_GSC_VERIFICATION;
+const yandexVerification = import.meta.env.PUBLIC_YANDEX_VERIFICATION;
 ---
 
 <!DOCTYPE html>
@@ -40,9 +45,13 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
   <meta name="description" content={description} />
   {keywords && <meta name="keywords" content={keywords} />}
   <meta name="author" content="Readling" />
+  {/* `follow` и на noindex-страницах: они остаются частью навигации, и ссылки
+      с них должны передавать вес дальше по каталогу. `nofollow` обрывал бы обход. */}
   {noindex
-    ? <meta name="robots" content="noindex, nofollow" />
+    ? <meta name="robots" content="noindex, follow" />
     : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+  {verification && <meta name="google-site-verification" content={verification} />}
+  {yandexVerification && <meta name="yandex-verification" content={yandexVerification} />}
   <link rel="canonical" href={canonicalURL} />
   <link rel="alternate" hreflang="ru" href={canonicalURL} />
   <link rel="alternate" hreflang="x-default" href={canonicalURL} />

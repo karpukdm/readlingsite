@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import allBooks from '../../data/books.json';
-import { toSlug, complexityToLevel, genreLabels, coverPath, coverSrcset } from '../../utils/slug';
+import { genreLabels, coverPath, coverSrcset } from '../../utils/slug';
+import { catalog, indexableCatalog, type CatalogBook } from '../../utils/catalog';
 
-const books = allBooks
-  .filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
+const books = catalog;
 
 // Group books by primary genre categories (order matters for display)
 const genreOrder = [
@@ -26,24 +25,21 @@ const genreOrder = [
 ];
 
 // Assign each book to one primary genre (first matching from genreOrder)
-const genreGroups = new Map<string, typeof books>();
+const genreGroups = new Map<string, CatalogBook[]>();
 const assigned = new Set<string>();
 
 for (const genre of genreOrder) {
-  const genreBooks = books.filter(b => {
-    if (assigned.has(b.title)) return false;
-    return b.genres.split(',').map((g: string) => g.trim()).includes(genre);
-  });
+  const genreBooks = books.filter(b => !assigned.has(b.slug) && b.genres.includes(genre));
   if (genreBooks.length > 0) {
     genreGroups.set(genre, genreBooks);
-    genreBooks.forEach(b => assigned.add(b.title));
+    genreBooks.forEach(b => assigned.add(b.slug));
   }
 }
 ---
 
 <BaseLayout
   title="Книги на английском с переводом — каталог Readling"
-  description="Более 100 книг на английском с русским переводом. Классика, детективы, фантастика, романтика — от уровня A1 до C2. Читайте в приложении Readling бесплатно 7 дней."
+  description={`${books.length} книг на английском с русским переводом: классика, детективы, фантастика, романтика — от A1 до C2. Первые 7 дней бесплатно.`}
   canonicalPath="/books"
 >
   <!-- BREADCRUMBS -->
@@ -58,9 +54,11 @@ for (const genre of genreOrder) {
   <section class="section">
     <div class="container">
       <h1 class="text-center mb-sm">Книги на английском с переводом — каталог Readling</h1>
+      {/* Число берём из каталога, а не пишем «более 100»: на странице должно быть
+          столько книг, сколько заявлено, иначе обещание не совпадает с содержимым. */}
       <p class="text-center max-w-prose mx-auto mb-xl">
-        <strong>Каталог Readling — это более 100 книг на английском с русским переводом,
-        разбитых по уровням от A1 до C2 и 25 жанрам.</strong>
+        <strong>В каталоге на сайте — {books.length} книг на английском с русским переводом,
+        по уровням от A1 до C2.</strong>
         Каждая книга доступна в режиме параллельного чтения или плавного погружения —
         выбирайте подход, который вам подходит.
       </p>
@@ -70,21 +68,21 @@ for (const genre of genreOrder) {
           <h2 class="genre-section__title">{genreLabels[genre] || genre}</h2>
           <div class="books-grid">
             {genreBooks.map(book => (
-              <a href={`/books/${toSlug(book.title)}/`} class="book-item">
+              <a href={`/books/${book.slug}/`} class="book-item">
                 <img
                   class="book-item__cover"
                   src={coverPath(book.title, 'sm')}
                   srcset={coverSrcset(book.title, 'card')}
-                  alt={`Обложка «${book.title}» — ${book.author}, ${(genreLabels[genre] || genre).toLowerCase()}, уровень ${complexityToLevel[book.complexity]}`}
+                  alt={`Обложка «${book.displayTitle}» — ${book.displayAuthor}, ${(genreLabels[genre] || genre).toLowerCase()}, уровень ${book.level}`}
                   loading="lazy"
                   decoding="async"
                   width="160"
                   height="240"
                 />
                 <div class="book-item__info">
-                  <span class="book-item__level">{complexityToLevel[book.complexity]}</span>
-                  <div class="book-item__title">{book.title}<span class="visually-hidden"> на английском {book.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
-                  <div class="book-item__author">{book.author}</div>
+                  <span class="book-item__level">{book.level}</span>
+                  <div class="book-item__title">{book.displayTitle}<span class="visually-hidden"> на английском с переводом</span></div>
+                  <div class="book-item__author">{book.displayAuthor}</div>
                 </div>
               </a>
             ))}
@@ -109,7 +107,7 @@ for (const genre of genreOrder) {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "name": "Книги на английском с переводом — каталог Readling",
-      "description": "Более 100 книг на английском с русским переводом для изучения языка.",
+      "description": `${indexableCatalog.length} книг на английском с русским переводом для изучения языка.`,
       "url": "https://readling.club/books/",
       "inLanguage": "ru",
       "isPartOf": {
@@ -117,14 +115,16 @@ for (const genre of genreOrder) {
         "name": "Readling",
         "url": "https://readling.club/"
       },
+      // В ItemList перечисляем только индексируемые книги: ссылаться схемой на
+      // noindex-страницы — противоречивый сигнал.
       "mainEntity": {
         "@type": "ItemList",
-        "numberOfItems": books.length,
-        "itemListElement": books.slice(0, 30).map((b, i) => ({
+        "numberOfItems": indexableCatalog.length,
+        "itemListElement": indexableCatalog.slice(0, 30).map((b, i) => ({
           "@type": "ListItem",
           "position": i + 1,
-          "url": `https://readling.club/books/${toSlug(b.title)}/`,
-          "name": b.title,
+          "url": `https://readling.club/books/${b.slug}/`,
+          "name": b.displayTitle,
         }))
       }
     })} />

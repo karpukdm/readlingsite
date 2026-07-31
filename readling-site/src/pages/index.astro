@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
-import allBooks from '../data/books.json';
-import { toSlug, complexityToLevel, pickByHash, coverPath, coverSrcset } from '../utils/slug';
+import { pickByHash, coverPath, coverSrcset } from '../utils/slug';
+import { indexableCatalog } from '../utils/catalog';
 
-const books = allBooks.filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
-const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
+// Витрину набираем только из индексируемых страниц: рекламировать с главной то,
+// что закрыто от индексации, — значит вести пользователя в тупик каталога.
+const featuredBooks = pickByHash(indexableCatalog, 12, 'home-featured-v1');
 ---
 
 <BaseLayout
-  title="Книги на английском с переводом — читать и учить язык | Readling"
-  description="Readling — читайте книги на английском с русским переводом: параллельный режим (оригинал и перевод рядом) и плавное погружение. 100+ книг от A1 до C2, тренировки слов. 7 дней бесплатно."
+  title="Readling — книги на английском с переводом для изучения языка"
+  description="Читайте книги на английском с русским переводом: оригинал и перевод рядом либо плавное погружение. 100+ книг от A1 до C2. Первые 7 дней бесплатно."
 >
   <Fragment slot="head">
     <link rel="preload" as="image" href="/screen-immersion.webp" type="image/webp" fetchpriority="high" />
@@ -185,19 +186,19 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
       </div>
       <div class="book-scroll">
         {featuredBooks.map(book => (
-          <a href={`/books/${toSlug(book.title)}/`} class="book-card">
+          <a href={`/books/${book.slug}/`} class="book-card">
             <img
               class="book-card__cover"
               src={coverPath(book.title, 'sm')}
               srcset={coverSrcset(book.title, 'card')}
-              alt={`Обложка книги «${book.title}» — ${book.author}, уровень ${complexityToLevel[book.complexity]}`}
+              alt={`Обложка книги «${book.displayTitle}» — ${book.displayAuthor}, уровень ${book.level}`}
               loading="lazy"
               decoding="async"
               width="160"
               height="240"
             />
-            <div class="book-card__title">{book.title}<span class="visually-hidden"> на английском {book.mode === 'параллельный' ? 'с параллельным переводом' : 'с переводом'}</span></div>
-            <div class="book-card__author">{book.author}</div>
+            <div class="book-card__title">{book.displayTitle}<span class="visually-hidden"> на английском с переводом</span></div>
+            <div class="book-card__author">{book.displayAuthor}</div>
           </a>
         ))}
       </div>
@@ -288,17 +289,32 @@ const featuredBooks = pickByHash(books, 12, 'home-featured-v1');
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "MobileApplication",
+      // Тот же @id, что на /pricing/ — одна сущность, описанная с двух страниц.
+      "@id": "https://readling.club/#app",
       "name": "Readling — английский по книгам",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "iOS, Android",
       "description": "Приложение для изучения английского через чтение книг. Режим погружения, параллельное чтение, тренировки слов.",
       "url": "https://readling.club/",
       "image": "https://readling.club/logo.png",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
+      // Приложение freemium: бесплатный план и подписка. Один Offer с price "0"
+      // противоречил бы /pricing/, где указано $3.99/мес.
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Бесплатный план",
+          "price": "0",
+          "priceCurrency": "USD",
+          "url": "https://readling.club/pricing/"
+        },
+        {
+          "@type": "Offer",
+          "name": "Подписка Premium",
+          "price": "3.99",
+          "priceCurrency": "USD",
+          "url": "https://readling.club/pricing/"
+        }
+      ]
     })} />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",

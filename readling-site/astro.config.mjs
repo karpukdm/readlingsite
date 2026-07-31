@@ -10,6 +10,13 @@ const SITE = 'https://readling.club';
 const PROJECT_ROOT = dirname(fileURLToPath(import.meta.url));
 const BUILD_TIME = new Date().toISOString();
 
+// Слуги книг, объединённых в одну карточку: retired-слуг → канонический.
+// Тот же файл читает src/utils/catalog.ts, поэтому 301-редиректы и страницы
+// не могут разъехаться. См. комментарий в catalog.ts о том, зачем объединяли.
+const BOOK_REDIRECTS = JSON.parse(
+  readFileSync(join(PROJECT_ROOT, 'src/data/book-redirects.json'), 'utf8'),
+);
+
 // Реестр «когда страница менялась в последний раз». Коммитится в git.
 // Ключ — путь страницы, значение — отпечаток её HTML и дата последней правки.
 const MANIFEST_PATH = join(PROJECT_ROOT, 'lastmod-manifest.json');
@@ -72,12 +79,20 @@ function lastmodTracker() {
 
         const next = {};
         const lastmods = new Map();
+        // Страницы, закрытые noindex: их нельзя оставлять в sitemap. Определяем
+        // по собранному HTML, а не по отдельному списку, — тогда список не может
+        // разойтись с тем, что реально стоит в разметке.
+        const noindexPaths = new Set();
         let changed = 0;
 
         for (const file of htmlFiles(outDir)) {
           const urlPath = urlPathOf(outDir, file);
           const html = readFileSync(file, 'utf8');
           const hash = fingerprint(html);
+
+          if (/<meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) {
+            noindexPaths.add(urlPath);
+          }
 
           const prev = previous[urlPath];
           const isSame = prev && prev.hash === hash;
@@ -95,13 +110,23 @@ function lastmodTracker() {
         // Даты только тех страниц, что реально попали в sitemap: 404.html
         // и прочие невыгружаемые страницы не должны влиять на sitemap-index.
         const listed = [];
+        let dropped = 0;
 
         for (const name of readdirSync(outDir).filter(f => /^sitemap-\d+\.xml$/.test(f))) {
           const path = join(outDir, name);
           const xml = readFileSync(path, 'utf8').replace(/<url>[\s\S]*?<\/url>/g, block => {
             const loc = block.match(/<loc>([^<]+)<\/loc>/);
             if (!loc) return block;
-            const lastmod = lastmods.get(new URL(loc[1]).pathname);
+            const urlPath = new URL(loc[1]).pathname;
+
+            // Просить обойти страницу и тут же запрещать её индексировать —
+            // противоречивый сигнал: noindex-страницы из sitemap убираем.
+            if (noindexPaths.has(urlPath)) {
+              dropped++;
+              return '';
+            }
+
+            const lastmod = lastmods.get(urlPath);
             if (!lastmod) return block;
             listed.push(lastmod);
             return /<lastmod>/.test(block)
@@ -126,8 +151,22 @@ function lastmodTracker() {
         const sorted = Object.fromEntries(Object.entries(next).sort(([a], [b]) => a.localeCompare(b)));
         writeFileSync(MANIFEST_PATH, `${JSON.stringify(sorted, null, 2)}\n`);
 
+        // 301 для страниц книг, объединённых в одну карточку. Домен здесь не
+        // указать — `_redirects` в Workers static assets не поддерживает
+        // редиректы по хосту, поэтому www→apex настраивается Redirect Rule
+        // в дашборде Cloudflare (см. README).
+        const redirectLines = Object.entries(BOOK_REDIRECTS)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([from, to]) => `/books/${from}/ /books/${to}/ 301`);
+        writeFileSync(
+          join(outDir, '_redirects'),
+          `# Сгенерировано сборкой из src/data/book-redirects.json — не редактировать вручную.\n${redirectLines.join('\n')}\n`,
+        );
+
         const total = Object.keys(next).length;
         logger.info(`lastmod: изменилось ${changed} из ${total} страниц`);
+        logger.info(`sitemap: ${listed.length} URL, исключено по noindex — ${dropped}`);
+        logger.info(`_redirects: ${redirectLines.length} правил для объединённых книг`);
         if (!Object.keys(previous).length) {
           logger.warn('lastmod-manifest.json создан заново — не забудьте закоммитить его');
         } else if (changed > total / 2) {

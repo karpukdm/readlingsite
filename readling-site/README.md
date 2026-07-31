@@ -1,43 +1,86 @@
-# Astro Starter Kit: Minimal
+# readling.club
+
+Статический сайт Readling на Astro. Деплоится на Cloudflare Workers (static assets) из ветки `main`.
+
+## Команды
+
+| Команда           | Действие                                     |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Установить зависимости                       |
+| `npm run dev`     | Локальный сервер на `localhost:4321`         |
+| `npm run build`   | Сборка в `./dist/`                           |
+| `npm run preview` | Просмотр собранного сайта локально           |
+| `npm run covers`  | Пережать обложки книг (`--force` — заново)   |
+| `npm run screens` | Пережать скриншоты приложения                |
+| `npm run og`      | Сгенерировать OG-картинки книг               |
+
+## Переменные сборки
+
+Смотрите `.env.example`. Все они должны быть заданы **в настройках Cloudflare**
+(Workers → `readlingsite` → Settings → Variables), иначе на продакшене их нет —
+именно поэтому на сайте до сих пор не было ни Метрики, ни GA.
+
+## Каталог книг
+
+`src/data/books.json` — выгрузка из БД приложения, и напрямую на сайт она не идёт.
+Единый источник истины — `src/utils/catalog.ts`, там же подробно расписано, зачем:
+
+- одно произведение может лежать двумя записями (русская — режим погружения,
+  английская — параллельное чтение). Они объединяются в одну карточку с двумя
+  отрывками; канонической берётся параллельная запись, русский слуг уходит в 301
+  (`src/data/book-redirects.json`). Русское название не теряется — оно ведёт
+  в `title`/H1, потому что именно его ищут;
+- артефакты Gutenberg-выгрузки (`Volume 3 (of 3)`, `Complete Works`) не попадают
+  на сайт вовсе (`EXCLUDED_SLUGS`);
+- страницы без единого отрывка помечаются `noindex`: кроме описания на них нет
+  ничего, кроме шаблона.
+
+Отрывки берутся из БД приложения через `scripts/export-excerpts.mjs`.
+
+### Что попадает в индекс
+
+`dist/_redirects` генерируется сборкой из `book-redirects.json`, а из `sitemap-0.xml`
+хук `astro:build:done` выкидывает всё, что помечено `noindex` в собранном HTML.
+Отдельных списков, которые могли бы разойтись с разметкой, нет — достаточно
+поставить `noindex` на страницу, и она сама уйдёт из sitemap.
+
+## Редирект www — опционально, и осторожно
+
+`https://www.readling.club/` отдаёт 200 и является дублем сайта. На индексацию
+это почти не влияет: `<link rel="canonical">` на всех страницах указывает на
+апекс, и поисковик склеивает дубль сам. Так что правило — необязательное.
+
+**Важно:** на `readling.club` живёт не только эта статика, но и продакшн-API на
+`/api/*`. Redirect Rules выполняются **раньше** маршрутизации Worker'а и origin,
+поэтому слишком широкое правило гарантированно уронит API — так уже случалось.
+`_redirects` тут не помощник: в Workers static assets он не поддерживает
+редиректы по хосту.
+
+Если всё же настраивать — Rules → Redirect Rules, custom filter expression:
+
+```
+http.host eq "www.readling.club"
+and not starts_with(http.request.uri.path, "/api/")
+```
+
+Target URL (Dynamic), статус **301**, галку «Preserve query string» не включать:
+
+```
+concat("https://readling.club", http.request.uri)
+```
+
+- `eq`, а не `contains` — апекс не должен совпадать даже случайно;
+- исключение `/api/` — страховка на случай ошибки в условии по хосту;
+- `http.request.uri`, а не `http.request.uri.path` — иначе теряется query string
+  (`.uri` = путь + query, `.uri.path` = только путь).
+
+Проверка после включения:
 
 ```sh
-npm create astro@latest -- --template minimal
+curl -sI https://readling.club/api/v1         # ожидаем 401, не 301
+curl -sI "https://readling.club/api/v1?a=1"   # ожидаем 401, не 301
+curl -sI https://www.readling.club/           # ожидаем 301 на апекс
+curl -sI https://readling.club/               # ожидаем 200
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Увидели 301 на первых двух — сразу ставьте правило на паузу.

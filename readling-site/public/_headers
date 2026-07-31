@@ -27,8 +27,31 @@
 /*.ico
   Cache-Control: public, max-age=31536000, immutable
 
-# HTML — короткий кэш, чтобы быстро видеть обновления
-/*.html
+# HTML — короткий кэш, чтобы быстро видеть обновления.
+# Правило /*.html не срабатывало: страницы отдаются по /books/1984/, а не
+# /books/1984/index.html, поэтому HTML перечислен здесь путями каталогов.
+/
+  Cache-Control: public, max-age=300, must-revalidate
+
+/books/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/uroven/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/sravnenie/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/metod-pogruzheniya/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/parallelnoe-chtenie/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/pricing/*
+  Cache-Control: public, max-age=300, must-revalidate
+
+/o-readling/*
   Cache-Control: public, max-age=300, must-revalidate
 
 # Sitemap и robots — обновляются с каждым деплоем
