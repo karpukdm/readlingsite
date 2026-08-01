@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { levelDescriptions, coverPath, coverSrcset, extractSnippet } from '../../utils/slug';
-import { booksByLevel } from '../../utils/catalog';
+import { booksByLevel, MIN_BOOKS_TO_INDEX, siteCatalogSize } from '../../utils/catalog';
+import Faq from '../../components/Faq.astro';
 
 export function getStaticPaths() {
   const levels = ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'];
@@ -14,13 +15,8 @@ const info = levelDescriptions[level];
 
 const books = booksByLevel(levelUpper);
 
-/**
- * Уровень с горсткой книг не выполняет обещание из H1 («Книги на английском
- * уровня A1») — такая страница читается как пустая и тянет вниз оценку раздела.
- * Держим её доступной для навигации, но не отдаём в индекс, пока каталог не
- * наполнится.
- */
-const MIN_BOOKS_TO_INDEX = 3;
+// Страницу держим доступной для навигации, но не отдаём в индекс, пока книг на
+// уровне слишком мало (порог и причина — в catalog.ts).
 const noindex = books.length < MIN_BOOKS_TO_INDEX;
 
 // Соседние уровни для перелинковки
@@ -42,6 +38,27 @@ const pageTitle = `${titlePrefix} — каталог Readling`.length <= 60
 // середине описания уровня, и сниппет теряет смысл.
 const DESCRIPTION_PREFIX = `${books.length > 0 ? books.length + ' книг' : 'Книги'} на английском уровня ${levelUpper} (${info.fullName}) с русским переводом. `;
 const pageDescription = DESCRIPTION_PREFIX + extractSnippet(info.long, 160 - DESCRIPTION_PREFIX.length);
+// Вопросы и ответы: один массив на видимый блок и на разметку FAQPage. Условная
+// вставка про начинающих раньше попадала только в видимый текст, и схема на всех
+// шести страницах уровней расходилась с тем, что читает пользователь.
+const faqItems = [
+  {
+    q: `Какие книги на английском читать на уровне ${levelUpper}?`,
+    a: `На уровне ${levelUpper} (${info.short}) подойдут книги, отмеченные этим уровнем в каталоге Readling.${
+      isBeginner
+        ? ' Для начинающих это короткие и адаптированные тексты с частотной лексикой.'
+        : ' Лексика и конструкции соответствуют вашему уровню, а перевод всегда под рукой.'
+    } Каждое слово в Readling можно перевести по нажатию.`,
+  },
+  {
+    q: `Что значит уровень ${levelUpper}?`,
+    a: `${info.long} Это ${info.vocab}.`,
+  },
+  {
+    q: 'Можно ли читать книги выше своего уровня?',
+    a: 'Да. В режиме погружения текст начинается с большой долей русского, а в параллельном режиме перевод всегда рядом — поэтому книгу можно взять даже на уровень выше текущего.',
+  },
+];
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonicalPath={`/uroven/${level}`} noindex={noindex}>
@@ -92,8 +109,10 @@ const pageDescription = DESCRIPTION_PREFIX + extractSnippet(info.long, 160 - DES
         </div>
       ) : (
         <p class="text-center max-w-prose mx-auto">
+          {/* Ссылка ведёт на каталог сайта, значит и число должно быть его —
+              обещать «100+» и показать другое количество нельзя. */}
           Книги уровня {levelUpper} сейчас готовятся. Загляните в <a href="/books/">полный каталог</a> —
-          там более 100 книг от A1 до C2.
+          там {siteCatalogSize} книг от A1 до C2.
         </p>
       )}
 
@@ -131,33 +150,7 @@ const pageDescription = DESCRIPTION_PREFIX + extractSnippet(info.long, 160 - DES
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Вопросы о чтении на уровне {levelUpper}</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Какие книги на английском читать на уровне {levelUpper}?</summary>
-          <div class="faq-item__answer">
-            На уровне {levelUpper} ({info.short}) подойдут книги, отмеченные этим уровнем в каталоге Readling.
-            {isBeginner ? ' Для начинающих это короткие и адаптированные тексты с частотной лексикой.' : ' Лексика и конструкции соответствуют вашему уровню, а перевод всегда под рукой.'}
-            Каждое слово в Readling можно перевести по нажатию.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Что значит уровень {levelUpper}?</summary>
-          <div class="faq-item__answer">{info.long} Это {info.vocab}.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Можно ли читать книги выше своего уровня?</summary>
-          <div class="faq-item__answer">
-            Да. В режиме погружения текст начинается с большой долей русского, а в параллельном режиме
-            перевод всегда рядом — поэтому книгу можно взять даже на уровень выше текущего.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
+  <Faq title={`Вопросы о чтении на уровне ${levelUpper}`} items={faqItems} />
 
   <!-- Schema.org -->
   <Fragment slot="schema">
@@ -189,28 +182,7 @@ const pageDescription = DESCRIPTION_PREFIX + extractSnippet(info.long, 160 - DES
         { "@type": "ListItem", "position": 3, "name": `Уровень ${levelUpper}`, "item": `https://readling.club/uroven/${level}/` }
       ]
     })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": `Какие книги на английском читать на уровне ${levelUpper}?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `На уровне ${levelUpper} (${info.short}) подойдут книги, отмеченные этим уровнем в каталоге Readling. Каждое слово можно перевести по нажатию.` }
-        },
-        {
-          "@type": "Question",
-          "name": `Что значит уровень ${levelUpper}?`,
-          "acceptedAnswer": { "@type": "Answer", "text": `${info.long} Это ${info.vocab}.` }
-        },
-        {
-          "@type": "Question",
-          "name": "Можно ли читать книги выше своего уровня?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Да. В режиме погружения текст начинается с большой долей русского, а в параллельном режиме перевод всегда рядом — поэтому книгу можно взять даже на уровень выше текущего." }
-        }
-      ]
-    })} />
-  </Fragment>
+      </Fragment>
 </BaseLayout>
 
 <style>

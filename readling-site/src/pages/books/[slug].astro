@@ -7,10 +7,11 @@ import {
   genreDescriptions,
   levelDescriptions,
   extractSnippet,
+  plural,
   coverPath,
   coverSrcset,
 } from '../../utils/slug';
-import { catalog, booksBySameAuthor, type CatalogBook, type ExcerptSentence } from '../../utils/catalog';
+import { catalog, booksBySameAuthor, lexiconMedians, type CatalogBook, type ExcerptSentence } from '../../utils/catalog';
 
 export function getStaticPaths() {
   return catalog.map(book => ({
@@ -102,12 +103,6 @@ const relatedBooks = scored.slice(0, 6).map(s => s.book);
 // Книги того же автора
 const sameAuthorBooks = booksBySameAuthor(book);
 
-function plural(n: number, one: string, few: string, many: string) {
-  const m10 = n % 10, m100 = n % 100;
-  if (m10 === 1 && m100 !== 11) return one;
-  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
-  return many;
-}
 const pagesPhrase = stat?.pages ? `${stat.pages} ${plural(stat.pages, 'страница', 'страницы', 'страниц')}` : '';
 
 // Блок «Зачем читать» — мотивирующий: жанровый крючок + посильная цель + что получишь.
@@ -120,6 +115,40 @@ const whyHook = `${primaryGenreInfo?.appeal || 'Прочитать любиму�
 const whyPayoff = primaryGenreInfo?.vocab
   ? `А дочитав «${name}» до конца, вы не просто закроете книгу в оригинале — попутно освоите характерную лексику жанра (${primaryGenreInfo.vocab}), причём не зубрёжкой, а вместе с сюжетом.`
   : `А дочитав «${name}» до конца, вы закроете настоящую книгу в оригинале — и почувствуете язык совсем иначе, чем на учебных текстах.`;
+
+/**
+ * Лексический портрет книги — числа, посчитанные по её полному тексту.
+ * Голое «уровень B2» есть на десятке сайтов; замеры — только у нас, и они
+ * объясняют, почему уровень именно такой.
+ */
+const lex = book.lexicon;
+
+const numberFmt = new Intl.NumberFormat('ru-RU');
+
+// Сравнение с медианой каталога: «11,6% редкой лексики» само по себе пусто,
+// а «заметно выше, чем в остальных книгах» — уже факт.
+const rare2000 = lex?.rare['2000'] ?? 0;
+const rareVerdict = !lex
+  ? ''
+  : rare2000 > lexiconMedians.rare2000 * 1.15
+    ? 'заметно выше среднего: словарь книги богатый, готовьтесь встречать незнакомое'
+    : rare2000 < lexiconMedians.rare2000 * 0.85
+      ? 'ниже среднего: книга держится частотной лексики, незнакомых слов немного'
+      : 'на уровне среднего по каталогу';
+
+/**
+ * Доля простых фраз (сложность 1–2) — из оценки, которую приложение ставит
+ * каждой фразе при выравнивании. Именно с них начинается режим погружения,
+ * поэтому число отвечает на вопрос «а мне будет посильно».
+ */
+const easyPhraseShare = lex
+  ? Math.round((lex.cx['1'] ?? 0) + (lex.cx['2'] ?? 0))
+  : 0;
+
+// Время чтения: 150 слов в минуту — темп чтения на неродном языке; на родном
+// он около 240, и брать его для оценки английского текста было бы враньём.
+const READING_WPM = 150;
+const readingHours = lex ? Math.round(lex.words / READING_WPM / 60) : 0;
 
 // Title и description держим в пределах, которые Google показывает целиком
 // (~60 и ~160 символов). Ключевая фраза идёт первой, поэтому обрезка у длинных
@@ -136,13 +165,15 @@ const pageTitle = titleCore.length + ' | Readling'.length <= 60
 // сниппет на английском не совпадает ни с запросом, ни с языком страницы.
 // Пока у книги нет русского описания, собираем сниппет из того, что достоверно:
 // автор, жанр, уровень и режимы чтения.
+// Короткий синопсис из БД — это готовая фраза на одно предложение, и в сниппете
+// она читается лучше, чем обрезанный по длине абзац полного описания.
 const DESCRIPTION_SUFFIX = ` Читайте на английском с русским переводом в Readling, уровень ${level}.`;
-const pageDescription = book.descriptionLang === 'ru'
-  ? extractSnippet(book.description, 160 - DESCRIPTION_SUFFIX.length) + DESCRIPTION_SUFFIX
-  : extractSnippet(
-      `«${name}» — ${author}, ${primaryGenreLabel.toLowerCase()}${pagesPhrase ? `, ${pagesPhrase}` : ''}.`,
-      160 - DESCRIPTION_SUFFIX.length,
-    ) + DESCRIPTION_SUFFIX;
+const descriptionSource = book.shortDescription
+  ?? (book.descriptionLang === 'ru'
+    ? book.description
+    : `«${name}» — ${author}, ${primaryGenreLabel.toLowerCase()}${pagesPhrase ? `, ${pagesPhrase}` : ''}.`);
+const pageDescription =
+  extractSnippet(descriptionSource, 160 - DESCRIPTION_SUFFIX.length) + DESCRIPTION_SUFFIX;
 
 // H1 и лид-абзац под ключевые запросы («[книга] на английском с [параллельным] переводом»).
 // У объединённых пар в H1 идут оба названия: русское — то, что ищут, английское —
@@ -166,20 +197,68 @@ const faqLevelAnswer = hasParallelMode
 // FAQ рендерится и в разметку, и в JSON-LD из одного массива: структурированные
 // данные обязаны дословно совпадать с видимым текстом, иначе Google считает их
 // недостоверными и игнорирует всю схему страницы.
-const faqItems = [
+//
+// Раньше здесь лежали три вопроса одной формы с подставленным названием книги, и
+// на 88 страницах это давало самый заметный шаблонный блок на сайте. Теперь три
+// вопроса общие для всех книг, а остальные подбираются по самой книге — по её
+// замерам, году и объёму, — поэтому наборы у разных книг не совпадают.
+const vocabSample = lex?.vocabulary.slice(0, 3).map(w => `${w.w} — ${w.ru}`).join(', ');
+
+const coreFaq = [
   {
     q: `Какой уровень английского нужен для «${name}»?`,
     a: `«${name}» рассчитана на уровень ${level} (${levelInfo?.short || ''}). ${faqLevelAnswer}`,
   },
   {
+    q: `Какую лексику я выучу, читая «${name}»?`,
+    a: lex && vocabSample
+      ? `Мы разобрали полный текст: ${rare2000}% слов книги лежат вне двух тысяч самых частотных в английском. Характерные для неё слова — ${vocabSample}. Каждое слово, на которое вы нажмёте при чтении, попадёт в личный словарь, а оттуда — в тренировки: флэш-карточки, пазлы предложений, вставка слов.`
+      : `«${name}» относится к жанру «${primaryGenreLabel.toLowerCase()}». ${primaryGenreInfo?.vocab ? `Это значит — ${primaryGenreInfo.vocab}.` : 'Это значит — характерная для жанра лексика.'} Каждое слово, на которое вы нажмёте при чтении, попадёт в личный словарь. Дальше — тренировки именно на эту лексику: флэш-карточки, пазлы предложений, вставка слов.`,
+  },
+  {
     q: `Можно ли читать «${name}» бесплатно?`,
     a: `В Readling действует пробный период 7 дней — вы получаете доступ ко всем книгам каталога, включая «${name}», ко всем режимам чтения и тренировкам. После пробного периода никаких автосписаний — продолжать подписку или нет, решаете вы.`,
   },
-  {
-    q: `Какую лексику я выучу, читая «${name}»?`,
-    a: `«${name}» относится к жанру «${primaryGenreLabel.toLowerCase()}». ${primaryGenreInfo?.vocab ? `Это значит — ${primaryGenreInfo.vocab}.` : 'Это значит — характерная для жанра лексика.'} Каждое слово, на которое вы нажмёте при чтении, попадёт в личный словарь. Дальше — тренировки именно на эту лексику: флэш-карточки, пазлы предложений, вставка слов.`,
-  },
 ];
+
+/**
+ * Вопросы, которые есть смысл задавать не о каждой книге: они опираются на её
+ * замеры, возраст или объём. Из подходящих берём два — какие именно, зависит от
+ * слуга, поэтому соседние книги в каталоге получают разные пары.
+ */
+const optionalFaq = [
+  lex && {
+    q: `Сколько времени займёт прочитать «${name}» на английском?`,
+    a: `В книге ${numberFmt.format(lex.words)} ${plural(lex.words, 'слово', 'слова', 'слов')}. При темпе около ${READING_WPM} слов в минуту — обычный темп чтения на неродном языке — это примерно ${readingHours} ${plural(readingHours, 'час', 'часа', 'часов')} чистого чтения. По 20 минут в день книга займёт около ${Math.max(1, Math.round((readingHours * 60) / 20 / 7))} ${plural(Math.max(1, Math.round((readingHours * 60) / 20 / 7)), 'недели', 'недель', 'недель')}.`,
+  },
+  lex && {
+    q: `Сложный ли язык в «${name}»?`,
+    a: `Доля редкой лексики — ${rare2000}% слов вне двух тысяч самых частотных в английском, ${rareVerdict}. При этом ${easyPhraseShare}% фраз книги простые: с них и начинается режим погружения.`,
+  },
+  book.year && book.year < 1900 && {
+    q: `Не устарел ли английский в «${name}»?`,
+    a: `Книга написана в ${book.year} году, и отдельные обороты в ней действительно устаревшие. На понимание это не влияет: основа языка с тех пор не изменилась, а редкие архаизмы переводятся по нажатию, как и любое другое слово. Читать классику в оригинале — обычная практика, и именно на ней строятся школьные и университетские курсы английского.`,
+  },
+  stat?.pages && {
+    q: `Большая ли книга «${name}»?`,
+    a: `В «${name}» ${pagesPhrase}${stat.chapters ? ` и ${stat.chapters} ${plural(stat.chapters, 'глава', 'главы', 'глав')}` : ''}. Читать её целиком за раз не нужно: Readling запоминает место, где вы остановились, и показывает прогресс по главам.`,
+  },
+  relatedBooks.length > 0 && {
+    q: `Что почитать после «${name}»?`,
+    a: `Ближе всего по уровню и теме — «${relatedBooks[0].displayTitle}»${relatedBooks[1] ? ` и «${relatedBooks[1].displayTitle}»` : ''}. Полная подборка похожих книг — выше на этой странице, а все книги уровня ${level} собраны на отдельной странице каталога.`,
+  },
+].filter(Boolean) as Array<{ q: string; a: string }>;
+
+// Смещение по слугу — не случайность: сборка должна быть воспроизводимой, иначе
+// FAQ менялся бы при каждом деплое и страницы получали бы новый lastmod.
+const faqOffset = [...slug].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
+const EXTRA_FAQ = 2;
+const rotatedOptional = optionalFaq.length
+  ? Array.from({ length: Math.min(EXTRA_FAQ, optionalFaq.length) },
+      (_, i) => optionalFaq[(faqOffset + i) % optionalFaq.length])
+  : [];
+
+const faqItems = [...coreFaq, ...rotatedOptional];
 ---
 
 <BaseLayout
@@ -231,8 +310,14 @@ const faqItems = [
           </div>
         </div>
       </div>
-      <div class="facts-strip">
+      {/* Колонок ровно столько, сколько фактов: у книг без года их четыре, с годом —
+          пять. Фиксированное `repeat(4, 1fr)` переносило бы пятый факт на вторую
+          строку, и разделители слева вставали бы в начало строки. */}
+      <div class="facts-strip" style={`--fact-count: ${book.year ? 5 : 4}`}>
         <div class="fact"><span class="fact__label">Автор</span><span class="fact__value">{author}</span></div>
+        {book.year && (
+          <div class="fact"><span class="fact__label">Год издания</span><span class="fact__value">{book.year}</span></div>
+        )}
         <div class="fact"><span class="fact__label">Уровень</span><span class="fact__value">{level} · {levelInfo?.short || ''}</span></div>
         <div class="fact"><span class="fact__label">Жанр</span><span class="fact__value">{primaryGenreLabel}</span></div>
         <div class="fact"><span class="fact__label">Режим чтения</span><span class="fact__value">{modeLabel}</span></div>
@@ -333,14 +418,13 @@ const faqItems = [
           </div>
         )}
 
+        {/* Кнопки магазинов на странице выводятся ещё дважды — в шапке и в
+            финальном CTA. Третий повтор ничего не добавлял читателю, зато
+            целиком уходил в текст, дословно совпадающий на всех страницах книг. */}
         <p class="excerpt__note text-center">
           Это начало «{name}». Полный текст с переводом по нажатию на любое слово, личным словарём
           и тренировками — в приложении Readling.
         </p>
-        <div class="store-buttons" style="justify-content: center;">
-          <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
-          <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
-        </div>
       </div>
 
       {/* Тултип перевода для режима погружения */}
@@ -402,9 +486,12 @@ const faqItems = [
                 {sameAuthorBooks.map(ab => (
                   <li>
                     <a href={`/books/${ab.slug}/`}>
-                      <img src={coverPath(ab.title, 'sm')} alt={ab.title} loading="lazy" decoding="async" width="40" height="60" />
+                      {/* Путь к обложке строится по названию канонической записи
+                          (у объединённых пар — английскому): это имя файла, а не
+                          текст для читателя. Видимое название — русское. */}
+                      <img src={coverPath(ab.title, 'sm')} alt={ab.displayTitle} loading="lazy" decoding="async" width="40" height="60" />
                       <div class="author-list__meta">
-                        <span class="author-list__title">{ab.title}<span class="visually-hidden"> на английском с переводом</span></span>
+                        <span class="author-list__title">{ab.displayTitle}<span class="visually-hidden"> на английском с переводом</span></span>
                         <span class="author-list__level">{ab.level}</span>
                       </div>
                     </a>
@@ -418,6 +505,51 @@ const faqItems = [
     </div>
   </section>
 
+  <!-- ЯЗЫК КНИГИ: замеры по полному тексту -->
+  {lex && (
+    <section class="section section--alt" aria-labelledby="lexicon-title">
+      <div class="container">
+        <h2 id="lexicon-title" class="text-center mb-sm">Язык «{name}» в цифрах</h2>
+        <p class="text-center max-w-prose mx-auto mb-l">
+          Уровень {level} у этой книги не проставлен на глаз: мы разобрали её полный текст —
+          {' '}{numberFmt.format(lex.words)} {plural(lex.words, 'слово', 'слова', 'слов')},
+          {' '}{numberFmt.format(lex.sentences)} {plural(lex.sentences, 'предложение', 'предложения', 'предложений')} —
+          и посчитали, из чего он состоит.
+        </p>
+
+        <div class="lex-stats max-w-wide mx-auto mb-l">
+          <div class="lex-stat">
+            <span class="lex-stat__value">{numberFmt.format(lex.words)}</span>
+            <span class="lex-stat__label">слов в книге</span>
+            <span class="lex-stat__note">около {readingHours} ч чтения</span>
+          </div>
+          <div class="lex-stat">
+            <span class="lex-stat__value">{numberFmt.format(lex.distinctWords)}</span>
+            <span class="lex-stat__label">уникальных словоформ</span>
+            <span class="lex-stat__note">весь словарь книги</span>
+          </div>
+          <div class="lex-stat">
+            <span class="lex-stat__value">{rare2000}%</span>
+            <span class="lex-stat__label">редкой лексики</span>
+            <span class="lex-stat__note">слов вне 2000 самых частотных</span>
+          </div>
+        </div>
+
+        <div class="lex-read max-w-prose mx-auto mb-xl">
+          <p class="mb-s">
+            <strong>Лексика:</strong> {rare2000}% слов лежат за пределами двух тысяч самых
+            частотных в английском — {rareVerdict}.
+          </p>
+          <p>
+            <strong>Простых фраз:</strong> {easyPhraseShare}%. В режиме погружения они переходят
+            на английский первыми.
+          </p>
+        </div>
+
+      </div>
+    </section>
+  )}
+
   <!-- RELATED -->
   {relatedBooks.length > 0 && (
     <section class="section section--alt">
@@ -429,11 +561,11 @@ const faqItems = [
         <div class="related-grid">
           {relatedBooks.map(rb => (
             <a href={`/books/${rb.slug}/`} class="related-book">
-              <img class="related-book__cover" src={coverPath(rb.title, 'sm')} srcset={coverSrcset(rb.title, 'card')} alt={`Обложка «${rb.title}»`} loading="lazy" decoding="async" width="160" height="240" />
+              <img class="related-book__cover" src={coverPath(rb.title, 'sm')} srcset={coverSrcset(rb.title, 'card')} alt={`Обложка «${rb.displayTitle}»`} loading="lazy" decoding="async" width="160" height="240" />
               <div class="related-book__info">
                 <span class="related-book__level">{rb.level}</span>
-                <div class="related-book__title">{rb.title}<span class="visually-hidden"> на английском с переводом</span></div>
-                <div class="related-book__author">{rb.author}</div>
+                <div class="related-book__title">{rb.displayTitle}<span class="visually-hidden"> на английском с переводом</span></div>
+                <div class="related-book__author">{rb.displayAuthor}</div>
               </div>
             </a>
           ))}
@@ -499,6 +631,9 @@ const faqItems = [
       },
       "educationalLevel": level,
       "learningResourceType": "Bilingual reading book",
+      // Год первой публикации оригинала — помогает Google связать страницу с
+      // конкретным произведением, а не с одноимённым изданием или экранизацией.
+      ...(book.year ? { "datePublished": String(book.year) } : {}),
       ...(stat?.pages ? { "numberOfPages": stat.pages } : {}),
       // Отрывок(и), реально опубликованные на странице — по одному на режим.
       ...((immersion || parallel) ? {
@@ -804,7 +939,7 @@ const faqItems = [
 
   .facts-strip {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--fact-count, 4), 1fr);
     gap: var(--space-m);
     background: var(--color-surface);
     border: 1px solid var(--color-card-border);
@@ -961,6 +1096,46 @@ const faqItems = [
     margin-top: var(--space-xs);
   }
 
+  /* ── Язык книги в цифрах ── */
+  .lex-stats {
+    display: grid;
+    /* auto-fit: на широком экране четыре карточки в ряд, на планшете две,
+       на телефоне одна — без отдельных правил под каждый брейкпоинт. */
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: var(--space-m);
+  }
+  .lex-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-l);
+    text-align: center;
+  }
+  .lex-stat__value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.1;
+  }
+  .lex-stat__label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+  .lex-stat__note {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .lex-read p {
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+  .lex-read strong { color: var(--color-text); }
+
   .related-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -1007,6 +1182,16 @@ const faqItems = [
   }
 
   @media (max-width: 960px) {
+    /* Пять фактов в ряд перестают помещаться раньше, чем наступает мобильная
+       вёрстка. Две колонки: разделитель слева нужен только правой из пары,
+       а это всегда чётный по счёту факт. */
+    .facts-strip { grid-template-columns: 1fr 1fr; }
+    .fact + .fact { border-left: none; padding-left: 0; }
+    .fact:nth-child(odd) + .fact {
+      border-left: 1px solid var(--color-card-border);
+      padding-left: var(--space-m);
+    }
+
     .book-body { grid-template-columns: 1fr; }
     .book-body__sidebar {
       position: static;
@@ -1031,14 +1216,8 @@ const faqItems = [
     .book-hero .store-buttons { justify-content: center; }
 
     .facts-strip {
-      grid-template-columns: 1fr 1fr;
       gap: var(--space-s) var(--space-m);
       padding: var(--space-m);
-    }
-    .fact + .fact { border-left: none; padding-left: 0; }
-    .fact:nth-child(odd) + .fact {
-      border-left: 1px solid var(--color-card-border);
-      padding-left: var(--space-m);
     }
 
     .related-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-m); }

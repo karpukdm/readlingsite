@@ -1,11 +1,40 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { appCatalog } from '../utils/catalog';
+import Faq from '../components/Faq.astro';
 import { links } from '../config/links';
+// Вопросы и ответы: один массив на видимый блок и на разметку FAQPage.
+const faqItems = [
+  {
+    q: 'Можно ли пользоваться Readling полностью бесплатно?',
+    a: 'Да! Бесплатная версия включает часть каталога, оба режима чтения, перевод слов и личный словарь. Вы можете учиться бесплатно столько, сколько хотите. Подписка нужна только если вы хотите весь каталог и безлимитные тренировки.',
+  },
+  {
+    q: 'Что будет после 7 дней пробного периода?',
+    a: 'Ничего не списывается автоматически. Пробный период просто даёт доступ ко всем функциям на 7 дней. После этого вы продолжите пользоваться бесплатной версией — а подписку оформите только если сами захотите.',
+  },
+  {
+    q: 'Как отменить подписку?',
+    a: 'Через настройки App Store или Google Play — так же, как любую другую подписку. После отмены вы сможете пользоваться подпиской до конца оплаченного периода.',
+  },
+  {
+    q: 'Сохранится ли мой прогресс, если я отменю подписку?',
+    a: 'Да, весь ваш прогресс, личный словарь и закладки сохранятся. Вы просто вернётесь к бесплатной версии с ограниченным каталогом и лимитом тренировок.',
+  },
+  {
+    q: 'Как работает реферальная программа?',
+    a: 'За каждого друга, который скачает Readling по вашей ссылке, вы получаете 7 дней бесплатной подписки. Друг тоже получает бонусные дни. Количество приглашений не ограничено — приглашайте больше и пользуйтесь бесплатно.',
+  },
+  {
+    q: 'Почему подписка, а не разовая покупка?',
+    a: 'Подписка позволяет нам постоянно добавлять новые книги, улучшать тренировки и развивать приложение. Вы платите не за продукт один раз — а за сервис, который становится лучше каждый месяц.',
+  },
+];
 ---
 
 <BaseLayout
   title="Цены Readling — бесплатно или подписка за $3.99/мес"
-  description="Readling бесплатен для чтения и изучения английского. Подписка открывает весь каталог из 100+ книг и безлимитные тренировки — всего $3.99 в месяц."
+  description={`Readling бесплатен для чтения и изучения английского. Подписка открывает весь каталог из ${appCatalog.books} книг и безлимитные тренировки — всего $3.99 в месяц.`}
   canonicalPath="/pricing"
 >
   <!-- BREADCRUMBS -->
@@ -118,7 +147,7 @@ import { links } from '../config/links';
           <ul class="pricing-card__features">
             <li class="pricing-card__feature">
               <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
-              <strong>Весь каталог — 100+ книг</strong>
+              <strong>Весь каталог — {appCatalog.books} книг</strong>
             </li>
             <li class="pricing-card__feature">
               <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
@@ -178,7 +207,7 @@ import { links } from '../config/links';
           <div class="anchor-card__icon">&#128218;</div>
           <div class="anchor-card__label">Readling</div>
           <div class="anchor-card__price">$3.99</div>
-          <div class="anchor-card__note">100+ книг и английский на месяц</div>
+          <div class="anchor-card__note">{appCatalog.books} книг и английский на месяц</div>
         </div>
         <div class="anchor-card">
           <div class="anchor-card__icon">&#127891;</div>
@@ -198,7 +227,7 @@ import { links } from '../config/links';
         <div class="value-item">
           <div class="value-item__icon">&#128214;</div>
           <div>
-            <h3 class="mb-xs">Весь каталог из 100+ книг</h3>
+            <h3 class="mb-xs">Весь каталог из {appCatalog.books} книг</h3>
             <p>Детективы, фантастика, классика, романтика — от уровня A1 до C2. Новые книги добавляются регулярно.</p>
           </div>
         </div>
@@ -230,11 +259,11 @@ import { links } from '../config/links';
       </p>
       <div class="social-stats">
         <div class="social-stat">
-          <div class="social-stat__number">100+</div>
+          <div class="social-stat__number">{appCatalog.books}</div>
           <div class="social-stat__label">Книг в каталоге</div>
         </div>
         <div class="social-stat">
-          <div class="social-stat__number">25</div>
+          <div class="social-stat__number">{appCatalog.genres}</div>
           <div class="social-stat__label">Жанров — от классики до фантастики</div>
         </div>
         <div class="social-stat">
@@ -245,56 +274,7 @@ import { links } from '../config/links';
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section section--alt">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Вопросы о подписке</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Можно ли пользоваться Readling полностью бесплатно?</summary>
-          <div class="faq-item__answer">
-            Да! Бесплатная версия включает часть каталога, оба режима чтения, перевод слов и личный словарь.
-            Вы можете учиться бесплатно столько, сколько хотите. Подписка нужна только если вы хотите весь каталог и безлимитные тренировки.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Что будет после 7 дней пробного периода?</summary>
-          <div class="faq-item__answer">
-            Ничего не списывается автоматически. Пробный период просто даёт доступ ко всем функциям на 7 дней.
-            После этого вы продолжите пользоваться бесплатной версией — а подписку оформите только если сами захотите.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Как отменить подписку?</summary>
-          <div class="faq-item__answer">
-            Через настройки App Store или Google Play — так же, как любую другую подписку.
-            После отмены вы сможете пользоваться подпиской до конца оплаченного периода.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Сохранится ли мой прогресс, если я отменю подписку?</summary>
-          <div class="faq-item__answer">
-            Да, весь ваш прогресс, личный словарь и закладки сохранятся. Вы просто вернётесь к бесплатной версии
-            с ограниченным каталогом и лимитом тренировок.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Как работает реферальная программа?</summary>
-          <div class="faq-item__answer">
-            За каждого друга, который скачает Readling по вашей ссылке, вы получаете 7 дней бесплатной подписки.
-            Друг тоже получает бонусные дни. Количество приглашений не ограничено — приглашайте больше и пользуйтесь бесплатно.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Почему подписка, а не разовая покупка?</summary>
-          <div class="faq-item__answer">
-            Подписка позволяет нам постоянно добавлять новые книги, улучшать тренировки и развивать приложение.
-            Вы платите не за продукт один раз — а за сервис, который становится лучше каждый месяц.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
+  <Faq title="Частые вопросы о ценах" items={faqItems} />
 
   <!-- CTA -->
   <section class="section">
@@ -329,7 +309,7 @@ import { links } from '../config/links';
       "name": "Readling — английский по книгам",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "iOS, Android",
-      "description": "Подписка на приложение Readling — изучение английского через чтение книг. 100+ книг, безлимитные тренировки.",
+      "description": `Подписка на приложение Readling — изучение английского через чтение книг. ${appCatalog.books} книг, безлимитные тренировки.`,
       "url": "https://readling.club/pricing/",
       "image": "https://readling.club/logo.png",
       "publisher": { "@type": "Organization", "name": "Readling", "url": "https://readling.club/" },
@@ -350,43 +330,7 @@ import { links } from '../config/links';
         }
       ]
     })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Можно ли пользоваться Readling полностью бесплатно?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Да, бесплатная версия включает часть каталога, оба режима чтения, перевод слов и личный словарь. Подписка нужна только для всего каталога и безлимитных тренировок." }
-        },
-        {
-          "@type": "Question",
-          "name": "Что будет после 7 дней пробного периода?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Ничего не списывается автоматически. После пробного периода вы продолжите пользоваться бесплатной версией, а подписку оформите только если сами захотите." }
-        },
-        {
-          "@type": "Question",
-          "name": "Как отменить подписку Readling?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Через настройки App Store или Google Play — так же, как любую другую подписку. После отмены вы сможете пользоваться подпиской до конца оплаченного периода." }
-        },
-        {
-          "@type": "Question",
-          "name": "Сохранится ли мой прогресс, если я отменю подписку?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Да, весь прогресс, личный словарь и закладки сохраняются. Вы просто вернётесь к бесплатной версии с ограниченным каталогом и лимитом тренировок." }
-        },
-        {
-          "@type": "Question",
-          "name": "Как работает реферальная программа Readling?",
-          "acceptedAnswer": { "@type": "Answer", "text": "За каждого друга, который скачает Readling по вашей ссылке, вы получаете 7 дней бесплатной подписки. Друг тоже получает бонусные дни. Количество приглашений не ограничено." }
-        },
-        {
-          "@type": "Question",
-          "name": "Почему подписка, а не разовая покупка?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Подписка позволяет постоянно добавлять новые книги, улучшать тренировки и развивать приложение." }
-        }
-      ]
-    })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
+        <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [

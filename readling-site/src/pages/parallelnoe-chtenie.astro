@@ -2,18 +2,34 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
 import { pickByHash, coverPath, coverSrcset } from '../utils/slug';
-import { indexableCatalog } from '../utils/catalog';
+import { indexableCatalog, appCatalog } from '../utils/catalog';
 import { getPageDates } from '../utils/dates';
+import Faq from '../components/Faq.astro';
 
 // Страница про параллельное чтение — показываем книги, доступные в этом режиме.
 const parallelBooks = indexableCatalog.filter(b => b.modes.includes('parallel'));
 const featuredBooks = pickByHash(parallelBooks, 8, 'parallel-featured-v1');
 const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chtenie.astro');
+// Вопросы и ответы: один массив на видимый блок и на разметку FAQPage.
+const faqItems = [
+  {
+    q: 'Чем параллельное чтение в Readling отличается от обычных книг с параллельным переводом?',
+    a: 'В Readling текст интерактивный: вы можете нажать на любое слово и увидеть перевод. Незнакомые слова сохраняются в личный словарь и используются в тренировках.',
+  },
+  {
+    q: 'Для какого уровня подходит параллельное чтение?',
+    a: 'Лучше всего для B1 и выше — когда базовая грамматика уже знакома. Для начинающих (A1–A2) рекомендуем начать с режима погружения, где английский появляется постепенно.',
+  },
+  {
+    q: 'Можно ли переключаться между параллельным чтением и режимом погружения?',
+    a: 'У каждой книги в каталоге указан доступный режим — погружение или параллельный. Выбирайте книгу с нужным вам режимом.',
+  },
+];
 ---
 
 <BaseLayout
   title="Книги на английском с параллельным переводом | Readling"
-  description="Книги на английском с параллельным переводом: оригинал и русский перевод рядом, предложение за предложением. 100+ книг от A1 до C2 в Readling."
+  description={`Книги на английском с параллельным переводом: оригинал и русский перевод рядом, предложение за предложением. ${appCatalog.books} книг от A1 до C2 в Readling.`}
   canonicalPath="/parallelnoe-chtenie"
 >
   <Fragment slot="head">
@@ -70,7 +86,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
           </p>
           <p>
             Это один из самых проверенных методов изучения языка через чтение.
-            В Readling он доступен для всех книг каталога — более 100 книг в 25 жанрах.
+            В Readling он доступен для всех книг каталога — {appCatalog.books} книг в {appCatalog.genres} жанрах.
           </p>
         </div>
         <div class="what-section__visual">
@@ -207,8 +223,9 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
     <div class="container">
       <h2 class="text-center mb-m">Книги с параллельным переводом — от A1 до C2</h2>
       <p class="text-center max-w-prose mx-auto mb-xl">
-        В каталоге Readling — более 100 книг в двух режимах чтения. Детективы, фантастика, классика, романтика и другие
-        жанры. У каждой книги указан её режим — параллельный или погружение.
+        Детективы, фантастика, классика, романтика и другие жанры — в двух режимах чтения.
+        У каждой книги указан её режим, а на странице есть реальный отрывок: можно посмотреть,
+        как выглядит текст, ещё до установки приложения.
       </p>
       <div class="book-scroll">
         {featuredBooks.map(book => (
@@ -245,34 +262,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Вопросы о параллельном чтении</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Чем параллельное чтение в Readling отличается от обычных книг с параллельным переводом?</summary>
-          <div class="faq-item__answer">
-            В Readling текст интерактивный: вы можете нажать на любое слово и увидеть перевод.
-            Незнакомые слова сохраняются в личный словарь и используются в тренировках.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Для какого уровня подходит параллельное чтение?</summary>
-          <div class="faq-item__answer">
-            Лучше всего для B1 и выше — когда базовая грамматика уже знакома.
-            Для начинающих (A1–A2) рекомендуем начать с режима погружения, где английский появляется постепенно.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Можно ли переключаться между параллельным чтением и режимом погружения?</summary>
-          <div class="faq-item__answer">
-            У каждой книги в каталоге указан доступный режим — погружение или параллельный. Выбирайте книгу с нужным вам режимом.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
+  <Faq title="Частые вопросы о параллельном чтении" items={faqItems} />
 
   <!-- Schema.org -->
   <Fragment slot="schema">
@@ -308,28 +298,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/parallelnoe-chte
         { "@type": "ListItem", "position": 2, "name": "Параллельное чтение", "item": "https://readling.club/parallelnoe-chtenie/" }
       ]
     })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Чем параллельное чтение в Readling отличается от обычных книг с параллельным переводом?",
-          "acceptedAnswer": { "@type": "Answer", "text": "В Readling текст интерактивный: можно нажать на любое слово и увидеть перевод. Незнакомые слова сохраняются в личный словарь и используются в тренировках." }
-        },
-        {
-          "@type": "Question",
-          "name": "Для какого уровня подходит параллельное чтение?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Лучше всего для B1 и выше. Для начинающих рекомендуем режим погружения." }
-        },
-        {
-          "@type": "Question",
-          "name": "Можно ли переключаться между параллельным чтением и режимом погружения?",
-          "acceptedAnswer": { "@type": "Answer", "text": "У каждой книги в каталоге указан доступный режим — погружение или параллельный." }
-        }
-      ]
-    })} />
-  </Fragment>
+      </Fragment>
 </BaseLayout>
 
 <style>

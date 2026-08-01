@@ -1,0 +1,58 @@
+---
+/**
+ * Блок вопросов и ответов вместе с разметкой FAQPage.
+ *
+ * Раньше на каждой странице видимый текст и JSON-LD писались отдельно, и они
+ * разошлись: на 11 страницах ответ в схеме оказался пересказом того, что видит
+ * читатель, а где-то и вовсе устаревшей редакцией. Google требует, чтобы
+ * размеченный текст присутствовал на странице дословно, иначе разметку он
+ * игнорирует, — то есть FAQ-схема там работала вхолостую.
+ *
+ * Компонент печатает и то, и другое из одного массива, поэтому разойтись они
+ * больше не могут. Схему он отдаёт сразу, без слота `schema` у BaseLayout:
+ * JSON-LD валиден в любом месте документа, а держать его рядом с блоком —
+ * единственный способ гарантировать, что текст один и тот же.
+ *
+ * Ответы задаются строками, а не разметкой: в JSON-LD всё равно уходит текст,
+ * и разрешить здесь HTML значило бы снова допустить расхождение.
+ */
+export type FaqItem = { q: string; a: string };
+
+interface Props {
+  items: FaqItem[];
+  /** Заголовок блока. Если не нужен — не передавайте. */
+  title?: string;
+  /** Класс на обёртку секции — чтобы страница задала свои отступы и фон. */
+  sectionClass?: string;
+}
+
+const { items, title, sectionClass = 'section' } = Astro.props;
+---
+
+<section class={sectionClass}>
+  <div class="container max-w-wide mx-auto">
+    {title && <h2 class="text-center mb-l">{title}</h2>}
+    <div class="faq-list">
+      {items.map(item => (
+        <details class="faq-item">
+          <summary>{item.q}</summary>
+          <div class="faq-item__answer">{item.a}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(item => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  })}
+/>

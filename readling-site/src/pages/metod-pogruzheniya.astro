@@ -1,9 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
+import { pickByHash, coverPath, coverSrcset } from '../utils/slug';
+import { indexableCatalog, appCatalog } from '../utils/catalog';
 import { getPageDates } from '../utils/dates';
+import Faq from '../components/Faq.astro';
 
 const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheniya.astro');
+
+// Подборка книг, доступных в режиме погружения. Выбор детерминированный
+// (pickByHash), иначе состав менялся бы при каждой сборке и страница получала бы
+// новый lastmod без единой правки.
+const immersionBooks = indexableCatalog.filter(b => b.modes.includes('immersion'));
+const featuredBooks = pickByHash(immersionBooks, 8, 'immersion-featured-v1');
+// Вопросы и ответы: один массив на видимый блок и на разметку FAQPage.
+const faqItems = [
+  {
+    q: 'Чем метод погружения отличается от обычного чтения на английском?',
+    a: 'При обычном чтении вы сразу видите сложный текст целиком — и быстро сдаётесь. В режиме погружения сложность нарастает плавно. Вы начинаете с почти полностью русского текста, и английский появляется постепенно — вы никогда не чувствуете, что «не справляетесь».',
+  },
+  {
+    q: 'Для какого уровня подходит метод погружения?',
+    a: 'Для любого — от полного начинающего (A1) до продвинутого (C2). Приложение адаптирует начальную долю английского под ваш уровень. Начинающие начинают с 5% английского, продвинутые — с 50% и выше.',
+  },
+  {
+    q: 'Это работает с любой книгой в каталоге?',
+    a: 'В каталоге Readling у каждой книги указан доступный режим чтения — погружение или параллельный. Часть книг доступна в режиме погружения, часть — в параллельном режиме.',
+  },
+];
 ---
 
 <BaseLayout
@@ -246,6 +270,39 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
     </div>
   </section>
 
+  <!-- BOOKS -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="text-center mb-m">Книги в режиме погружения — от A1 до C2</h2>
+      <p class="text-center max-w-prose mx-auto mb-xl">
+        Классика, приключения, фантастика, детективы. У каждой книги на странице — реальный
+        отрывок в режиме погружения и измеренная по полному тексту сложность, так что уровень
+        можно проверить до чтения.
+      </p>
+      <div class="book-scroll">
+        {featuredBooks.map(book => (
+          <a href={`/books/${book.slug}/`} class="book-card">
+            <img
+              class="book-card__cover"
+              src={coverPath(book.title, 'sm')}
+              srcset={coverSrcset(book.title, 'card')}
+              alt={`Обложка книги «${book.displayTitle}» на английском в режиме погружения`}
+              loading="lazy"
+              decoding="async"
+              width="160"
+              height="240"
+            />
+            <div class="book-card__title">{book.displayTitle}<span class="visually-hidden"> на английском в режиме погружения</span></div>
+            <div class="book-card__author">{book.displayAuthor} · {book.level}</div>
+          </a>
+        ))}
+      </div>
+      <p class="text-center mt-l">
+        <a href="/books/" class="btn btn--secondary">Весь каталог книг &rarr;</a>
+      </p>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="section" style="padding-bottom: 0;">
     <div class="container text-center">
@@ -258,41 +315,12 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
         <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
       </div>
       <p style="margin-top: var(--space-m); font-size: 0.875rem; color: var(--color-text-tertiary);">
-        100+ книг · Все уровни · Без рекламы
+        {appCatalog.books} книг · Все уровни · Без рекламы
       </p>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Вопросы о методе погружения</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Чем метод погружения отличается от обычного чтения на английском?</summary>
-          <div class="faq-item__answer">
-            При обычном чтении вы сразу видите сложный текст целиком — и быстро сдаётесь.
-            В режиме погружения сложность нарастает плавно. Вы начинаете с почти полностью русского текста,
-            и английский появляется постепенно — вы никогда не чувствуете, что «не справляетесь».
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Для какого уровня подходит метод погружения?</summary>
-          <div class="faq-item__answer">
-            Для любого — от полного начинающего (A1) до продвинутого (C2). Приложение адаптирует начальную долю
-            английского под ваш уровень. Начинающие начинают с 5% английского, продвинутые — с 50% и выше.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Это работает с любой книгой в каталоге?</summary>
-          <div class="faq-item__answer">
-            В каталоге Readling у каждой книги указан доступный режим чтения — погружение или параллельный.
-            Часть книг доступна в режиме погружения, часть — в параллельном режиме.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
+  <Faq title="Частые вопросы о методе погружения" items={faqItems} />
 
   <!-- Schema.org -->
   <Fragment slot="schema">
@@ -328,28 +356,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/metod-pogruzheni
         { "@type": "ListItem", "position": 2, "name": "Метод погружения", "item": "https://readling.club/metod-pogruzheniya/" }
       ]
     })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Чем метод погружения отличается от обычного чтения на английском?",
-          "acceptedAnswer": { "@type": "Answer", "text": "При обычном чтении вы сразу видите сложный текст целиком. В режиме погружения сложность нарастает плавно — вы никогда не чувствуете, что не справляетесь." }
-        },
-        {
-          "@type": "Question",
-          "name": "Для какого уровня подходит метод погружения?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Для любого — от A1 до C2. Приложение адаптирует начальную долю английского под ваш уровень." }
-        },
-        {
-          "@type": "Question",
-          "name": "Это работает с любой книгой в каталоге?",
-          "acceptedAnswer": { "@type": "Answer", "text": "В каталоге у каждой книги указан доступный режим чтения — погружение или параллельный. Часть книг доступна в режиме погружения, часть — в параллельном режиме." }
-        }
-      ]
-    })} />
-  </Fragment>
+      </Fragment>
 </BaseLayout>
 
 <style>

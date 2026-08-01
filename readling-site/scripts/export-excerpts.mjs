@@ -13,57 +13,29 @@
 //
 // Связь книг сайта и БД — по image_url (уникален, совпадает 1:1).
 
-import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { join } from 'node:path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, '..');
+import { ROOT, psqlJson, normUrl, toSlug, siteBooksByImage } from './lib/db.mjs';
 
-const CONTAINER = process.env.PG_CONTAINER || 'translator-postgres-1';
-const DB_USER = process.env.PG_USER || 'user';
-const DB_NAME = process.env.PG_DB || 'book_translator';
-
-// Сколько текста кладём в отрывок (примерно пара страниц) и отсев заголовков.
-const MAX_SENTENCES = 10;
-const MAX_RU_CHARS = 1100;
+// Сколько текста кладём в отрывок и отсев заголовков.
+//
+// Раньше здесь стояло 10 предложений (~1100 знаков) — примерно полтора абзаца.
+// Это ровно то, что ищет пользователь по запросу «книга на английском с
+// переводом», и обрывалось оно на середине первой сцены. Ограничение поднято до
+// полноценного фрагмента: столько же, сколько даёт «просмотр отрывка» в
+// книжном магазине, и достаточно, чтобы страница отвечала на запрос, а не
+// дразнила им. Оригиналы 95 из 111 книг сайта — public domain, перевод наш.
+const MAX_SENTENCES = 60;
+const MAX_EN_WORDS = 650;
 const MIN_EN_LEN = 25; // первая «настоящая» фраза не короче (отсекаем заголовок главы)
 
-// --- toSlug: копия src/utils/slug.ts (дублируем, чтобы не тащить TS-загрузчик) ---
-const translitMap = {
-  'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
-  'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm',
-  'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
-  'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch',
-  'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya',
-};
-function toSlug(title) {
-  return title.toLowerCase().split('').map(ch => translitMap[ch] ?? ch).join('')
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-}
-
-function psqlJson(sql) {
-  const out = execFileSync(
-    'docker',
-    ['exec', CONTAINER, 'psql', '-U', DB_USER, '-d', DB_NAME, '-t', '-A', '-c', sql],
-    { encoding: 'utf8', maxBuffer: 512 * 1024 * 1024 },
-  ).trim();
-  return out ? JSON.parse(out) : null;
-}
-
-const normUrl = u => (u || '').trim().replace(/^https?:/, '');
+const wordCount = s => (s.match(/\S+/g) || []).length;
 
 // 1. Книги сайта: image_url -> { slug, mode }
 const siteBooks = JSON.parse(readFileSync(join(ROOT, 'src/data/books.json'), 'utf8'))
   .filter(b => !b.title.includes('Guide') && !b.title.includes('Руководство'));
-const metaByImg = new Map();
-for (const b of siteBooks) {
-  metaByImg.set(normUrl(b.image_url), {
-    slug: toSlug(b.title),
-    mode: b.mode === 'параллельный' ? 'parallel' : 'immersion',
-  });
-}
+const metaByImg = siteBooksByImage(siteBooks);
 
 // 2. Тянем из БД предложения первой главы (с фразами) каждой переведённой книги.
 //    text/translatedText и phrase.original/translated — в original_language/translated_language.
@@ -73,47 +45,109 @@ const rows = psqlJson(`
            b.original_language AS lang,
            b.pages_count AS pages,
            (SELECT count(*) FROM chapters WHERE book_id = b.id) AS chapters,
+           b.year_published AS year,
+           -- Русские title/описание. В БД метаданные лежат парой «оригинал /
+           -- перевод», и русская сторона зависит от языка оригинала: у русских
+           -- книг это metadata_original, у английских — metadata_translated.
+           CASE WHEN b.original_language = 'RUSSIAN'
+                THEN b.metadata_original ELSE b.metadata_translated END AS meta_ru,
            ( SELECT json_agg(
-               jsonb_build_object('t', s.value->>'text', 'tt', s.value->>'translatedText', 'ph', s.value->'phrases')
-               ORDER BY p.pord, (s.value->>'orderId')::int
+               jsonb_build_object('ch', c.order_id, 't', s.value->>'text',
+                                  'tt', s.value->>'translatedText', 'ph', s.value->'phrases')
+               ORDER BY c.order_id, p.pord, (s.value->>'orderId')::int
              )
              FROM chapters c
              CROSS JOIN LATERAL jsonb_array_elements(c.paragraphs) WITH ORDINALITY p(value, pord)
              CROSS JOIN LATERAL jsonb_array_elements(p.value->'sentences') s(value)
              WHERE c.book_id = b.id
-               -- всегда первая глава книги (chapter 0 — первая страница, как в приложении)
-               AND c.order_id = (SELECT min(order_id) FROM chapters WHERE book_id = b.id)
-               AND p.pord <= 14
-           ) AS sents
+               -- Несколько первых глав, а не только самая первая. У части книг
+               -- нулевая глава — титульный лист на пару предложений: отрывок из
+               -- неё выходил в 11 слов, а у «Little Lady of the Big House» не
+               -- получался вовсе. Нужную главу выбирает уже JS.
+               AND c.order_id < (SELECT min(order_id) FROM chapters WHERE book_id = b.id) + 6
+               -- запас абзацев: лимит по словам применяется уже в JS, а короткие
+               -- абзацы диалогов дают мало текста при большом их числе
+               AND p.pord <= 120
+           ) AS sents,
+           b.status
     FROM books b
-    WHERE b.status = 'TRANSLATED'
+    -- Непереведённые книги тоже выгружаем — не ради отрывка, а ради статуса:
+    -- по нему каталог сайта их отбрасывает. Читать их в приложении нельзя, и
+    -- страница, обещающая чтение с переводом, обещала бы несуществующее.
   ) j
 `);
 
-// 3. Собираем excerpts.json и book-stats.json (реальные данные книги: страницы, главы).
+// 3. Собираем excerpts.json, book-stats.json (страницы, главы) и book-meta.json
+//    (русское описание, год издания).
 const excerpts = {};
 const stats = {};
+const meta = {};
 let matched = 0;
 for (const row of rows || []) {
-  const meta = metaByImg.get(normUrl(row.img));
-  if (!meta || !Array.isArray(row.sents)) continue;
+  const site = metaByImg.get(normUrl(row.img));
+  if (!site) continue;
   const fromEnglish = row.lang === 'ENGLISH';
 
   // Реальная статистика — для всех совпавших книг (даже без отрывка)
   const pages = Number(row.pages) || 0;
   const chapters = Number(row.chapters) || 0;
-  if (pages || chapters) stats[meta.slug] = { pages, chapters };
+  if (pages || chapters) stats[site.slug] = { pages, chapters };
+
+  // Русское описание есть в БД у всех книг, тогда как в books.json у 60 из 111
+  // записей синопсис английский. Год издания заполнен на 100% — он идёт и в
+  // факты страницы, и в datePublished схемы Book.
+  const ru = row.meta_ru || {};
+  const year = /^\d{4}$/.test(String(row.year || '')) ? Number(row.year) : null;
+  const description = (ru.description || '').trim();
+  const short = (ru.shortDescription || '').trim();
+  // Русское название книги. Нужно даже там, где запись в каталоге одна: у книг
+  // в параллельном режиме она английская, и страница уходила в заголовок вида
+  // «Great Expectations на английском» — при том, что ищут «Большие надежды».
+  const title = (ru.title || '').trim();
+  // Русское имя автора — по той же причине: у записей в параллельном режиме
+  // author приходит латиницей («Charles Dickens» вместо «Чарльз Диккенс»).
+  const author = (ru.author || '').trim();
+  const translated = row.status === 'TRANSLATED';
+  meta[site.slug] = {
+    ...(title ? { title } : {}),
+    ...(author ? { author } : {}),
+    ...(description ? { description } : {}),
+    ...(short ? { short } : {}),
+    ...(year ? { year } : {}),
+    translated,
+  };
+
+  // Всё дальнейшее — про текст книги, которого у непереведённых записей нет.
+  if (!translated || !Array.isArray(row.sents)) continue;
+
+  // Главу отрывка выбираем по содержимому: у части книг нулевая глава — это
+  // титульный лист или эпиграф на два предложения, и отрывок из неё получался
+  // бессмысленно коротким. Берём первую главу, где есть о чём читать, а если
+  // такой нет — самую содержательную из первых.
+  const MIN_CHAPTER_SENTENCES = 8;
+  const perChapter = new Map();
+  for (const s of row.sents) {
+    if (s) perChapter.set(s.ch, (perChapter.get(s.ch) || 0) + 1);
+  }
+  const chapterIds = [...perChapter.keys()].sort((a, b) => a - b);
+  const startChapter =
+    chapterIds.find(ch => perChapter.get(ch) >= MIN_CHAPTER_SENTENCES) ??
+    [...chapterIds].sort((a, b) => perChapter.get(b) - perChapter.get(a))[0];
+  const sourceSents = row.sents.filter(s => s && s.ch >= startChapter);
 
   const sentences = [];
-  let ruChars = 0;
-  for (const s of row.sents) {
+  let enWords = 0;
+  for (const s of sourceSents) {
     if (!s) continue;
     const ru = ((fromEnglish ? s.tt : s.t) || '').trim();
     const en = ((fromEnglish ? s.t : s.tt) || '').trim();
     if (!ru || !en) continue;
     if (sentences.length === 0 && en.length < MIN_EN_LEN) continue; // пропускаем заголовок
 
-    const phrases = Array.isArray(s.ph)
+    // Пофразовая разбивка нужна только режиму погружения — по ней страница
+    // вплетает английский в русский текст. Параллельный режим печатает
+    // предложения целиком, и для него phrases — полтонны мёртвого груза в JSON.
+    const phrases = site.mode === 'immersion' && Array.isArray(s.ph)
       ? s.ph
           .map(p => ({
             ru: ((fromEnglish ? p.translated : p.original) || '').trim(),
@@ -124,17 +158,41 @@ for (const row of rows || []) {
       : [];
 
     sentences.push({ en, ru, phrases });
-    ruChars += ru.length;
-    if (sentences.length >= MAX_SENTENCES || ruChars >= MAX_RU_CHARS) break;
+    enWords += wordCount(en);
+    if (sentences.length >= MAX_SENTENCES || enWords >= MAX_EN_WORDS) break;
   }
 
   if (sentences.length >= 2) {
-    excerpts[meta.slug] = { mode: meta.mode, sentences };
+    excerpts[site.slug] = { mode: site.mode, sentences };
     matched++;
   }
 }
 
+// 4. Размер каталога в самом приложении. На сайте лежит его подмножество (часть
+//    книг ещё не заведена в books.json), поэтому страницы, обещающие «в
+//    приложении книг больше», должны опираться на цифру из БД, а не на
+//    захардкоженную. Раньше там стояло «100+ книг в 25 жанрах» — по книгам это
+//    правда, по жанрам завышение почти на треть.
+const appStats = psqlJson(`
+  SELECT json_build_object(
+    'books', (SELECT count(*) FROM books
+              WHERE status = 'TRANSLATED' AND accessibility = 'PUBLIC' AND demo = false),
+    'genres', (SELECT count(DISTINCT trim(g)) FROM books,
+                 LATERAL unnest(string_to_array(genres, ',')) g
+               WHERE status = 'TRANSLATED' AND accessibility = 'PUBLIC' AND demo = false
+                 AND trim(g) <> '')
+  )
+`);
+writeFileSync(join(ROOT, 'src/data/app-catalog.json'), JSON.stringify(appStats) + '\n');
+
 writeFileSync(join(ROOT, 'src/data/excerpts.json'), JSON.stringify(excerpts) + '\n');
 writeFileSync(join(ROOT, 'src/data/book-stats.json'), JSON.stringify(stats) + '\n');
+writeFileSync(join(ROOT, 'src/data/book-meta.json'), JSON.stringify(meta) + '\n');
+
 const sz = (JSON.stringify(excerpts).length / 1024).toFixed(0);
-console.log(`Готово: ${matched} отрывков (${sz} KB) + ${Object.keys(stats).length} stat-записей из ${siteBooks.length} книг сайта.`);
+const words = Object.values(excerpts)
+  .reduce((n, e) => n + e.sentences.reduce((m, s) => m + wordCount(s.en), 0), 0);
+const avg = matched ? Math.round(words / matched) : 0;
+console.log(`Отрывки: ${matched} шт., в среднем ${avg} английских слов (${sz} KB).`);
+console.log(`Статистика: ${Object.keys(stats).length} записей. Метаданные: ${Object.keys(meta).length} записей.`);
+console.log(`Всего книг сайта: ${siteBooks.length}.`);

@@ -2,16 +2,47 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
 import { pickByHash, coverPath, coverSrcset } from '../utils/slug';
-import { indexableCatalog } from '../utils/catalog';
+import { indexableCatalog, appCatalog } from '../utils/catalog';
+import Faq from '../components/Faq.astro';
 
 // Витрину набираем только из индексируемых страниц: рекламировать с главной то,
 // что закрыто от индексации, — значит вести пользователя в тупик каталога.
 const featuredBooks = pickByHash(indexableCatalog, 12, 'home-featured-v1');
+
+// Вопросы и ответы. Массив один: из него печатается и видимый блок, и разметка
+// FAQPage (см. components/Faq.astro). Раньше их писали порознь, и текст в схеме
+// разошёлся с текстом на странице.
+const faqItems = [
+  {
+    q: 'Для какого уровня английского подходит Readling?',
+    a: 'Для любого — от полного начинающего (A1) до продвинутого (C2). В каталоге есть книги для каждого уровня, а режим погружения адаптирует сложность текста под вас.',
+  },
+  {
+    q: 'Что такое режим погружения?',
+    a: 'Это уникальный способ чтения, при котором английские слова и фразы постепенно появляются в русском тексте. Вы начинаете читать почти на русском, а к концу книги — уже на английском. Переход происходит плавно и незаметно.',
+  },
+  {
+    q: 'Можно ли пользоваться Readling бесплатно?',
+    a: 'Да, бесплатная версия даёт доступ к части каталога. Подписка открывает все книги, убирает рекламу и даёт доступ ко всем функциям. Первые 7 дней — бесплатно.',
+  },
+  {
+    q: 'Какие книги есть в каталоге?',
+    a: `${appCatalog.books} книг в ${appCatalog.genres} жанрах: детективы, фантастика, классика, романтика, научпоп и другие. Часть книг доступна в режиме параллельного чтения, часть — в режиме погружения. У каждой книги в каталоге указан её режим.`,
+  },
+  {
+    q: 'Как работают тренировки?',
+    a: 'Когда вы читаете и нажимаете на незнакомое слово, оно сохраняется в ваш личный словарь. Тренировки — флэш-карточки, пазлы предложений, вставка слов — помогают запомнить именно ваши слова, а не случайные из учебника.',
+  },
+  {
+    q: 'На каких устройствах работает Readling?',
+    a: 'На iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play.',
+  },
+];
 ---
 
 <BaseLayout
   title="Readling — книги на английском с переводом для изучения языка"
-  description="Читайте книги на английском с русским переводом: оригинал и перевод рядом либо плавное погружение. 100+ книг от A1 до C2. Первые 7 дней бесплатно."
+  description={`Читайте книги на английском с русским переводом: оригинал и перевод рядом либо плавное погружение. ${appCatalog.books} книг от A1 до C2. Первые 7 дней бесплатно.`}
 >
   <Fragment slot="head">
     <link rel="preload" as="image" href="/screen-immersion.webp" type="image/webp" fetchpriority="high" />
@@ -33,7 +64,7 @@ const featuredBooks = pickByHash(indexableCatalog, 12, 'home-featured-v1');
           <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
         </div>
         <ul class="proof-line">
-          <li>100+ книг</li>
+          <li>{appCatalog.books} книг</li>
           <li>Уровни A1–C2</li>
           <li>iOS и Android</li>
         </ul>
@@ -179,7 +210,7 @@ const featuredBooks = pickByHash(indexableCatalog, 12, 'home-featured-v1');
     <div class="container">
       <div class="catalog-head">
         <div>
-          <h2 class="mb-xs">100+ книг на английском с переводом для любого уровня</h2>
+          <h2 class="mb-xs">{appCatalog.books} книг на английском с переводом для любого уровня</h2>
           <p>От A1 для начинающих до C2 — детективы, фантастика, классика, романтика.</p>
         </div>
         <a href="/books/" class="btn btn--secondary">Весь каталог →</a>
@@ -205,56 +236,7 @@ const featuredBooks = pickByHash(indexableCatalog, 12, 'home-featured-v1');
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Частые вопросы о Readling</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Для какого уровня английского подходит Readling?</summary>
-          <div class="faq-item__answer">
-            Для любого — от полного начинающего (A1) до продвинутого (C2). В каталоге есть книги для каждого уровня,
-            а режим погружения адаптирует сложность текста под вас.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Что такое режим погружения?</summary>
-          <div class="faq-item__answer">
-            Это уникальный способ чтения, при котором английские слова и фразы постепенно появляются в русском тексте.
-            Вы начинаете читать почти на русском, а к концу книги — уже на английском. Переход происходит плавно и незаметно.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Можно ли пользоваться Readling бесплатно?</summary>
-          <div class="faq-item__answer">
-            Да, бесплатная версия даёт доступ к части каталога. Подписка открывает все книги, убирает рекламу
-            и даёт доступ ко всем функциям. Первые 7 дней — бесплатно.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Какие книги есть в каталоге?</summary>
-          <div class="faq-item__answer">
-            Более 100 книг в 25 жанрах: детективы, фантастика, классика, романтика, научпоп и другие.
-            Часть книг доступна в режиме параллельного чтения, часть — в режиме погружения. У каждой книги в каталоге указан её режим.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Как работают тренировки?</summary>
-          <div class="faq-item__answer">
-            Когда вы читаете и нажимаете на незнакомое слово, оно сохраняется в ваш личный словарь.
-            Тренировки — флэш-карточки, пазлы предложений, вставка слов — помогают запомнить именно ваши слова,
-            а не случайные из учебника.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>На каких устройствах работает Readling?</summary>
-          <div class="faq-item__answer">
-            На iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
+  <Faq title="Частые вопросы о Readling" items={faqItems} />
 
   <!-- Schema.org -->
   <Fragment slot="schema">
@@ -313,42 +295,6 @@ const featuredBooks = pickByHash(indexableCatalog, 12, 'home-featured-v1');
           "price": "3.99",
           "priceCurrency": "USD",
           "url": "https://readling.club/pricing/"
-        }
-      ]
-    })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Для какого уровня английского подходит Readling?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Для любого — от полного начинающего (A1) до продвинутого (C2). В каталоге есть книги для каждого уровня, а режим погружения адаптирует сложность текста под вас." }
-        },
-        {
-          "@type": "Question",
-          "name": "Что такое режим погружения?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Это уникальный способ чтения, при котором английские слова и фразы постепенно появляются в русском тексте. Вы начинаете читать почти на русском, а к концу книги — уже на английском." }
-        },
-        {
-          "@type": "Question",
-          "name": "Можно ли пользоваться Readling бесплатно?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Да, бесплатная версия даёт доступ к части каталога. Подписка открывает все книги, убирает рекламу и даёт доступ ко всем функциям. Первые 7 дней — бесплатно." }
-        },
-        {
-          "@type": "Question",
-          "name": "Какие книги есть в каталоге?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Более 100 книг в 25 жанрах. Часть книг доступна в режиме параллельного чтения, часть — в режиме погружения." }
-        },
-        {
-          "@type": "Question",
-          "name": "Как работают тренировки?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Когда вы читаете и нажимаете на незнакомое слово, оно сохраняется в ваш личный словарь. Тренировки помогают запомнить именно ваши слова." }
-        },
-        {
-          "@type": "Question",
-          "name": "На каких устройствах работает Readling?",
-          "acceptedAnswer": { "@type": "Answer", "text": "На iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play." }
         }
       ]
     })} />

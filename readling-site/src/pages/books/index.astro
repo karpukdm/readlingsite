@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { genreLabels, coverPath, coverSrcset } from '../../utils/slug';
-import { catalog, indexableCatalog, type CatalogBook } from '../../utils/catalog';
+import { genreLabels, coverPath, coverSrcset, plural } from '../../utils/slug';
+import { catalog, indexableCatalog, appCatalog, type CatalogBook } from '../../utils/catalog';
 
 const books = catalog;
 
@@ -57,7 +57,7 @@ for (const genre of genreOrder) {
       {/* Число берём из каталога, а не пишем «более 100»: на странице должно быть
           столько книг, сколько заявлено, иначе обещание не совпадает с содержимым. */}
       <p class="text-center max-w-prose mx-auto mb-xl">
-        <strong>В каталоге на сайте — {books.length} книг на английском с русским переводом,
+        <strong>В каталоге на сайте — {books.length} {plural(books.length, 'книга', 'книги', 'книг')} на английском с русским переводом,
         по уровням от A1 до C2.</strong>
         Каждая книга доступна в режиме параллельного чтения или плавного погружения —
         выбирайте подход, который вам подходит.
@@ -94,8 +94,8 @@ for (const genre of genreOrder) {
         <div class="more-books__inner">
           <h3 class="mb-s">Ещё больше книг — в приложении</h3>
           <p>
-            Здесь показана часть каталога. В приложении Readling — более 100 книг на английском
-            с переводом в 25 жанрах. Новые книги добавляются каждую неделю.
+            Здесь показана часть каталога. В приложении Readling — {appCatalog.books} книг на английском
+            с переводом в {appCatalog.genres} жанрах. Новые книги добавляются каждую неделю.
           </p>
         </div>
       </div>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { appCatalog } from '../utils/catalog';
 import { links } from '../config/links';
 import { getPageDates } from '../utils/dates';
 
@@ -46,7 +47,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/o-readling.astro
 
       <h2 class="mb-m">Чем Readling отличается от других приложений</h2>
       <ul class="bullets mb-l">
-        <li><strong>Настоящие книги, а не учебные тексты.</strong> 100+ произведений в 25 жанрах — от A1 до C2.</li>
+        <li><strong>Настоящие книги, а не учебные тексты.</strong> {appCatalog.books} произведений в {appCatalog.genres} жанрах — от A1 до C2.</li>
         <li><strong>Метод плавного погружения.</strong> Английский постепенно замещает русский внутри страницы.</li>
         <li><strong>Параллельное чтение.</strong> Оригинал и перевод рядом — для разбора грамматики.</li>
         <li><strong>Тренировки на ваших словах.</strong> Не списки из учебника, а слова, которые встретились вам в книге.</li>

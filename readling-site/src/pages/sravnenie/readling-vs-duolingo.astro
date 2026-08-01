@@ -1,9 +1,30 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { appCatalog } from '../../utils/catalog';
+import Faq from '../../components/Faq.astro';
 import { links } from '../../config/links';
 import { getPageDates } from '../../utils/dates';
 
 const { datePublished, dateModified } = getPageDates('src/pages/sravnenie/readling-vs-duolingo.astro');
+// Вопросы и ответы: один массив на видимый блок и на разметку FAQPage.
+const faqItems = [
+  {
+    q: 'Readling может полностью заменить Duolingo?',
+    a: 'Зависит от ваших целей. Если вы хотите учить английский через чтение настоящих книг и контекст — да. Если нужны короткие грамматические упражнения и аудиоуроки — используйте оба приложения вместе.',
+  },
+  {
+    q: 'Что лучше для начинающих — Readling или Duolingo?',
+    a: 'Для абсолютных новичков Duolingo поможет набрать базовый словарный запас. Но в Readling есть книги уровня A1 с режимом погружения, где текст начинается почти полностью на русском — так что начинающие тоже могут учиться через чтение с первого дня.',
+  },
+  {
+    q: 'Можно ли пользоваться Readling бесплатно?',
+    a: 'Да, бесплатная версия даёт доступ к части каталога книг. Подписка открывает все книги, убирает рекламу и даёт доступ ко всем режимам чтения. Первые 7 дней подписки — бесплатно.',
+  },
+  {
+    q: 'Я уже продвинутый — Readling мне подойдёт?',
+    a: 'Да, особенно если Duolingo стал слишком простым. В каталоге Readling есть книги уровней C1–C2: классическая литература, научная фантастика, философская проза. Это уровень, на котором Duolingo заканчивается — а Readling продолжает.',
+  },
+];
 ---
 
 <BaseLayout
@@ -272,49 +293,12 @@ const { datePublished, dateModified } = getPageDates('src/pages/sravnenie/readli
         <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
       </div>
       <p style="margin-top: var(--space-m); font-size: 0.875rem; color: var(--color-text-tertiary);">
-        100+ книг · Без рекламы · Отмена в любой момент
+        {appCatalog.books} книг · Без рекламы · Отмена в любой момент
       </p>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container max-w-wide mx-auto">
-      <h2 class="text-center mb-l">Вопросы о Readling и Duolingo</h2>
-      <div class="faq-list">
-        <details class="faq-item">
-          <summary>Readling может полностью заменить Duolingo?</summary>
-          <div class="faq-item__answer">
-            Зависит от ваших целей. Если вы хотите учить английский через чтение настоящих книг и контекст — да.
-            Если нужны короткие грамматические упражнения и аудиоуроки — используйте оба приложения вместе.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Что лучше для начинающих — Readling или Duolingo?</summary>
-          <div class="faq-item__answer">
-            Для абсолютных новичков Duolingo поможет набрать базовый словарный запас.
-            Но в Readling есть книги уровня A1 с режимом погружения, где текст начинается почти полностью на русском —
-            так что начинающие тоже могут учиться через чтение с первого дня.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Можно ли пользоваться Readling бесплатно?</summary>
-          <div class="faq-item__answer">
-            Да, бесплатная версия даёт доступ к части каталога книг. Подписка открывает все книги, убирает рекламу
-            и даёт доступ ко всем режимам чтения. Первые 7 дней подписки — бесплатно.
-          </div>
-        </details>
-        <details class="faq-item">
-          <summary>Я уже продвинутый — Readling мне подойдёт?</summary>
-          <div class="faq-item__answer">
-            Да, особенно если Duolingo стал слишком простым. В каталоге Readling есть книги уровней C1–C2:
-            классическая литература, научная фантастика, философская проза. Это уровень, на котором
-            Duolingo заканчивается — а Readling продолжает.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
+  <Faq title="Частые вопросы о Readling и Duolingo" items={faqItems} />
 
   <!-- Schema.org -->
   <Fragment slot="schema">
@@ -350,33 +334,7 @@ const { datePublished, dateModified } = getPageDates('src/pages/sravnenie/readli
         { "@type": "ListItem", "position": 2, "name": "Readling vs Duolingo", "item": "https://readling.club/sravnenie/readling-vs-duolingo/" }
       ]
     })} />
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Readling может полностью заменить Duolingo?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Зависит от целей. Для обучения через чтение книг — да. Для коротких грамматических упражнений — используйте оба вместе." }
-        },
-        {
-          "@type": "Question",
-          "name": "Что лучше для начинающих — Readling или Duolingo?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Для абсолютных новичков Duolingo поможет набрать базу. Но в Readling есть книги A1 с режимом погружения, где текст почти полностью на русском." }
-        },
-        {
-          "@type": "Question",
-          "name": "Можно ли пользоваться Readling бесплатно?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Да, бесплатная версия даёт доступ к части каталога. Подписка открывает всё. Первые 7 дней — бесплатно." }
-        },
-        {
-          "@type": "Question",
-          "name": "Я уже продвинутый — Readling мне подойдёт?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Да, в каталоге есть книги C1–C2. Это уровень, на котором Duolingo заканчивается — а Readling продолжает." }
-        }
-      ]
-    })} />
-  </Fragment>
+      </Fragment>
 </BaseLayout>
 
 <style>

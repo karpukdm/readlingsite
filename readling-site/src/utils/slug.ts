@@ -224,6 +224,21 @@ export const genreVocabularyHints: Record<string, string> = Object.fromEntries(
   Object.entries(genreDescriptions).map(([k, v]) => [k, v.vocab]),
 );
 
+/**
+ * Русское склонение существительного после числа: 1 книга, 2 книги, 5 книг.
+ *
+ * Нужно везде, где число подставляется из данных: «83 книг» на странице
+ * каталога читается как недосмотр, а такие мелочи и складываются в ощущение,
+ * что страницу собрал автомат.
+ */
+export function plural(n: number, one: string, few: string, many: string): string {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+  return many;
+}
+
 export function extractSnippet(text: string, maxLen: number): string {
   const cleaned = text.replace(/\s+/g, ' ').trim();
   if (cleaned.length <= maxLen) return cleaned;
