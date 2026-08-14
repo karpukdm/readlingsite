@@ -137,15 +137,26 @@ function lastmodTracker() {
         }
 
         const indexPath = join(outDir, 'sitemap-index.xml');
-        if (existsSync(indexPath) && listed.length) {
-          const newest = listed.sort().at(-1);
-          const xml = readFileSync(indexPath, 'utf8').replace(
-            /<sitemap>[\s\S]*?<\/sitemap>/g,
-            block => (/<lastmod>/.test(block)
-              ? block.replace(/<lastmod>[^<]*<\/lastmod>/, `<lastmod>${newest}</lastmod>`)
-              : block.replace('</loc>', `</loc><lastmod>${newest}</lastmod>`)),
-          );
-          writeFileSync(indexPath, xml);
+        if (existsSync(indexPath)) {
+          let xml = readFileSync(indexPath, 'utf8');
+          if (listed.length) {
+            const newest = listed.sort().at(-1);
+            xml = xml.replace(
+              /<sitemap>[\s\S]*?<\/sitemap>/g,
+              block => (/<lastmod>/.test(block)
+                ? block.replace(/<lastmod>[^<]*<\/lastmod>/, `<lastmod>${newest}</lastmod>`)
+                : block.replace('</loc>', `</loc><lastmod>${newest}</lastmod>`)),
+            );
+            writeFileSync(indexPath, xml);
+          }
+
+          // @astrojs/sitemap пишет только `sitemap-index.xml` и чанки
+          // `sitemap-N.xml`. Но по умолчанию краулеры дёргают `/sitemap.xml`,
+          // и его же подставляют руками в Search Console. Раньше здесь стоял
+          // 301 на sitemap-index.xml, но Search Console считает редирект
+          // неудачной загрузкой («Не получено», 0 страниц), поэтому кладём по
+          // этому адресу настоящий файл-индекс.
+          writeFileSync(join(outDir, 'sitemap.xml'), xml);
         }
 
         const sorted = Object.fromEntries(Object.entries(next).sort(([a], [b]) => a.localeCompare(b)));
@@ -159,22 +170,15 @@ function lastmodTracker() {
           .sort(([a], [b]) => a.localeCompare(b))
           .map(([from, to]) => `/books/${from}/ /books/${to}/ 301`);
 
-        // @astrojs/sitemap пишет только `sitemap-index.xml` и чанки
-        // `sitemap-N.xml`; файла `/sitemap.xml` в сборке нет. Но именно его по
-        // умолчанию дёргают краулеры и подставляют руками в Search Console —
-        // и получают 404, из-за чего sitemap не читается вовсе.
-        const sitemapAliasLine = '/sitemap.xml /sitemap-index.xml 301';
-
-        const redirectLines = [...bookRedirectLines, sitemapAliasLine];
         writeFileSync(
           join(outDir, '_redirects'),
-          `# Сгенерировано сборкой (см. astro.config.mjs) — не редактировать вручную.\n${redirectLines.join('\n')}\n`,
+          `# Сгенерировано сборкой (см. astro.config.mjs) — не редактировать вручную.\n${bookRedirectLines.join('\n')}\n`,
         );
 
         const total = Object.keys(next).length;
         logger.info(`lastmod: изменилось ${changed} из ${total} страниц`);
         logger.info(`sitemap: ${listed.length} URL, исключено по noindex — ${dropped}`);
-        logger.info(`_redirects: ${bookRedirectLines.length} правил для объединённых книг + псевдоним sitemap`);
+        logger.info(`_redirects: ${bookRedirectLines.length} правил для объединённых книг`);
         if (!Object.keys(previous).length) {
           logger.warn('lastmod-manifest.json создан заново — не забудьте закоммитить его');
         } else if (changed > total / 2) {
