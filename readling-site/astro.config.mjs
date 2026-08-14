@@ -155,18 +155,26 @@ function lastmodTracker() {
         // указать — `_redirects` в Workers static assets не поддерживает
         // редиректы по хосту, поэтому www→apex настраивается Redirect Rule
         // в дашборде Cloudflare (см. README).
-        const redirectLines = Object.entries(BOOK_REDIRECTS)
+        const bookRedirectLines = Object.entries(BOOK_REDIRECTS)
           .sort(([a], [b]) => a.localeCompare(b))
           .map(([from, to]) => `/books/${from}/ /books/${to}/ 301`);
+
+        // @astrojs/sitemap пишет только `sitemap-index.xml` и чанки
+        // `sitemap-N.xml`; файла `/sitemap.xml` в сборке нет. Но именно его по
+        // умолчанию дёргают краулеры и подставляют руками в Search Console —
+        // и получают 404, из-за чего sitemap не читается вовсе.
+        const sitemapAliasLine = '/sitemap.xml /sitemap-index.xml 301';
+
+        const redirectLines = [...bookRedirectLines, sitemapAliasLine];
         writeFileSync(
           join(outDir, '_redirects'),
-          `# Сгенерировано сборкой из src/data/book-redirects.json — не редактировать вручную.\n${redirectLines.join('\n')}\n`,
+          `# Сгенерировано сборкой (см. astro.config.mjs) — не редактировать вручную.\n${redirectLines.join('\n')}\n`,
         );
 
         const total = Object.keys(next).length;
         logger.info(`lastmod: изменилось ${changed} из ${total} страниц`);
         logger.info(`sitemap: ${listed.length} URL, исключено по noindex — ${dropped}`);
-        logger.info(`_redirects: ${redirectLines.length} правил для объединённых книг`);
+        logger.info(`_redirects: ${bookRedirectLines.length} правил для объединённых книг + псевдоним sitemap`);
         if (!Object.keys(previous).length) {
           logger.warn('lastmod-manifest.json создан заново — не забудьте закоммитить его');
         } else if (changed > total / 2) {
