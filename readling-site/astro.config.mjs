@@ -151,7 +151,29 @@ function lastmodTracker() {
         }
 
         const indexPath = join(outDir, 'sitemap-index.xml');
-        if (existsSync(indexPath)) {
+
+        // @astrojs/sitemap пишет только `sitemap-index.xml` и чанки
+        // `sitemap-N.xml`. Но по умолчанию краулеры дёргают `/sitemap.xml`, а в
+        // Search Console уже отправлен `/sitemap-index.xml`. Раньше по первому
+        // адресу стоял 301 на индекс (Search Console считает редирект неудачной
+        // загрузкой), потом лежала его копия. Теперь по оба адреса кладём сам
+        // список URL: краулеру не нужен лишний переход, и любой из двух
+        // привычных адресов сразу отдаёт все страницы. Файл-индекс — законный
+        // вариант карты сайта, но не единственный: по протоколу на этом месте
+        // может стоять и обычный <urlset>.
+        // Лимит протокола — 50 000 URL на файл; если каталог до него дорастёт,
+        // вернёмся к индексу — чанки для этого остаются на месте.
+        const FLAT_SITEMAP_LIMIT = 45000;
+        const flatXml = urlBlocks.length && urlBlocks.length <= FLAT_SITEMAP_LIMIT
+          ? `<?xml version="1.0" encoding="UTF-8"?>${urlsetOpenTag || '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'}${urlBlocks.join('')}</urlset>`
+          : null;
+
+        if (flatXml) {
+          writeFileSync(join(outDir, 'sitemap.xml'), flatXml);
+          writeFileSync(indexPath, flatXml);
+        } else if (existsSync(indexPath)) {
+          // Страниц стало больше, чем влезает в один файл: возвращаемся к
+          // индексу и проставляем в нём дату самой свежей страницы.
           let xml = readFileSync(indexPath, 'utf8');
           if (listed.length) {
             const newest = listed.sort().at(-1);
@@ -163,26 +185,8 @@ function lastmodTracker() {
             );
             writeFileSync(indexPath, xml);
           }
-        }
-
-        // @astrojs/sitemap пишет только `sitemap-index.xml` и чанки
-        // `sitemap-N.xml`. Но по умолчанию краулеры дёргают `/sitemap.xml`,
-        // и его же подставляют руками в Search Console. Раньше здесь лежал
-        // 301 на индекс (Search Console считала это неудачной загрузкой),
-        // потом — копия индекса. Теперь кладём сам список URL: краулеру не
-        // нужен лишний переход, все страницы видны в одном файле.
-        // Лимит протокола sitemap — 50 000 URL на файл; если каталог до него
-        // дорастёт, откатываемся на индекс, а чанки останутся на месте.
-        const FLAT_SITEMAP_LIMIT = 45000;
-        if (urlBlocks.length && urlBlocks.length <= FLAT_SITEMAP_LIMIT) {
-          const openTag = urlsetOpenTag || '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-          writeFileSync(
-            join(outDir, 'sitemap.xml'),
-            `<?xml version="1.0" encoding="UTF-8"?>${openTag}${urlBlocks.join('')}</urlset>`,
-          );
-        } else if (existsSync(indexPath)) {
-          writeFileSync(join(outDir, 'sitemap.xml'), readFileSync(indexPath, 'utf8'));
-          logger.warn(`sitemap: ${urlBlocks.length} URL — больше ${FLAT_SITEMAP_LIMIT}, в /sitemap.xml положен индекс`);
+          writeFileSync(join(outDir, 'sitemap.xml'), xml);
+          logger.warn(`sitemap: ${urlBlocks.length} URL — больше ${FLAT_SITEMAP_LIMIT}, по /sitemap.xml и /sitemap-index.xml положен индекс`);
         }
 
         const sorted = Object.fromEntries(Object.entries(next).sort(([a], [b]) => a.localeCompare(b)));
@@ -203,7 +207,7 @@ function lastmodTracker() {
 
         const total = Object.keys(next).length;
         logger.info(`lastmod: изменилось ${changed} из ${total} страниц`);
-        logger.info(`sitemap: ${urlBlocks.length} URL в /sitemap.xml, исключено по noindex — ${dropped}`);
+        logger.info(`sitemap: ${urlBlocks.length} URL в /sitemap.xml и /sitemap-index.xml, исключено по noindex — ${dropped}`);
         logger.info(`_redirects: ${bookRedirectLines.length} правил для объединённых книг`);
         if (!Object.keys(previous).length) {
           logger.warn('lastmod-manifest.json создан заново — не забудьте закоммитить его');
