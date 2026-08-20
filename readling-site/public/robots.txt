@@ -21,4 +21,4 @@ Allow: /
 User-agent: Claude-Web
 Allow: /
 
-Sitemap: https://readling.club/sitemap-index.xml
+Sitemap: https://readling.club/sitemap.xml

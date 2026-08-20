@@ -111,10 +111,19 @@ function lastmodTracker() {
         // и прочие невыгружаемые страницы не должны влиять на sitemap-index.
         const listed = [];
         let dropped = 0;
+        // Блоки <url> из всех чанков — из них ниже собирается плоский
+        // /sitemap.xml со всеми страницами сразу.
+        const urlBlocks = [];
+        let urlsetOpenTag = '';
 
-        for (const name of readdirSync(outDir).filter(f => /^sitemap-\d+\.xml$/.test(f))) {
+        for (const name of readdirSync(outDir).filter(f => /^sitemap-\d+\.xml$/.test(f)).sort()) {
           const path = join(outDir, name);
-          const xml = readFileSync(path, 'utf8').replace(/<url>[\s\S]*?<\/url>/g, block => {
+          const source = readFileSync(path, 'utf8');
+          // Открывающий тег берём из готового чанка: в нём уже объявлены все
+          // пространства имён, которые проставил @astrojs/sitemap.
+          if (!urlsetOpenTag) urlsetOpenTag = source.match(/<urlset[^>]*>/)?.[0] ?? '';
+
+          const xml = source.replace(/<url>[\s\S]*?<\/url>/g, block => {
             const loc = block.match(/<loc>([^<]+)<\/loc>/);
             if (!loc) return block;
             const urlPath = new URL(loc[1]).pathname;
@@ -127,11 +136,16 @@ function lastmodTracker() {
             }
 
             const lastmod = lastmods.get(urlPath);
-            if (!lastmod) return block;
+            if (!lastmod) {
+              urlBlocks.push(block);
+              return block;
+            }
             listed.push(lastmod);
-            return /<lastmod>/.test(block)
+            const updated = /<lastmod>/.test(block)
               ? block.replace(/<lastmod>[^<]*<\/lastmod>/, `<lastmod>${lastmod}</lastmod>`)
               : block.replace('</loc>', `</loc><lastmod>${lastmod}</lastmod>`);
+            urlBlocks.push(updated);
+            return updated;
           });
           writeFileSync(path, xml);
         }
@@ -149,14 +163,26 @@ function lastmodTracker() {
             );
             writeFileSync(indexPath, xml);
           }
+        }
 
-          // @astrojs/sitemap пишет только `sitemap-index.xml` и чанки
-          // `sitemap-N.xml`. Но по умолчанию краулеры дёргают `/sitemap.xml`,
-          // и его же подставляют руками в Search Console. Раньше здесь стоял
-          // 301 на sitemap-index.xml, но Search Console считает редирект
-          // неудачной загрузкой («Не получено», 0 страниц), поэтому кладём по
-          // этому адресу настоящий файл-индекс.
-          writeFileSync(join(outDir, 'sitemap.xml'), xml);
+        // @astrojs/sitemap пишет только `sitemap-index.xml` и чанки
+        // `sitemap-N.xml`. Но по умолчанию краулеры дёргают `/sitemap.xml`,
+        // и его же подставляют руками в Search Console. Раньше здесь лежал
+        // 301 на индекс (Search Console считала это неудачной загрузкой),
+        // потом — копия индекса. Теперь кладём сам список URL: краулеру не
+        // нужен лишний переход, все страницы видны в одном файле.
+        // Лимит протокола sitemap — 50 000 URL на файл; если каталог до него
+        // дорастёт, откатываемся на индекс, а чанки останутся на месте.
+        const FLAT_SITEMAP_LIMIT = 45000;
+        if (urlBlocks.length && urlBlocks.length <= FLAT_SITEMAP_LIMIT) {
+          const openTag = urlsetOpenTag || '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+          writeFileSync(
+            join(outDir, 'sitemap.xml'),
+            `<?xml version="1.0" encoding="UTF-8"?>${openTag}${urlBlocks.join('')}</urlset>`,
+          );
+        } else if (existsSync(indexPath)) {
+          writeFileSync(join(outDir, 'sitemap.xml'), readFileSync(indexPath, 'utf8'));
+          logger.warn(`sitemap: ${urlBlocks.length} URL — больше ${FLAT_SITEMAP_LIMIT}, в /sitemap.xml положен индекс`);
         }
 
         const sorted = Object.fromEntries(Object.entries(next).sort(([a], [b]) => a.localeCompare(b)));
@@ -177,7 +203,7 @@ function lastmodTracker() {
 
         const total = Object.keys(next).length;
         logger.info(`lastmod: изменилось ${changed} из ${total} страниц`);
-        logger.info(`sitemap: ${listed.length} URL, исключено по noindex — ${dropped}`);
+        logger.info(`sitemap: ${urlBlocks.length} URL в /sitemap.xml, исключено по noindex — ${dropped}`);
         logger.info(`_redirects: ${bookRedirectLines.length} правил для объединённых книг`);
         if (!Object.keys(previous).length) {
           logger.warn('lastmod-manifest.json создан заново — не забудьте закоммитить его');
