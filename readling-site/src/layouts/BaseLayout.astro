@@ -28,10 +28,11 @@ const path = canonicalPath && !canonicalPath.endsWith('/') ? canonicalPath + '/'
 const canonicalURL = new URL(path, Astro.site);
 const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site).toString();
 
-// Подтверждение прав в Search Console и Яндекс.Вебмастере. Задаётся переменными
-// сборки (см. .env.example) — без них мету просто не выводим.
+// Подтверждение прав в Search Console, Яндекс.Вебмастере и Bing Webmaster Tools.
+// Задаётся переменными сборки (см. .env.example) — без них мету просто не выводим.
 const verification = import.meta.env.PUBLIC_GSC_VERIFICATION;
 const yandexVerification = import.meta.env.PUBLIC_YANDEX_VERIFICATION;
+const bingVerification = import.meta.env.PUBLIC_BING_VERIFICATION;
 ---
 
 <!DOCTYPE html>
@@ -52,6 +53,7 @@ const yandexVerification = import.meta.env.PUBLIC_YANDEX_VERIFICATION;
     : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
   {verification && <meta name="google-site-verification" content={verification} />}
   {yandexVerification && <meta name="yandex-verification" content={yandexVerification} />}
+  {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
   <link rel="canonical" href={canonicalURL} />
   <link rel="alternate" hreflang="ru" href={canonicalURL} />
   <link rel="alternate" hreflang="x-default" href={canonicalURL} />
