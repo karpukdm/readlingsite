@@ -49,6 +49,9 @@ type RawBook = {
   mode: string;
 };
 
+/** Объём книги в единицах выгрузки: «страница» — фиксированные ~341 слово. */
+export type BookStat = { pages: number; chapters: number };
+
 export type CatalogBook = {
   slug: string;
   /** Название канонической записи: у объединённых пар — английский оригинал. */
@@ -94,7 +97,7 @@ export type CatalogBook = {
   /** Режимы чтения, доступные в приложении. Минимум один. */
   modes: Array<'immersion' | 'parallel'>;
   /** Объём книги. У объединённых записей — из записи с большим числом страниц. */
-  stat: { pages: number; chapters: number } | null;
+  stat: BookStat | null;
   /** Замеры по полному тексту книги. Нет у книг, которых нет в БД приложения. */
   lexicon: BookLexicon | null;
   /** Ни одного отрывка нет — страница почти пустая, в индекс не отдаём. */
@@ -104,7 +107,7 @@ export type CatalogBook = {
 };
 
 const excerpts = excerptData as Record<string, Excerpt>;
-const bookStats = bookStatsData as Record<string, { pages: number; chapters: number }>;
+const bookStats = bookStatsData as Record<string, BookStat>;
 
 /**
  * Русское описание и год издания из БД приложения. В `books.json` синопсис у 60
@@ -252,6 +255,128 @@ function stripSubtitle(title: string): string {
   return match ? match[1].replace(/[,:;]\s*$/, '') : title;
 }
 
+/**
+ * «Страница» в выгрузке — не полиграфическая, а фиксированная единица объёма:
+ * по записям БД на неё приходится 319–387 слов, медиана 341. Полоса ниже вдвое
+ * шире наблюдаемой — задача проверки поймать разъехавшиеся данные, а не
+ * подогнать порог под текущий снимок каталога.
+ */
+const MIN_WORDS_PER_PAGE = 170;
+const MAX_WORDS_PER_PAGE = 700;
+
+type Measurements = {
+  stat: BookStat | null;
+  lexicon: BookLexicon | null;
+};
+
+/**
+ * Сходятся ли между собой счётчик страниц и объём текста. Не сходятся — значит,
+ * посчитаны по разным текстам, и верить нельзя как минимум счётчику страниц.
+ */
+function pagesMatchWords(stat: BookStat | null, lexicon: BookLexicon | null): boolean {
+  if (!stat || !lexicon || stat.pages <= 0) return true;
+  const wordsPerPage = lexicon.words / stat.pages;
+  return wordsPerPage >= MIN_WORDS_PER_PAGE && wordsPerPage <= MAX_WORDS_PER_PAGE;
+}
+
+/**
+ * Замеры одной записи БД — с проверкой на то, что они не противоречат друг другу.
+ *
+ * Числа со страницы книги проверяемы: объём и число глав любой классики есть в
+ * Википедии. Значит, опубликованная ошибка — это не «неточность в данных», а
+ * опровержение фразы «мы разобрали её полный текст» на той же странице. Дешевле
+ * не показать замер, чем показать неверный.
+ *
+ * Обе проверки ловят противоречие внутри записи, а не «непохожесть на правду»:
+ *
+ * 1. Страниц меньше, чем глав. Так не бывает: значит, текст в БД короче самой
+ *    книги, а объём и лексика посчитаны по обрезку. «Гиперболоид инженера
+ *    Гарина» — 27 страниц при 38 главах и 10 415 словах, примерно десятая часть
+ *    романа. Отбрасываем оба замера: они меряют не ту книгу, что на странице.
+ *
+ * 2. Слов на страницу вне полосы — `pages` и `words` посчитаны по разным
+ *    текстам. «Алые паруса» — 256 страниц при 26 501 слове, то есть 104 слова
+ *    на страницу против 341 по каталогу. Здесь ошибочен только счётчик страниц,
+ *    поэтому лексику оставляем, а `stat` убираем: иначе страница обещает
+ *    «256 страниц» у повести и отдаёт то же число в `numberOfPages` схемы.
+ *
+ * Чего эти проверки НЕ ловят: удвоенный текст (глава лежит в БД дважды). Там
+ * все три числа растут согласованно и остаются внутренне непротиворечивыми —
+ * см. `seo-strategy-review.md`, это чинится в выгрузке, а не здесь.
+ */
+function measurementsOf(recordSlug: string): Measurements {
+  const stat = bookStats[recordSlug] ?? null;
+  const lexicon = bookLexicon[recordSlug] ?? null;
+
+  if (stat && stat.chapters > 0 && stat.pages < stat.chapters) {
+    return { stat: null, lexicon: null };
+  }
+
+  if (!pagesMatchWords(stat, lexicon)) return { stat: null, lexicon };
+
+  return { stat, lexicon };
+}
+
+/**
+ * Карточки, у которых объём отброшен уже на уровне группы: записи по отдельности
+ * были непротиворечивы, но ни одна не сошлась с выбранной лексикой. Заполняется
+ * в `buildCatalog()` — иначе этот случай не попал бы в диагностику ниже и объём
+ * исчезал бы со страницы молча.
+ */
+const cardsWithoutStat: string[] = [];
+
+/**
+ * Записи, чьи замеры не сходятся, и это уже разобрано: чинится не на сайте,
+ * а в выгрузке из БД (см. `seo-strategy-review.md`, разделы 4 и 8). Пока слуг
+ * в этом списке, сборка о нём не предупреждает.
+ *
+ * Список нужен именно ради предупреждения: без него в логе всегда висели бы две
+ * известные строки, третья потерялась бы среди них, и сигнал о новой поломке
+ * данных не отличался бы от фона.
+ */
+const KNOWN_INCONSISTENT = new Set([
+  'giperboloid-inzhenera-garina',
+  'alye-parusa',
+]);
+
+/**
+ * Замеры, отброшенные проверками, — с указанием, что именно и у кого.
+ * `unexpected` — то, чего нет в `KNOWN_INCONSISTENT`: новая поломка в данных.
+ */
+export function inconsistentMeasurements(): Array<{ slug: string; dropped: string; unexpected: boolean }> {
+  const found: Array<{ slug: string; dropped: string; unexpected: boolean }> = [];
+  const reported = new Set<string>();
+
+  // Обе проверки уровня записи требуют `stat`, поэтому запись без него отбросить
+  // нечего — ключей `bookStats` достаточно, объединять их с ключами лексики не нужно.
+  for (const recordSlug of Object.keys(bookStats)) {
+    const measured = measurementsOf(recordSlug);
+    if (measured.stat) continue;
+    const lostLexicon = Boolean(bookLexicon[recordSlug]) && !measured.lexicon;
+    found.push({
+      slug: recordSlug,
+      dropped: lostLexicon ? 'объём и лексика' : 'объём',
+      unexpected: !KNOWN_INCONSISTENT.has(recordSlug),
+    });
+    reported.add(recordSlug);
+  }
+
+  // Карточка из одной записи, у которой уже сообщили о поломке, — то же самое
+  // событие, а не второе: в группе просто не осталось других кандидатов.
+  // Сообщаем только там, где карточку сломало сочетание записей, а не запись.
+  for (const slug of cardsWithoutStat) {
+    if (reported.has(slug)) continue;
+    found.push({
+      slug,
+      dropped: 'объём: ни одна запись группы не сошлась с лексикой',
+      unexpected: !KNOWN_INCONSISTENT.has(slug),
+    });
+    reported.add(slug);
+  }
+
+  return found;
+}
+
 function buildCatalog(): CatalogBook[] {
   const raw = allBooks as RawBook[];
 
@@ -339,20 +464,33 @@ function buildCatalog(): CatalogBook[] {
     if (group.some(b => b.mode !== 'параллельный')) modes.push('immersion');
     if (group.some(b => b.mode === 'параллельный')) modes.push('parallel');
 
-    // Объём — из записи, где он известен и больше: у объединённых пар счётчик
-    // страниц считался по разным изданиям, и заниженное число выглядит ошибкой.
-    const stat = group
-      .map(b => bookStats[toSlug(b.title)])
-      .filter(Boolean)
-      .sort((a, b) => b.pages - a.pages)[0] ?? null;
+    // Замеры берём только те, что прошли проверку на согласованность
+    // (см. `measurementsOf`): противоречащие сами себе числа на страницу не идут.
+    const measured = group.map(b => measurementsOf(toSlug(b.title)));
 
     // Лексика посчитана по записям БД, а карточка может объединять две из них
     // (русскую и английскую). Берём ту, где текст длиннее: у объединённых пар
     // это полная книга, а не сокращённая версия.
-    const lexicon = group
-      .map(b => bookLexicon[toSlug(b.title)])
-      .filter(Boolean)
+    const lexicon = measured
+      .map(m => m.lexicon)
+      .filter((l): l is BookLexicon => l !== null)
       .sort((a, b) => b.words - a.words)[0] ?? null;
+
+    // Объём — из записи, где он известен и больше: у объединённых пар счётчик
+    // страниц считался по разным изданиям, и заниженное число выглядит ошибкой.
+    //
+    // Но объём и лексика могут прийти из разных записей, и тогда они снова
+    // расходятся, хотя внутри каждой записи сходились. Правило «побеждает
+    // больший счётчик» тянет наверх как раз завышенный, поэтому берём не просто
+    // максимум, а максимум из тех, что сходятся с выбранной лексикой: если
+    // подходящая запись в группе есть, она лучше, чем карточка вообще без объёма.
+    const statCandidates = measured
+      .map(m => m.stat)
+      .filter((s): s is BookStat => s !== null)
+      .sort((a, b) => b.pages - a.pages);
+    const stat = statCandidates.find(s => pagesMatchWords(s, lexicon)) ?? null;
+
+    if (statCandidates.length && !stat) cardsWithoutStat.push(slug);
 
     // Уровень — минимальный из объединённых: страница предлагает оба режима, и
     // погружение (русская запись) — более доступный вход в ту же книгу.
@@ -537,4 +675,34 @@ export function unlinkedAuthorSpellings(): string[][] {
     }
   }
   return missed;
+}
+
+/**
+ * Диагностика выгрузки. В норме молчит: про уже разобранные записи знает
+ * `KNOWN_INCONSISTENT`, про уже сведённых авторов — `AUTHOR_ALIASES`. Заговорила
+ * — значит, в данных появилась новая поломка, и чинить её надо в БД, а не
+ * привыкать к строчке в логе.
+ *
+ * Печатаем при загрузке модуля, а не из хука сборки: `astro.config.mjs` пришлось
+ * бы переводить на `.ts` ради импорта отсюда, а модуль каталога и так
+ * исполняется один раз за сборку (в dev — ещё раз на каждый HMR его данных).
+ * До этого обе функции не вызывались ниоткуда, хотя комментарий у
+ * `unlinkedAuthorSpellings()` обещал печать.
+ */
+const unexpectedlyDropped = inconsistentMeasurements().filter(d => d.unexpected);
+if (unexpectedlyDropped.length) {
+  console.warn(
+    `[catalog] замеры не сошлись сами с собой, на страницы не пойдут — ${unexpectedlyDropped
+      .map(d => `${d.slug} (${d.dropped})`)
+      .join(', ')}. Если это известный дефект выгрузки, добавьте слуг в KNOWN_INCONSISTENT.`,
+  );
+}
+
+const unlinkedAuthors = unlinkedAuthorSpellings();
+if (unlinkedAuthors.length) {
+  console.warn(
+    `[catalog] возможно, один автор записан двумя именами — ${unlinkedAuthors
+      .map(pair => pair.join(' ↔ '))
+      .join('; ')}. Если это так, добавьте пару в AUTHOR_ALIASES.`,
+  );
 }
