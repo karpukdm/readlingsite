@@ -7,7 +7,10 @@ import Faq from '../components/Faq.astro';
 
 // Витрину набираем только из индексируемых страниц: рекламировать с главной то,
 // что закрыто от индексации, — значит вести пользователя в тупик каталога.
-const featuredBooks = pickByHash(indexableCatalog, 12, 'home-featured-v1');
+// Восемь, а не двенадцать: полка переехала на третье место и попала в порог
+// ленивой загрузки Chromium, то есть все обложки грузятся до первого скролла.
+// На 1440px в ряд видно семь, так что восьмая ещё и намекает на прокрутку.
+const featuredBooks = pickByHash(indexableCatalog, 8, 'home-featured-v1');
 
 // Вопросы и ответы. Массив один: из него печатается и видимый блок, и разметка
 // FAQPage (см. components/Faq.astro). Раньше их писали порознь, и текст в схеме
@@ -35,7 +38,7 @@ const faqItems = [
   },
   {
     q: 'На каких устройствах работает Readling?',
-    a: 'На iPhone и Android-смартфонах. Скачайте бесплатно из App Store или Google Play.',
+    a: 'На iPhone и Android-смартфонах, а также на iPad и Android-планшетах — там параллельное чтение показывается двумя колонками. Скачайте бесплатно из App Store или Google Play.',
   },
 ];
 ---
@@ -45,19 +48,19 @@ const faqItems = [
   description={`Читайте книги на английском с русским переводом: оригинал и перевод рядом либо плавное погружение. ${appCatalog.books} книг от A1 до C2. Первые 7 дней бесплатно.`}
 >
   <Fragment slot="head">
-    <link rel="preload" as="image" href="/screen-immersion.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/screen-parallel-280.webp" type="image/webp" fetchpriority="high"
+          imagesrcset="/screen-parallel-280.webp 280w, /screen-parallel-560.webp 560w, /screen-parallel.webp 834w" imagesizes="280px" />
   </Fragment>
   <!-- HERO -->
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__content">
         <span class="badge mb-m">7 дней бесплатно</span>
-        <h1 class="mb-m">Книги на английском с переводом — читайте и учите язык без зубрёжки</h1>
+        <h1 class="mb-m">Читайте книги на английском и понимайте с первой страницы</h1>
         <p class="hero__subtitle mb-l">
           <strong>Readling — приложение для чтения книг на английском с русским переводом.</strong>
-          Выбирайте параллельный режим (оригинал и перевод рядом) или плавное погружение, где английский
-          появляется в тексте постепенно. Слова запоминаются в контексте истории, а тренировки строятся
-          на тех, что вы встретили сами.
+          Незнакомое слово — нажмите, и перевод рядом. Слова остаются в памяти, потому что
+          встретились в истории, а не в списке.
         </p>
         <div class="store-buttons mb-m">
           <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
@@ -65,21 +68,76 @@ const faqItems = [
         </div>
         <ul class="proof-line">
           <li>{appCatalog.books} книг</li>
-          <li>Уровни A1–C2</li>
+          <li>A1–C2</li>
           <li>iOS и Android</li>
         </ul>
       </div>
+      {/* В герое параллельный режим: он самообъясняющийся (перевод рядом
+          понятен без пояснений) и мажоритарный по каталогу — 61 запись против
+          50 у погружения. Раньше здесь стоял неподписанный кадр погружения,
+          и он читался как «вот и всё приложение»: посетитель видел русский
+          текст с непонятными английскими вставками и решал, что ему это не
+          подходит. Поэтому кадр подписан, а второй режим назван строкой ниже.
+          Сам кадр в герое обязателен: без него страница не показывает продукт
+          и объясняет механику раньше, чем сообщает, что это за приложение. */}
       <div class="hero__visual">
-        <picture>
-          <source srcset="/screen-immersion.webp" type="image/webp" />
-          <img src="/screen-immersion.png" alt="Скриншот приложения Readling в режиме погружения: страница книги, где английские слова постепенно вплетаются в русский текст" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
-        </picture>
+        <figure class="hero__shot">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/screen-parallel-280.webp 280w, /screen-parallel-560.webp 560w, /screen-parallel.webp 834w"
+              sizes="280px"
+            />
+            <img src="/screen-parallel.png" alt="Экран чтения Readling: страница книги на английском, сверху — панель с русским переводом текущего фрагмента, сам фрагмент подсвечен в обоих текстах" width="834" height="1731" fetchpriority="high" decoding="async" />
+          </picture>
+          <figcaption class="hero__shot-label">Параллельный режим</figcaption>
+        </figure>
+        <p class="hero__modes-line">
+          Есть и режим погружения — английский появляется в тексте постепенно.
+          <a href="#modes">Сравнить оба →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK SHELF -->
+  <section class="section">
+    <div class="container">
+      <div class="catalog-head">
+        <div>
+          <h2 class="mb-xs">Читайте то, что давно хотели — в оригинале</h2>
+          {/* Без перечисления авторов: состав полки набирает pickByHash, и любой
+              список имён в подписи начал бы врать молча при смене каталога.
+              Имена и так видны на обложках прямо ниже. */}
+          <p>{appCatalog.books} книг на английском с переводом — от A1 для начинающих до C2. Детективы, фантастика, классика, романтика.</p>
+        </div>
+        <a href="/books/" class="btn btn--secondary">Весь каталог →</a>
+      </div>
+      <div class="book-scroll">
+        {featuredBooks.map(book => (
+          <a href={`/books/${book.slug}/`} class="book-card">
+            <img
+              class="book-card__cover"
+              src={coverPath(book.title, 'sm')}
+              srcset={coverSrcset(book.title, 'card')}
+              alt={`Обложка книги «${book.displayTitle}» — ${book.displayAuthor}, уровень ${book.level}`}
+              loading="lazy"
+              decoding="async"
+              width="160"
+              height="240"
+            />
+            <div class="book-card__title">{book.displayTitle}<span class="visually-hidden"> на английском с переводом</span></div>
+            <div class="book-card__author">{book.displayAuthor}</div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- TWO MODES (equal) -->
-  <section class="section">
+  {/* tabindex="-1" — чтобы переход по якорю из героя переносил не только
+      вьюпорт, но и фокус: иначе следующий Tab продолжает с прежнего места. */}
+  <section class="section" id="modes" tabindex="-1">
     <div class="container">
       <div class="text-center mb-xl">
         <h2 class="mb-s">Книги на английском с переводом — два режима чтения</h2>
@@ -144,7 +202,7 @@ const faqItems = [
           </div>
           <h3 class="mode-card__title">Оригинал и русский перевод рядом</h3>
           <p class="mode-card__text">
-            Английский и русский текст параллельно — предложение за предложением. Удобно сравнивать конструкции и проверять понимание.
+            На планшете оригинал и перевод идут двумя колонками, абзац напротив абзаца. На телефоне — английский текст, а перевод текущего фрагмента показывается в панели над ним. Удобно сравнивать конструкции и проверять понимание.
           </p>
           <div class="parallel-demo">
             <div class="parallel-demo__col" lang="en">
@@ -185,11 +243,15 @@ const faqItems = [
           <ul class="phrase-mini">
             <li>
               <span class="en" lang="en">It's raining cats and dogs</span>
-              <span class="phrase-mini__good">→ Льёт как из ведра</span>
+              <span class="phrase-mini__good">Льёт как из ведра</span>
             </li>
             <li>
               <span class="en" lang="en">He kicked the bucket</span>
-              <span class="phrase-mini__good">→ Он отдал концы</span>
+              <span class="phrase-mini__good">Он отдал концы</span>
+            </li>
+            <li>
+              <span class="en" lang="en">She was over the moon</span>
+              <span class="phrase-mini__good">Она была на седьмом небе</span>
             </li>
           </ul>
         </div>
@@ -200,38 +262,28 @@ const faqItems = [
           <p class="bento-tile__text">
             Флэшкарточки, пазлы предложений и вставка слов — на словах, которые вы встретили в книге. Не списки из учебника, а ваш живой словарь.
           </p>
+          {/* Плитка была пустой наполовину, рядом с наполненной соседкой это
+              читалось как недоделка. Артефакт переиспользует `.phrase-mini`
+              соседа — и показывает не названия тренировок (они уже в тексте
+              выше), а то, что слова приходят из книг, которые вы читаете. */}
+          <ul class="phrase-mini">
+            <li>
+              <span class="en" lang="en">envelope</span>
+              <span class="phrase-mini__good">конверт</span>
+              <span class="phrase-mini__src">из «Великого Гэтсби»</span>
+            </li>
+            <li>
+              <span class="en" lang="en">withdrawn</span>
+              <span class="phrase-mini__good">замкнутый</span>
+              <span class="phrase-mini__src">из «Великого Гэтсби»</span>
+            </li>
+            <li>
+              <span class="en" lang="en">daisy-chain</span>
+              <span class="phrase-mini__good">венок из маргариток</span>
+              <span class="phrase-mini__src">из «Алисы в Стране чудес»</span>
+            </li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BOOK CATALOG -->
-  <section class="section">
-    <div class="container">
-      <div class="catalog-head">
-        <div>
-          <h2 class="mb-xs">{appCatalog.books} книг на английском с переводом для любого уровня</h2>
-          <p>От A1 для начинающих до C2 — детективы, фантастика, классика, романтика.</p>
-        </div>
-        <a href="/books/" class="btn btn--secondary">Весь каталог →</a>
-      </div>
-      <div class="book-scroll">
-        {featuredBooks.map(book => (
-          <a href={`/books/${book.slug}/`} class="book-card">
-            <img
-              class="book-card__cover"
-              src={coverPath(book.title, 'sm')}
-              srcset={coverSrcset(book.title, 'card')}
-              alt={`Обложка книги «${book.displayTitle}» — ${book.displayAuthor}, уровень ${book.level}`}
-              loading="lazy"
-              decoding="async"
-              width="160"
-              height="240"
-            />
-            <div class="book-card__title">{book.displayTitle}<span class="visually-hidden"> на английском с переводом</span></div>
-            <div class="book-card__author">{book.displayAuthor}</div>
-          </a>
-        ))}
       </div>
     </div>
   </section>
@@ -320,14 +372,61 @@ const faqItems = [
     line-height: 1.6;
   }
 
-  .hero__phone {
+  /* ===== Скриншот в герое ===== */
+  .hero__visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-m);
+  }
+
+  .hero__shot {
+    position: relative;
     max-width: 280px;
+    width: 100%;
+  }
+
+  .hero__shot img {
     width: 100%;
     height: auto;
     border-radius: var(--radius-xxl);
     box-shadow: var(--shadow-lg);
-    margin: 0 auto;
-    display: block;
+  }
+
+  /* Подпись поверх кадра: без неё кадр читался как «вот и всё приложение»,
+     а под кадром её путали со строкой про второй режим. Сверху, а не снизу:
+     на мобильном низ кадра уходит под сгиб, а сверху подпись ложится на
+     статус-бар скриншота и не закрывает текст книги. */
+  .hero__shot-label {
+    position: absolute;
+    left: 50%;
+    top: var(--space-m);
+    transform: translateX(-50%);
+    padding: 6px var(--space-sm);
+    border-radius: var(--radius-pill);
+    background: rgba(28, 27, 31, 0.82);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: var(--color-on-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    white-space: nowrap;
+  }
+
+  .hero__modes-line {
+    max-width: 320px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+
+  .hero__modes-line a {
+    color: var(--color-primary-hover);
+    font-weight: 600;
+    white-space: nowrap;
   }
 
   /* ===== Proof line ===== */
@@ -367,24 +466,16 @@ const faqItems = [
     display: none;
   }
 
-  .proof-line__stars {
-    color: var(--color-rating);
-    letter-spacing: 1px;
-  }
-
   /* ===== Kicker ===== */
+  /* Не --color-primary: #007AFF даёт 3.7–4.0:1 на подложках карточек. */
   .kicker {
     display: inline-block;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.6px;
-    color: var(--color-primary);
+    color: var(--color-primary-hover);
     margin-bottom: var(--space-s);
-  }
-
-  .section--accent .kicker {
-    color: rgba(255, 255, 255, 0.85);
   }
 
   /* ===== TWO MODES — equal cards ===== */
@@ -472,8 +563,9 @@ const faqItems = [
     margin-bottom: 0;
   }
 
+  /* #FF8533 давал 2.3:1, #FF6B6B — 2.8:1. Один тёмный оранжевый на всё. */
   .mode-card--parallel .kicker {
-    color: #FF8533;
+    color: #B84A00;
   }
 
   .mode-card__title {
@@ -495,11 +587,11 @@ const faqItems = [
     padding-top: var(--space-m);
     font-size: 0.9375rem;
     font-weight: 600;
-    color: var(--color-primary);
+    color: var(--color-primary-hover);
   }
 
   .mode-card--parallel .mode-card__link {
-    color: #FF6B6B;
+    color: #B84A00;
   }
 
   /* ===== Immersion demo — progressive rows with bars ===== */
@@ -512,6 +604,7 @@ const faqItems = [
 
   .mode-demo__row {
     background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     border: 1px solid rgba(0, 122, 255, 0.12);
     border-radius: var(--radius-md);
@@ -535,7 +628,8 @@ const faqItems = [
   .mode-demo__pct {
     font-size: 0.6875rem;
     font-weight: 700;
-    color: var(--color-primary);
+    /* Не --color-primary: #007AFF на этой плашке даёт 3.5:1 при 11px/700. */
+    color: var(--color-primary-hover);
     background: var(--color-primary-tint);
     padding: 2px 8px;
     border-radius: var(--radius-pill);
@@ -556,9 +650,16 @@ const faqItems = [
     color: var(--color-text-secondary);
   }
 
+  /* Та же плашка, что у `.stage__example .en`
+     на /metod-pogruzheniya/: тот же набор фраз, и синим текстом они давали
+     3.9–4.0:1 — ниже AA. Заодно совпадает с заливкой в приложении. */
   .mode-demo .en {
-    color: var(--color-primary);
-    font-weight: 500;
+    background: var(--color-primary-tint-medium);
+    border-radius: 3px;
+    padding: 0 1px;
+    margin: 0 -1px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   /* ===== Parallel demo — clean two-column ===== */
@@ -566,6 +667,7 @@ const faqItems = [
     display: grid;
     grid-template-columns: 1fr 1fr;
     background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     border: 1px solid rgba(255, 159, 64, 0.18);
     border-radius: var(--radius-md);
@@ -592,7 +694,7 @@ const faqItems = [
     font-size: 0.6875rem;
     font-weight: 700;
     background: rgba(255, 159, 64, 0.15);
-    color: #FF8533;
+    color: #B84A00;
     padding: 2px 8px;
     border-radius: var(--radius-pill);
     letter-spacing: 0.5px;
@@ -667,9 +769,17 @@ const faqItems = [
     font-weight: 600;
   }
 
+  /* Не синий и без стрелки: синее со стрелкой на этой странице означает
+     ссылку («Весь каталог →», «Подробнее о методе погружения →»), и три
+     таких «ссылки» подряд в плитке врали про систему знаков. */
   .phrase-mini__good {
-    color: var(--color-primary);
+    color: var(--color-success);
     font-weight: 500;
+  }
+
+  .phrase-mini__src {
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
   }
 
   /* ===== Catalog head ===== */
@@ -690,18 +800,39 @@ const faqItems = [
   }
 
   @media (max-width: 768px) {
+    /* Визуал остаётся под текстом: с `order: -1` он шёл перед H1, и когда
+       здесь стоял скриншот телефона на 581px, первый экран мобильного не
+       содержал ни заголовка, ни кнопок сторов, ни объяснения, что показано. */
+    /* Отбивки героя и кегль подзаголовка поджаты, чтобы кадр приложения
+       начинался выше: на 390px он стартует на 494px, и в первый экран
+       попадает его верхняя треть вместе с подписью режима. */
+    .hero {
+      padding: var(--space-xl) 0;
+    }
+
     .hero__inner {
       grid-template-columns: 1fr;
+      row-gap: var(--space-l);
       text-align: center;
     }
 
-    .hero__visual {
-      order: -1;
+    .hero__subtitle {
+      font-size: 1rem;
     }
 
     .hero .store-buttons,
     .proof-line {
       justify-content: center;
+    }
+
+    /* Ряд держим в одну строку: на два он разваливается на 30px и отодвигает
+       кадр приложения вниз. Ширину нельзя подгонять пиксельно — первый пункт
+       печатается из appCatalog.books, поэтому текст пункта про уровни укорочен
+       до «A1–C2», а здесь остаётся шаг между пунктами: он же выравнивает
+       точку-разделитель, позиционированную по левому краю пункта (12px до
+       точки против 11px после — против 16/11 в базовом правиле). */
+    .proof-line {
+      column-gap: var(--space-sm);
     }
 
     .modes-grid,
@@ -736,4 +867,5 @@ const faqItems = [
       align-self: center;
     }
   }
+
 </style>
