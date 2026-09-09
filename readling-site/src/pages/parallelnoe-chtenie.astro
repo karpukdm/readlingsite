@@ -63,7 +63,7 @@ const faqItems = [
       <div class="hero__visual">
         <picture>
           <source srcset="/screen-parallel.webp" type="image/webp" />
-          <img src="/screen-parallel.png" alt="Скриншот режима параллельного чтения Readling: на экране смартфона английский оригинал книги и русский перевод расположены параграфами друг под другом" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+          <img src="/screen-parallel.png" alt="Скриншот параллельного чтения Readling на смартфоне: английский текст книги, сверху — панель с русским переводом выделенного фрагмента" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
         </picture>
       </div>
     </div>
@@ -91,8 +91,14 @@ const faqItems = [
         </div>
         <div class="what-section__visual">
           <picture>
-            <source srcset="/screen-parallel-wide.webp" type="image/webp" />
-            <img src="/screen-parallel-wide.png" alt="Развёрнутый интерфейс параллельного чтения Readling: английский оригинал и русский перевод книги показаны параграф за параграфом, с подсветкой текущего параграфа" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
+            {/* Варианты уже генерировались, но никем не использовались:
+                слот здесь 526px на десктопе против исходных 2000px. */}
+            <source
+              type="image/webp"
+              srcset="/screen-parallel-wide-640.webp 640w, /screen-parallel-wide-960.webp 960w, /screen-parallel-wide-1280.webp 1280w, /screen-parallel-wide-1600.webp 1600w, /screen-parallel-wide.webp 2000w"
+              sizes="(max-width: 768px) calc(100vw - 40px), (max-width: 1120px) calc((100vw - 68px) / 2), 526px"
+            />
+            <img src="/screen-parallel-wide.png" alt="Параллельное чтение Readling на планшете: английский оригинал книги в левой колонке, русский перевод — в правой, абзац напротив абзаца" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
           </picture>
         </div>
       </div>

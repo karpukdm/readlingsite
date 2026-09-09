@@ -66,7 +66,7 @@ const faqItems = [
       <div class="hero__visual">
         <picture>
           <source srcset="/screen-immersion.webp" type="image/webp" />
-          <img src="/screen-immersion.png" alt="Скриншот режима погружения Readling: страница книги, где английский текст постепенно замещает русский — видно, как процент английского растёт от начала к концу" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+          <img src="/screen-immersion.png" alt="Скриншот режима погружения Readling на смартфоне: страница книги, где английские слова и фразы вплетены в русский текст и помечены заливкой, сверху — заголовок главы на двух языках" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
         </picture>
       </div>
     </div>
@@ -98,6 +98,23 @@ const faqItems = [
           Вы выбираете книгу, начинаете читать — и даже не замечаете, как переходите на английский.
         </p>
       </div>
+
+      {/* Кадр стоит здесь, а не в секции про тап-перевод, где был раньше: он
+          показывает именно замещение текста внутри книги, о котором интро
+          выше, и ничего не показывает про тап и словарь. Английского на кадре
+          около 20% — это между «Этапом 1» и «Этапом 2» ниже; в шапке видно
+          «ГЛАВА I» и прогресс 0%, поэтому подпись говорит про начало книги. */}
+      <figure class="section-figure max-w-wide mx-auto mb-l">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/screen-immersion-wide-640.webp 640w, /screen-immersion-wide-960.webp 960w, /screen-immersion-wide-1280.webp 1280w, /screen-immersion-wide-1600.webp 1600w, /screen-immersion-wide.webp 2000w"
+            sizes="(max-width: 940px) calc(100vw - 40px), 900px"
+          />
+          <img src="/screen-immersion-wide.png" alt="Экран чтения Readling на планшете: русский текст первой главы, в котором отдельные английские слова и фразы помечены голубой заливкой" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
+        </picture>
+        <figcaption>Так выглядит начало книги: английского пока пятая часть текста, и дальше его доля растёт страница за страницей.</figcaption>
+      </figure>
 
       <div class="stages max-w-wide mx-auto">
         <!-- Stage 1 -->
@@ -227,11 +244,40 @@ const faqItems = [
             Потом тренируете именно эти слова — те, которые вам действительно нужны.
           </p>
         </div>
+        {/* Здесь стоял кадр `screen-immersion-wide.png` — он переехал в секцию
+            «Как работает метод погружения», которую иллюстрирует. Секция обещает
+            тап-перевод и словарь, а на кадре ни того, ни другого: обычный экран
+            чтения. Прежний alt описывал попап с транскрипцией и кнопкой
+            сохранения, которых на картинке нет, — он был написан по тексту
+            секции, а не по изображению. Кадра с открытым переводом в public/
+            нет, поэтому вместо картинки — схема живым текстом, как в
+            `.stage__example` и в демо режимов на главной: она показывает ровно
+            те три шага, что перечислены слева, читается на любом масштабе и
+            ничего не обещает про интерфейс. */}
         <div class="tap-section__visual">
-          <picture>
-            <source srcset="/screen-immersion-wide.webp" type="image/webp" />
-            <img src="/screen-immersion-wide.png" alt="Скриншот Readling крупным планом: пользователь нажимает на английское слово в тексте книги, открывается окно с переводом, транскрипцией и кнопкой сохранения в личный словарь" class="section__img" width="2000" height="1380" loading="lazy" decoding="async" />
-          </picture>
+          <ol class="tap-demo" role="list">
+            <li class="tap-demo__step">
+              {/* Слово названо в самом чипе, а не скрытой вставкой внутри
+                  фразы: вставка склеивалась с текстом книги («looked — нажатое
+                  слово на конверт»), а её тире означало бы ещё и перевод —
+                  ровно так тире работает в шаге ниже. Заливка помечает слово
+                  для глаза, <strong> добавляет нецветовой признак (WCAG 1.4.1),
+                  а озвучивает его чип: сам <strong> скринридеры не читают. */}
+              <span class="tap-demo__chip">Нажали на слово «looked»</span>
+              <p>
+                Анна <span class="en" lang="en">opened</span> дверь и
+                <strong class="en en--tapped" lang="en">looked</strong> на конверт.
+              </p>
+            </li>
+            <li class="tap-demo__step">
+              <span class="tap-demo__chip">Перевод сразу</span>
+              <p><span class="en" lang="en">looked</span> — смотрел, взглянул</p>
+            </li>
+            <li class="tap-demo__step">
+              <span class="tap-demo__chip">И в личный словарь</span>
+              <p>Дальше это слово приходит в тренировки — во флэш-карточки, пазлы предложений и вставку слов</p>
+            </li>
+          </ol>
         </div>
       </div>
     </div>
@@ -406,6 +452,14 @@ const faqItems = [
     box-shadow: var(--shadow-md);
   }
 
+  .section-figure figcaption {
+    margin-top: var(--space-s);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    text-align: center;
+  }
+
   /* Stages */
   .stages {
     display: flex;
@@ -464,9 +518,69 @@ const faqItems = [
     color: var(--color-text-secondary);
   }
 
+  /* Плашка, а не синий текст: #007AFF на фоне блока (#F7F2FA) даёт 3.6:1 —
+     провал AA, а английских вставок здесь двенадцать. Заодно совпадает с
+     заливкой в приложении и со схемой тап-перевода ниже. */
   .stage__example .en {
-    color: var(--color-primary);
-    font-weight: 500;
+    background: var(--color-primary-tint-medium);
+    border-radius: 3px;
+    padding: 0 1px;
+    margin: 0 -1px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* ===== Схема тап-перевода (вместо кадра, см. комментарий в разметке) ===== */
+  .tap-demo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tap-demo__step {
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-m);
+  }
+
+  .tap-demo__chip {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    /* Не --color-primary: #007AFF даёт на белом 4.0:1, ниже AA для мелкого. */
+    color: var(--color-primary-hover);
+    margin-bottom: var(--space-xs);
+  }
+
+  .tap-demo__step p {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  /* Английское — плашкой, а не цветом текста: цвет пришлось бы брать
+     контрастнее #007AFF, а плашка ещё и ближе к тому, как это выглядит
+     в приложении. */
+  .tap-demo .en {
+    background: var(--color-primary-tint-medium);
+    border-radius: 3px;
+    padding: 0 1px;
+    margin: 0 -1px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .tap-demo .en--tapped {
+    background: var(--color-primary-hover);
+    color: var(--color-on-primary);
+    font-weight: 600;
   }
 
   /* Tap section */
