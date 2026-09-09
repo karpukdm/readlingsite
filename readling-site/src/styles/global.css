@@ -95,6 +95,22 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Chromium не отключает smooth-скролл по этому запросу сам (WebKit и Gecko,
+   по сообщениям, учитывают системный Reduce Motion — дублирование безвредно). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Хедер sticky: без отступа переход по якорю уводит цель под него.
+   Одно правило на скроллпорте вместо scroll-margin на каждой цели: работает
+   и для целей без id, и не навешивает отступ на #nav с #burger внутри самого
+   хедера. Действует на любой подскролл, включая переход по фокусу. */
+html {
+  scroll-padding-top: var(--header-height);
+}
+
 body {
   font-family: var(--font-family);
   font-size: 1rem;
@@ -188,26 +204,6 @@ p {
 
 .section--accent p {
   color: rgba(255, 255, 255, 0.9);
-}
-
-.section--accent .immersion-step {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 3px solid rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
-}
-
-.section--accent .immersion-step__label {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.section--accent .immersion-step__text {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.section--accent .immersion-step__text .en {
-  color: #FFD60A;
-  font-weight: 600;
 }
 
 /* Warm section for testimonials */
@@ -447,35 +443,6 @@ p {
   }
 }
 
-/* ===== SCREENSHOT PLACEHOLDER ===== */
-.screenshot-placeholder {
-  background: linear-gradient(135deg, var(--color-primary-tint), var(--color-primary-tint-medium));
-  border-radius: var(--radius-lg);
-  border: 2px dashed var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-primary);
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-align: center;
-  padding: var(--space-l);
-  min-height: 200px;
-  opacity: 0.8;
-}
-
-.screenshot-placeholder--phone {
-  width: 280px;
-  height: 560px;
-  border-radius: var(--radius-xxl);
-  margin: 0 auto;
-}
-
-.screenshot-placeholder--wide {
-  width: 100%;
-  height: 300px;
-}
-
 /* ===== COMPARISON TABLE ===== */
 .comparison-table {
   width: 100%;
@@ -592,41 +559,6 @@ p {
   color: var(--color-text-tertiary);
 }
 
-/* ===== IMMERSION DEMO ===== */
-.immersion-demo {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-l);
-}
-
-.immersion-step {
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-card-border);
-  border-left: 3px solid var(--color-primary);
-  padding: var(--space-l);
-}
-
-.immersion-step__label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-primary);
-  margin-bottom: var(--space-s);
-}
-
-.immersion-step__text {
-  font-size: 1.0625rem;
-  line-height: 1.8;
-  color: var(--color-text-secondary);
-}
-
-.immersion-step__text .en {
-  color: var(--color-primary);
-  font-weight: 500;
-}
-
 /* ===== SECTION UTILITIES ===== */
 .text-center {
   text-align: center;
@@ -726,7 +658,12 @@ p {
 }
 
 /* ===== BOOK GRID ===== */
+/* contain: paint не даёт горизонтальному скроллеру раздувать
+   documentElement.scrollWidth (было 1792 при вьюпорте 390): из-за этого
+   мобильный layout viewport считался по 1792px и низ страницы был
+   недостижим. Прокрутка самой полки при этом работает. */
 .book-scroll {
+  contain: paint;
   display: flex;
   gap: var(--space-m);
   overflow-x: auto;
