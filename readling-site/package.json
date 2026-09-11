@@ -15,7 +15,8 @@
     "screens": "node scripts/optimize-screens.mjs",
     "screens:force": "node scripts/optimize-screens.mjs --force",
     "og": "node scripts/generate-og.mjs",
-    "og:force": "node scripts/generate-og.mjs --force"
+    "og:force": "node scripts/generate-og.mjs --force",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",
