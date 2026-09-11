@@ -49,18 +49,61 @@
 `https://www.readling.club/` отдаёт 200 и является дублем сайта. На индексацию
 это почти не влияет: `<link rel="canonical">` на всех страницах указывает на
 апекс, и поисковик склеивает дубль сам. Так что правило — необязательное.
+Единственный довод за: из URL, которые Bing вообще держит по сайту в индексе,
+часть — www-версии, и дубль хоста ест краул-бюджет.
 
-**Важно:** на `readling.club` живёт не только эта статика, но и продакшн-API на
-`/api/*`. Redirect Rules выполняются **раньше** маршрутизации Worker'а и origin,
-поэтому слишком широкое правило гарантированно уронит API — так уже случалось.
+**Важно:** на `readling.club` живёт не только эта статика, но и продакшн-API.
+Redirect Rules выполняются **раньше** маршрутизации Worker'а и origin, поэтому
+слишком широкое правило гарантированно уронит API — так уже случалось.
 `_redirects` тут не помощник: в Workers static assets он не поддерживает
-редиректы по хосту.
+редиректы по хосту (в документации Cloudflare «Domain-level redirects» прямо
+в списке неподдерживаемых).
 
-Если всё же настраивать — Rules → Redirect Rules, custom filter expression:
+### Сначала выясните, на какой хост ходят клиенты
+
+У API есть свой хост: `api.readling.club` отдаёт `server: nginx` без `cf-ray`,
+то есть он **не за Cloudflare** и Redirect Rules до него не доходят физически.
+Если базовый URL в приложении и URL вебхука в дашборде RevenueCat указывают
+туда, правило по www безопасно by construction, и весь список ниже — теория.
+
+Но тот же бэкенд отвечает и через проксируемые `readling.club` и
+`www.readling.club`, так что дверь открыта. Пока не проверено, куда ходят
+клиенты, правило делается вслепую.
+
+### Чего правило не должно касаться
+
+Всё это отвечает через апекс и www, то есть попадает под Redirect Rules.
+Источник истины — `SecurityConfiguration` в репозитории бэкенда:
+
+| Путь | Через апекс | Что это |
+| :--- | :--- | :--- |
+| `/api/v1/revenuecat/webhook` | 405 на GET (POST-only) | вебхук RevenueCat, `@Order(1)`, `permitAll` |
+| `/api/v1/app/version` | 200 | `permitAll` |
+| `/api/v1/health` | 200 | `permitAll` |
+| `/api/**` | 401 | всё остальное, `authenticated` |
+| `/v3/api-docs` | 200 | OpenAPI, **вне `/api/`** |
+| `/swagger-ui.html`, `/swagger/**`, `/swagger-ui/**`, `/swagger-resources/**` | 302 | **вне `/api/`** |
+| `/actuator/**` | 200 на `/prometheus` | **вне `/api/`** |
+
+Дороже всего два. `/api/v1/revenuecat/webhook` — POST от стороннего сервиса,
+деньги: 301 на POST означает потерянные события подписок, и заметить это можно
+сильно позже. `/api/v1/app/version` — `permitAll` и дёргается на старте до
+авторизации, так что ломается всё и сразу; это наиболее вероятная причина
+прошлого падения.
+
+Исключения по одному только `/api/` недостаточно: `/v3/api-docs`, `/swagger*`
+и `/actuator/` лежат вне этого префикса.
+
+### Само правило
+
+Rules → Redirect Rules, custom filter expression:
 
 ```
 http.host eq "www.readling.club"
 and not starts_with(http.request.uri.path, "/api/")
+and not starts_with(http.request.uri.path, "/v3/api-docs")
+and not starts_with(http.request.uri.path, "/swagger")
+and not starts_with(http.request.uri.path, "/actuator/")
 ```
 
 Target URL (Dynamic), статус **301**, галку «Preserve query string» не включать:
@@ -70,17 +113,37 @@ concat("https://readling.club", http.request.uri)
 ```
 
 - `eq`, а не `contains` — апекс не должен совпадать даже случайно;
-- исключение `/api/` — страховка на случай ошибки в условии по хосту;
+- исключения путей — страховка на случай ошибки в условии по хосту;
 - `http.request.uri`, а не `http.request.uri.path` — иначе теряется query string
-  (`.uri` = путь + query, `.uri.path` = только путь).
+  (`.uri` = путь + query, `.uri.path` = только путь). Галка продублировала бы её.
 
-Проверка после включения:
+Создавайте правило выключенным, включайте и сразу проверяйте. Не вечером.
+
+### Проверка после включения
+
+Ни одна строка бэкенда не должна отдать 301 на апекс:
 
 ```sh
-curl -sI https://readling.club/api/v1         # ожидаем 401, не 301
-curl -sI "https://readling.club/api/v1?a=1"   # ожидаем 401, не 301
-curl -sI https://www.readling.club/           # ожидаем 301 на апекс
-curl -sI https://readling.club/               # ожидаем 200
+for u in \
+  https://readling.club/api/v1 \
+  "https://readling.club/api/v1/health?a=1" \
+  https://readling.club/api/v1/app/version \
+  https://readling.club/api/v1/revenuecat/webhook \
+  https://readling.club/v3/api-docs \
+  https://readling.club/swagger-ui.html \
+  https://www.readling.club/api/v1/health
+do printf '%-52s %s\n' "$u" "$(curl -so /dev/null -w '%{http_code}' "$u")"; done
 ```
 
-Увидели 301 на первых двух — сразу ставьте правило на паузу.
+Ожидаемые коды: `401`, `200`, `200`, `405`, `200`, `302`, `200`. У
+`/swagger-ui.html` 302 — это его собственный редирект на `/swagger-ui/index.html`,
+а не наш; смотрите на `location`, если сомневаетесь.
+
+А сайт, наоборот, должен переехать:
+
+```sh
+curl -sI https://www.readling.club/ | head -1   # ожидаем 301
+curl -sI https://readling.club/      | head -1   # ожидаем 200
+```
+
+Увидели 301 там, где его быть не должно, — сразу ставьте правило на паузу.
