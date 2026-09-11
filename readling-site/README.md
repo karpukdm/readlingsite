@@ -126,27 +126,30 @@ Cloudflare не стоит вовсе, так что Redirect Rules до нег�
 
 ### Чего правило не должно касаться
 
-Всё это отвечает через апекс и www, то есть попадает под Redirect Rules.
-Источник истины — `SecurityConfiguration` в репозитории бэкенда:
+Список не выведен из `SecurityConfiguration`, а отстукан по проду: часть путей
+до бэкенда не доходит и падает в 404 самого сайта, а часть — доходит, хотя в
+конфиге выглядит иначе. Значение имеет второе.
 
-| Путь | Через апекс | Что это |
+| Путь | Через апекс | Куда попадает |
 | :--- | :--- | :--- |
-| `/api/v1/revenuecat/webhook` | 405 на GET (POST-only) | вебхук RevenueCat, `@Order(1)`, `permitAll` |
-| `/api/v1/app/version` | 200 | `permitAll` |
-| `/api/v1/health` | 200 | `permitAll` |
-| `/api/**` | 401 | всё остальное, `authenticated` |
-| `/v3/api-docs` | 200 | OpenAPI, **вне `/api/`** |
-| `/swagger-ui.html`, `/swagger/**`, `/swagger-ui/**`, `/swagger-resources/**` | 302 | **вне `/api/`** |
-| `/actuator/**` | 200 на `/prometheus` | **вне `/api/`** |
+| `/api/v1/revenuecat/webhook` | 405 на GET (POST-only) | бэкенд: вебхук RevenueCat, `@Order(1)`, `permitAll` |
+| `/api/v1/app/version` | 200 | бэкенд, `permitAll` |
+| `/api/v1/health` | 200 | бэкенд, `permitAll` |
+| `/api/` и глубже | 401 | бэкенд, `authenticated` |
+| `/actuator/` и глубже | 404 / 200 на `/prometheus` | бэкенд |
+| `/v3/api-docs`, `.yaml`, `/swagger-config` | 200 / 401 | бэкенд, OpenAPI |
+| `/swagger-ui.html`, `/swagger-ui/…` | 302 / 200 | бэкенд |
+| `/api`, `/actuator`, `/swagger`, `/error`, `/webjars/…` | 404 | 404 самого сайта, до бэкенда не доходят |
 
 Дороже всего два. `/api/v1/revenuecat/webhook` — POST от стороннего сервиса,
-деньги: 301 на POST означает потерянные события подписок, и заметить это можно
+деньги: 301 на POST означает потерянные события подписок, и заметно это станет
 сильно позже. `/api/v1/app/version` — `permitAll` и дёргается на старте до
-авторизации, так что ломается всё и сразу; это наиболее вероятная причина
-прошлого падения.
+авторизации, так что ломается всё и сразу.
 
-Исключения по одному только `/api/` недостаточно: `/v3/api-docs`, `/swagger*`
-и `/actuator/` лежат вне этого префикса.
+Префиксы в правиле пишутся без завершающего слеша: `/api` вместо `/api/`.
+Голые формы до бэкенда не доходят, но лишний символ в исключении стоит ноль, а
+цена промаха — весь трафик приложения. Ни один путь самого сайта под эти
+четыре префикса не попадает, проверено по `sitemap.xml` и содержимому `dist/`.
 
 ### Само правило
 
@@ -154,10 +157,10 @@ Rules → Redirect Rules, custom filter expression:
 
 ```
 http.host eq "www.readling.club"
-and not starts_with(http.request.uri.path, "/api/")
-and not starts_with(http.request.uri.path, "/v3/api-docs")
+and not starts_with(http.request.uri.path, "/api")
+and not starts_with(http.request.uri.path, "/actuator")
 and not starts_with(http.request.uri.path, "/swagger")
-and not starts_with(http.request.uri.path, "/actuator/")
+and not starts_with(http.request.uri.path, "/v3/")
 ```
 
 Target URL (Dynamic), статус **301**, галку «Preserve query string» не включать:
@@ -175,23 +178,40 @@ concat("https://readling.club", http.request.uri)
 
 ### Проверка после включения
 
-Ни одна строка бэкенда не должна отдать 301 на апекс:
+Инвариант простой: ни один путь бэкенда не должен уехать на апекс. Сверять
+точные коды смысла мало — они меняются сами по себе (`/actuator/prometheus`
+станет 403, когда его закроют в nginx), поэтому скрипт смотрит на цель
+редиректа, а не на статус.
 
-```sh
+```bash
 for u in \
-  https://readling.club/api/v1 \
-  "https://readling.club/api/v1/health?a=1" \
-  https://readling.club/api/v1/app/version \
-  https://readling.club/api/v1/revenuecat/webhook \
-  https://readling.club/v3/api-docs \
-  https://readling.club/swagger-ui.html \
-  https://www.readling.club/api/v1/health
-do printf '%-52s %s\n' "$u" "$(curl -so /dev/null -w '%{http_code}' "$u")"; done
+  https://www.readling.club/api/v1 \
+  "https://www.readling.club/api/v1/health?a=1" \
+  https://www.readling.club/api/v1/app/version \
+  https://www.readling.club/api/v1/revenuecat/webhook \
+  https://www.readling.club/actuator/prometheus \
+  https://www.readling.club/v3/api-docs \
+  https://www.readling.club/v3/api-docs.yaml \
+  https://www.readling.club/swagger-ui.html \
+  https://www.readling.club/swagger-ui/index.html \
+  https://readling.club/api/v1/health
+do
+  read -r code loc < <(curl -so /dev/null -w '%{http_code} %{redirect_url}' "$u"; echo)
+  case "$loc" in
+    https://readling.club/*) verdict="СТОП — уехал на апекс: $loc" ;;
+    *) verdict="ok ${loc:+(свой редирект: $loc)}" ;;
+  esac
+  printf '%-56s %s  %s\n' "$u" "$code" "$verdict"
+done
 ```
 
-Ожидаемые коды: `401`, `200`, `200`, `405`, `200`, `302`, `200`. У
-`/swagger-ui.html` 302 — это его собственный редирект на `/swagger-ui/index.html`,
-а не наш; смотрите на `location`, если сомневаетесь.
+Все строки должны быть `ok`. `/swagger-ui.html` отдаёт 302 на
+`/swagger-ui/index.html` — это его собственный редирект, и он не считается.
+Хотя бы одно «СТОП» — правило на паузу, не разбираясь.
+
+Проверяется именно `www`: правило висит на нём, и промах по хосту всплывёт
+на апексе, последняя строка списка про это. Приложение ходит на апекс
+(см. выше), так что она — главная.
 
 А сайт, наоборот, должен переехать:
 
@@ -199,5 +219,3 @@ do printf '%-52s %s\n' "$u" "$(curl -so /dev/null -w '%{http_code}' "$u")"; done
 curl -sI https://www.readling.club/ | head -1   # ожидаем 301
 curl -sI https://readling.club/      | head -1   # ожидаем 200
 ```
-
-Увидели 301 там, где его быть не должно, — сразу ставьте правило на паузу.
