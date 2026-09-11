@@ -37,6 +37,14 @@ const faqItems = [
     a: 'Когда вы читаете и нажимаете на незнакомое слово, оно сохраняется в ваш личный словарь. Тренировки — флэш-карточки, пазлы предложений, вставка слов — помогают запомнить именно ваши слова, а не случайные из учебника.',
   },
   {
+    q: 'Есть ли в Readling упражнения по грамматике?',
+    a: 'Да, шесть тренажёров: артикли, предлоги, времена глагола, количество, местоимения и сравнение. Предложения взяты из книг каталога, а после ответа приложение объясняет по-русски, почему подходит верный вариант и почему не годится тот, что напрашивался. Бесплатно — два занятия в день, этого хватает попробовать.',
+  },
+  {
+    q: 'Можно ли практиковать разговорный английский?',
+    a: 'Да — переписываясь по-английски с героями книг. Собеседник подстраивается под ваш уровень, от начального до свободного, любую его фразу можно перевести одним касанием, а серьёзную ошибку он не пропустит: покажет, что не так и как сказать правильно.',
+  },
+  {
     q: 'На каких устройствах работает Readling?',
     a: 'На iPhone и Android-смартфонах, а также на iPad и Android-планшетах — там параллельное чтение показывается двумя колонками. Скачайте бесплатно из App Store или Google Play.',
   },
@@ -288,6 +296,66 @@ const faqItems = [
     </div>
   </section>
 
+  <!-- GRAMMAR & CHAT -->
+  {/* Третий блок возможностей: чтение даёт узнавание, а произвести фразу
+      самому оно не учит. Две карточки, а не четыре плитки, — у каждой своя
+      страница, и карточка целиком кликабельна, как в блоке режимов выше. */}
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">Прочитанное нужно во что-то превращать</h2>
+        <p class="max-w-prose mx-auto">
+          Слово из книги легко узнаёшь на странице — и не вспоминаешь, когда надо сказать
+          самому. Поэтому в приложении есть ещё грамматика и разговор, и оба — на том же
+          материале, на книгах.
+        </p>
+      </div>
+      <div class="practice-grid">
+        <a href="/grammatika/" class="practice-card">
+          <div class="practice-card__text">
+            <span class="kicker">Грамматика</span>
+            <h3 class="practice-card__title">Правило, которое узнаёшь в живой фразе</h3>
+            <p>
+              Артикли, предлоги, времена, количество, местоимения, сравнение — шесть мест,
+              где русскоязычные ошибаются годами. Тренируете их на предложениях из настоящих
+              книг, а после каждого ответа читаете по-русски, почему так и почему не иначе.
+            </p>
+            <span class="practice-card__link">Подробнее о грамматике →</span>
+          </div>
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/screen-grammar-280.webp 280w, /screen-grammar-560.webp 560w, /screen-grammar.webp 834w"
+              sizes="220px"
+            />
+            <img src="/screen-grammar.png" alt="Вкладка «Грамматика» в Readling: список тренажёров — артикли, предлоги, времена глагола, количество, местоимения, сравнение" class="practice-card__shot" width="834" height="1731" loading="lazy" decoding="async" />
+          </picture>
+        </a>
+
+        <a href="/razgovornaya-praktika/" class="practice-card">
+          <div class="practice-card__text">
+            <span class="kicker">Разговорная практика</span>
+            <h3 class="practice-card__title">Поговорите с героем книги по-английски</h3>
+            <p>
+              Переписываетесь по-английски с героем книги из каталога. Он подстраивается
+              под ваш уровень, любую его фразу можно перевести одним касанием, а на серьёзной
+              ошибке остановит и покажет, как сказать правильно.
+            </p>
+            <span class="practice-card__link">Подробнее о разговорной практике →</span>
+          </div>
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/screen-chat-280.webp 280w, /screen-chat-560.webp 560w, /screen-chat.webp 834w"
+              sizes="220px"
+            />
+            <img src="/screen-chat.png" alt="Чат Readling: переписка по-английски с Гермионой Грейнджер и переключатель уровня собеседника" class="practice-card__shot" width="834" height="1731" loading="lazy" decoding="async" />
+          </picture>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <Faq title="Частые вопросы о Readling" items={faqItems} />
 
   <!-- Schema.org -->
@@ -328,7 +396,7 @@ const faqItems = [
       "name": "Readling — английский по книгам",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "iOS, Android",
-      "description": "Приложение для изучения английского через чтение книг. Режим погружения, параллельное чтение, тренировки слов.",
+      "description": "Приложение для изучения английского через чтение книг. Режим погружения, параллельное чтение, тренировки слов, упражнения по грамматике и разговорная практика с персонажами книг.",
       "url": "https://readling.club/",
       "image": "https://readling.club/logo.png",
       // Приложение freemium: бесплатный план и подписка. Один Offer с price "0"
@@ -799,6 +867,68 @@ const faqItems = [
     color: var(--color-text-secondary);
   }
 
+  /* ===== Грамматика и разговор ===== */
+  .practice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .practice-card {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: var(--space-l);
+    align-items: center;
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-l);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .practice-card:hover {
+    color: inherit;
+    border-color: rgba(0, 122, 255, 0.25);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .practice-card__title {
+    margin-bottom: var(--space-s);
+  }
+
+  .practice-card p {
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-m);
+  }
+
+  .practice-card__link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-primary-hover);
+  }
+
+  /* Кадр обрезан сверху: в списке тренажёров и в ленте чата смысл несёт
+     верхняя половина экрана, а целиком телефон при двух карточках в ряд
+     ужимается до нечитаемого. */
+  .practice-card__shot {
+    width: 100%;
+    max-width: 220px;
+    height: 300px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (max-width: 1000px) {
+    .practice-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   @media (max-width: 768px) {
     /* Визуал остаётся под текстом: с `order: -1` он шёл перед H1, и когда
        здесь стоял скриншот телефона на 581px, первый экран мобильного не
@@ -865,6 +995,21 @@ const faqItems = [
 
     .catalog-head .btn {
       align-self: center;
+    }
+
+    .practice-card {
+      grid-template-columns: 1fr;
+    }
+
+    .practice-card picture {
+      order: -1;
+      display: block;
+    }
+
+    .practice-card__shot {
+      max-width: 100%;
+      height: 220px;
+      margin: 0 auto;
     }
   }
 

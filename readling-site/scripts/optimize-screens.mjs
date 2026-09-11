@@ -21,6 +21,9 @@ const FILES_TO_CONVERT = [
   'screen-flashcards.png',
   'screen-sentence-puzzle.png',
   'screen-training.png',
+  'screen-grammar.png',
+  'screen-grammar-explain.png',
+  'screen-chat.png',
   'og-default.png',
 ];
 
@@ -38,6 +41,12 @@ const RESPONSIVE_WIDTHS = {
   // при DPR 3. Это LCP-элемент страницы, и на DPR 1–2 он тянул втрое больше
   // нужного.
   'screen-parallel.png': [280, 560],
+  // Кадры грамматики и чата с персонажами: в герое своих страниц слот 280
+  // CSS-px, в карточках на главной — 240. Исходник тот же, что у остальных
+  // скриншотов, 834px, то есть без вариантов DPR 1 тянул бы втрое больше нужного.
+  'screen-grammar.png': [280, 560],
+  'screen-grammar-explain.png': [280, 560],
+  'screen-chat.png': [280, 560],
 };
 
 async function main() {

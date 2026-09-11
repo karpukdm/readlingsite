@@ -1,0 +1,711 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../config/links';
+import { appCatalog } from '../utils/catalog';
+import { getPageDates } from '../utils/dates';
+import Faq from '../components/Faq.astro';
+
+const { datePublished, dateModified } = getPageDates('src/pages/razgovornaya-praktika.astro');
+
+// Четыре уровня собеседника — те же, что в приложении, с их подсказками.
+const levels = [
+  {
+    pill: 'A1–A2',
+    hint: 'Очень короткие фразы, самая простая лексика',
+    text: 'Коротко, простыми словами, без идиом. И вопросы простые не только по словам, но и по сути: «What does freedom mean to you?» собран из лёгких слов, а ответить на него новичок всё равно не сможет. Здесь такого не спросят.',
+  },
+  {
+    pill: 'B1',
+    hint: 'Короткие фразы, частая лексика',
+    text: 'Уже можно спорить, уточнять и шутить, а не только отвечать «yes». Редких слов пока не будет.',
+  },
+  {
+    pill: 'B2',
+    hint: 'Развёрнутые ответы, идиомы, оттенки',
+    text: 'Персонаж начинает говорить так, как написан в книге: с оборотами и иронией.',
+  },
+  {
+    pill: 'C1–C2',
+    hint: 'Полный литературный регистр без упрощения',
+    text: 'Никаких скидок на то, что вы учите язык. Ровно та речь, ради которой книгу и читают в оригинале.',
+  },
+];
+
+// Вопросы и ответы: один массив на видимый блок и на разметку FAQPage.
+const faqItems = [
+  {
+    q: 'С кем я на самом деле переписываюсь — с человеком?',
+    a: 'Не с человеком. Отвечает модель, которой мы вручную прописали характер персонажа: как он говорит, что знает о событиях книги, чего не скажет никогда. Ждать ответа не нужно, и от ваших ошибок собеседник не устанет.',
+  },
+  {
+    q: 'Нужно ли прочитать книгу, чтобы поговорить с её героем?',
+    a: 'Нет. Персонаж сам объяснит, кто он и что вокруг происходит, а сюжетные развязки не выдаёт — специально, чтобы разговор не испортил вам книгу.',
+  },
+  {
+    q: 'Что будет, если я ошибусь в английском?',
+    a: 'Смотря насколько. Мелочи — опечатки, пропущенная запятая, короткий ответ вроде «ok» — проходят без замечаний. Если ошибка серьёзная для выбранного уровня, сообщение не уйдёт: приложение покажет, в каком предложении ошибка, объяснит её и добавит строку «Как правильно», а ваш текст останется в поле. Такое сообщение тоже считается в дневной лимит — так что выгоднее поправить, чем отправлять наугад.',
+  },
+  {
+    q: 'А если написать по-русски?',
+    a: 'Сообщение вернётся с пометкой «Не тот язык» — персонаж понимает только английский, и в этом весь смысл упражнения. Подсказка есть и в самом поле ввода: там написано «Ответьте по-английски…».',
+  },
+  {
+    q: 'Сколько сообщений доступно бесплатно?',
+    a: 'Двадцать в день и не больше трёхсот в месяц. С подпиской — три тысячи сообщений в месяц без дневного потолка.',
+  },
+  {
+    q: 'Можно ли поговорить с персонажем, которого нет в списке?',
+    a: 'Пока нет: набор персонажей мы составляем вручную — у каждого прописан характер, а не просто имя. Если кого-то не хватает, напишите в поддержку, такие заявки мы собираем.',
+  },
+];
+---
+
+<BaseLayout
+  title="Разговорная практика английского — чат с персонажами книг | Readling"
+  description="Переписывайтесь по-английски с героями книг: четыре уровня собеседника, перевод реплик и разбор, если вы ошиблись. Разговорная практика без живого собеседника — в приложении Readling."
+  canonicalPath="/razgovornaya-praktika"
+>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/screen-chat-280.webp" type="image/webp" fetchpriority="high"
+          imagesrcset="/screen-chat-280.webp 280w, /screen-chat-560.webp 560w, /screen-chat.webp 834w" imagesizes="280px" />
+  </Fragment>
+
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <div class="container">
+      <a href="/">Главная</a>
+      <span class="breadcrumbs__sep">/</span>
+      <span>Разговорная практика</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <h1 class="mb-m">Разговорная практика английского — переписка с персонажами книг</h1>
+        <p class="hero__subtitle mb-sm">
+          <strong>Выбираете книгу, выбираете героя — и говорите с ним по-английски.</strong>
+          Гермиона напишет, что они прячутся в палатке, и спросит, как вы их нашли.
+          Отвечать нужно самому: ошиблись — приложение остановит сообщение и покажет,
+          как сказать правильно.
+        </p>
+        <p class="hero__note mb-l">
+          Отвечает не человек, а модель с прописанным характером героя. Зато отвечает
+          сразу и не устаёт от ваших ошибок.
+        </p>
+        <div class="store-buttons">
+          <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+          <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/screen-chat-280.webp 280w, /screen-chat-560.webp 560w, /screen-chat.webp 834w"
+            sizes="280px"
+          />
+          <img src="/screen-chat.png" alt="Экран чата Readling: переписка по-английски с Гермионой Грейнджер из «Гарри Поттера и Даров Смерти», сверху — переключатель уровня собеседника A1–A2" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+        </picture>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">Говорить не с кем — и язык так и остаётся в голове</h2>
+        <p class="max-w-prose mx-auto">
+          Слова выучены, грамматика разобрана, книги читаются. А попробовать это на живом человеке
+          негде: разговорный клуб по расписанию, репетитор за деньги, приложение с носителем —
+          по настроению носителя. Переписка с персонажем даёт собеседника, которого не надо искать.
+        </p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3 class="mb-s">Не стыдно ошибаться</h3>
+          <p>
+            Никто не вздыхает, не переспрашивает и не переходит на русский из вежливости.
+            Можно писать медленно, переписывать фразу три раза и молчать десять минут.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Есть о чём говорить</h3>
+          <p>
+            Обычная беда разговорных тренажёров — темы уровня «расскажите о своём хобби».
+            Здесь у собеседника своя история, свои дела и свои вопросы к вам.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Можно начать с трёх слов</h3>
+          <p>
+            На начальном уровне собеседник не придирается: пока по фразе понятно, что вы
+            хотели сказать, разговор идёт дальше. Сначала важно заговорить, безошибочно — потом.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT LOOKS -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="text-center mb-s">Обычная переписка — только по-английски и с героем книги</h2>
+      <p class="text-center max-w-prose mx-auto mb-xl">
+        Как в мессенджере, только собеседник из книги и отвечает на английском.
+        Не разобрали фразу — нажмите «Перевод» под ней, и разговор не остановится.
+      </p>
+
+      <div class="chat-demo max-w-prose mx-auto">
+        <div class="chat-demo__head">
+          <div>
+            <div class="chat-demo__name">Hermione Granger</div>
+            <div class="chat-demo__book">Гарри Поттер и Дары Смерти</div>
+          </div>
+        </div>
+        <div class="chat-demo__level">
+          <span>Уровень собеседника</span>
+          <span class="chat-demo__pill">A1–A2</span>
+        </div>
+        <div class="chat-demo__feed">
+          <div class="chat-demo__msg chat-demo__msg--them">
+            <p lang="en">We are hiding in a tent. How did you find us?</p>
+            <p class="chat-demo__translation">Перевод: «Мы прячемся в палатке. Как ты нас нашёл?»</p>
+          </div>
+          <div class="chat-demo__msg chat-demo__msg--me">
+            <p lang="en">I saw a light between the trees.</p>
+          </div>
+          <div class="chat-demo__msg chat-demo__msg--them">
+            <p lang="en">Then we must move tonight. Can you keep a secret?</p>
+            <p class="chat-demo__translation">Перевод: «Значит, сегодня же уходим. Ты умеешь хранить секреты?»</p>
+          </div>
+        </div>
+        <div class="chat-demo__input">Ответьте по-английски…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARACTERS -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">С кем вы будете говорить</h2>
+        <p class="max-w-prose mx-auto">
+          Сначала выбираете книгу, потом персонажа: у каждого есть портрет и короткое описание,
+          чтобы понять, с кем предстоит говорить. В списке не весь каталог: герои появляются
+          по мере того, как мы их прописываем, книга за книгой.
+        </p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3 class="mb-s">Каждый говорит по-своему</h3>
+          <p>
+            Персонажей мы собираем сами и каждому пишем характер: как он говорит, что знает
+            о событиях книги, чего не скажет никогда. Поэтому двое из одной книги разговаривают
+            с вами по-разному — это видно с первых реплик.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Без спойлеров</h3>
+          <p>
+            Персонаж не выдаёт развязку книги, даже если спросить прямо. Разговор не должен
+            портить чтение — это одно из правил, по которым он живёт.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Помнит, о чём вы говорили</h3>
+          <p>
+            Разговор не начинается каждый раз с нуля: вернулись через неделю — персонаж
+            помнит, о чём вы говорили. А если давно не заходили, может написать первым.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEVELS -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">Собеседник подстраивается под ваш уровень</h2>
+        <p class="max-w-prose mx-auto">
+          Начали на простом — он будет говорить просто. Стало легко — поднимите планку
+          прямо в разговоре: персонаж и тема останутся те же.
+        </p>
+      </div>
+      <div class="levels">
+        {levels.map(level => (
+          <div class="card level">
+            <div class="badge mb-m">{level.pill}</div>
+            <h3 class="mb-xs">{level.hint}</h3>
+            <p class="level__text">{level.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MISTAKES -->
+  <section class="section">
+    <div class="container">
+      <div class="mistakes">
+        <div>
+          <h2 class="mb-m">Ошиблись — приложение остановит и покажет, как правильно</h2>
+          <p class="mb-m">
+            Сообщение с серьёзной ошибкой до собеседника не дойдёт. Вместо него вы увидите,
+            где ошибка, в чём она и как надо было сказать. Ваш текст останется в поле —
+            поправьте и отправьте.
+          </p>
+          <p class="mb-m">
+            Кнопки «вставить исправление» там намеренно нет. Правильную фразу нужно
+            перепечатать самому: то, что вы просто прочитали, забывается к следующему сообщению,
+            а то, что набрали руками, — остаётся.
+          </p>
+          <p>
+            Придирок не будет. Опечатки, регистр, пропущенные запятые, сленг и односложные
+            ответы приложение пропускает молча — как пропустил бы живой собеседник.
+          </p>
+        </div>
+        <div class="mistakes__demo">
+          <div class="correction">
+            <div class="correction__head">
+              <span class="correction__tag">Грамматика</span>
+            </div>
+            <p class="correction__quote" lang="en">«Yesterday I go to the forest and see a light.»</p>
+            <p class="correction__text">
+              Вы рассказываете о вчерашнем дне, а глаголы стоят в настоящем времени.
+              У «go» и «see» есть формы прошедшего — «went» и «saw».
+            </p>
+            <div class="correction__fix">
+              <span class="correction__fix-label">Как правильно</span>
+              <p lang="en">Yesterday I went to the forest and saw a light.</p>
+            </div>
+          </div>
+          <p class="mistakes__note">
+            Так это выглядит на B2. Строгость зависит от уровня: на A1–A2 приложение
+            вмешивается, только когда по фразе непонятно, что вы хотели сказать —
+            там важнее заговорить, чем сказать безошибочно.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIMITS -->
+  <section class="section section--alt">
+    <div class="container max-w-wide mx-auto">
+      <h2 class="text-center mb-l">Один разговор в день — бесплатно</h2>
+      <div class="table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Бесплатно</th>
+              <th>Подписка</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Сообщений в день</strong></td>
+              <td>20</td>
+              <td>Дневного потолка нет</td>
+            </tr>
+            <tr>
+              <td><strong>Сообщений в месяц</strong></td>
+              <td>300</td>
+              <td>3000</td>
+            </tr>
+            <tr>
+              <td><strong>Персонажи</strong></td>
+              <td>Все</td>
+              <td>Все</td>
+            </tr>
+            <tr>
+              <td><strong>Уровни собеседника</strong></td>
+              <td>Все четыре</td>
+              <td>Все четыре</td>
+            </tr>
+            <tr>
+              <td><strong>Разбор ошибок и перевод реплик</strong></td>
+              <td>&#10003;</td>
+              <td>&#10003;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-center" style="margin-top: var(--space-l);">
+        Двадцать сообщений — это примерно один разговор.
+        <a href="/pricing/">Все тарифы — на одной странице →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="section">
+    <div class="container">
+      <h2 class="text-center mb-l">Разговор — одна из частей приложения</h2>
+      <p class="text-center max-w-prose mx-auto mb-xl">
+        Readling прежде всего читалка. Чат — то место, где прочитанное приходится
+        произнести самому.
+      </p>
+      <div class="grid-3">
+        <a href="/grammatika/" class="card related-card">
+          <h3 class="mb-s">Упражнения по грамматике</h3>
+          <p>Шесть тренажёров на предложениях из книг — с разбором ответа на русском.</p>
+          <span class="related-card__link">Подробнее →</span>
+        </a>
+        <a href="/metod-pogruzheniya/" class="card related-card">
+          <h3 class="mb-s">Метод погружения</h3>
+          <p>Английский появляется внутри русского текста и постепенно вытесняет его. К концу книги вы читаете в оригинале.</p>
+          <span class="related-card__link">Подробнее →</span>
+        </a>
+        <a href="/parallelnoe-chtenie/" class="card related-card">
+          <h3 class="mb-s">Параллельное чтение</h3>
+          <p>Оригинал и русский перевод рядом, абзац напротив абзаца. Для тех, кому важно понять каждую фразу.</p>
+          <span class="related-card__link">Подробнее →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--alt" style="padding-bottom: var(--space-3xl);">
+    <div class="container text-center">
+      <h2 class="mb-m">Первый разговор — сегодня и бесплатно</h2>
+      <p class="max-w-prose mx-auto mb-l">
+        Скачайте Readling, откройте вкладку «Чаты», выберите книгу и героя.
+        Двадцать сообщений в день — бесплатно.
+      </p>
+      <div class="store-buttons" style="justify-content: center;">
+        <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+    </div>
+  </section>
+
+  <Faq title="Частые вопросы о разговорной практике" items={faqItems} />
+
+  <!-- Schema.org -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Разговорная практика английского с персонажами книг в Readling",
+      "description": "Переписка по-английски с героями книг: четыре уровня собеседника, перевод реплик и разбор ошибок с подсказкой, как сказать правильно.",
+      "image": "https://readling.club/screen-chat.png",
+      "url": "https://readling.club/razgovornaya-praktika/",
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+      "inLanguage": "ru",
+      "author": {
+        "@type": "Person",
+        "name": "Дзмитрий Карпук",
+        "jobTitle": "Основатель Readling",
+        "url": "https://readling.club/o-readling/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Readling",
+        "url": "https://readling.club/",
+        "logo": { "@type": "ImageObject", "url": "https://readling.club/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://readling.club/razgovornaya-praktika/" }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Разговорная практика", "item": "https://readling.club/razgovornaya-praktika/" }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .breadcrumbs {
+    padding: var(--space-m) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
+
+  .hero {
+    background: var(--gradient-hero);
+    padding: var(--space-xxl) 0;
+    border-bottom: 1px solid var(--color-card-border);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .hero__subtitle {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .hero__note {
+    font-size: 0.9375rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .hero__phone {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xxl);
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+  }
+
+  /* ===== Демонстрация переписки ===== */
+  .chat-demo {
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .chat-demo__head {
+    padding: var(--space-m) var(--space-l);
+    border-bottom: 1px solid var(--color-card-border);
+    text-align: center;
+  }
+
+  .chat-demo__name {
+    font-weight: 700;
+    font-size: 1.0625rem;
+    color: var(--color-text);
+  }
+
+  .chat-demo__book {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .chat-demo__level {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    padding: var(--space-s) var(--space-l);
+    background: var(--color-surface-alt);
+    border-bottom: 1px solid var(--color-card-border);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+
+  .chat-demo__pill {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 3px var(--space-sm);
+    border-radius: var(--radius-pill);
+  }
+
+  .chat-demo__feed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-l);
+  }
+
+  .chat-demo__msg {
+    max-width: 86%;
+    padding: var(--space-sm) var(--space-m);
+    border-radius: var(--radius-lg);
+  }
+
+  .chat-demo__msg--them {
+    align-self: flex-start;
+    background: var(--color-surface-alt);
+    border-bottom-left-radius: var(--radius-xs);
+  }
+
+  .chat-demo__msg--me {
+    align-self: flex-end;
+    background: var(--color-primary);
+    border-bottom-right-radius: var(--radius-xs);
+  }
+
+  .chat-demo__msg p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  .chat-demo__msg--me p {
+    color: var(--color-on-primary);
+  }
+
+  /* В приложении перевод скрыт до нажатия. На странице он развёрнут:
+     иначе картинка обещает функцию, которой на ней не видно. */
+  .chat-demo__translation {
+    font-size: 0.875rem !important;
+    color: var(--color-text-tertiary) !important;
+    margin-top: var(--space-xs);
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--color-card-border);
+  }
+
+  .chat-demo__input {
+    padding: var(--space-sm) var(--space-l) var(--space-m);
+    border-top: 1px solid var(--color-card-border);
+    color: var(--color-text-tertiary);
+    font-size: 0.9375rem;
+  }
+
+  /* ===== Уровни ===== */
+  .levels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-l);
+  }
+
+  .levels h3 {
+    font-size: 1rem;
+  }
+
+  .level__text {
+    font-size: 0.9375rem;
+  }
+
+  /* ===== Разбор ошибки ===== */
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xxl);
+    align-items: center;
+  }
+
+  .correction {
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-left: 3px solid var(--color-warning);
+    border-radius: var(--radius-lg);
+    padding: var(--space-l);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .correction__head {
+    margin-bottom: var(--space-sm);
+  }
+
+  .correction__tag {
+    background: var(--color-warning-light);
+    color: var(--color-warning);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px var(--space-s);
+    border-radius: var(--radius-pill);
+  }
+
+  .correction__quote {
+    font-style: italic;
+    color: var(--color-text);
+    font-size: 1rem;
+    margin-bottom: var(--space-s);
+  }
+
+  .correction__text {
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-m);
+  }
+
+  .correction__fix {
+    background: var(--color-success-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-m);
+  }
+
+  .correction__fix-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-success);
+    margin-bottom: var(--space-xs);
+  }
+
+  .correction__fix p {
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .mistakes__note {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    margin-top: var(--space-m);
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ===== Смежные страницы ===== */
+  .related-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .related-card:hover {
+    color: inherit;
+  }
+
+  .related-card p {
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-s);
+  }
+
+  .related-card__link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 900px) {
+    .levels {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero__inner,
+    .mistakes {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__inner {
+      text-align: center;
+    }
+
+    .hero__visual {
+      order: -1;
+    }
+
+    .store-buttons {
+      justify-content: center;
+    }
+
+    .levels {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

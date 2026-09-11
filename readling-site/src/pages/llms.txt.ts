@@ -77,6 +77,13 @@ Russian text, increasing the English percentage with each page.
 - Immersion mode: English gradually replaces Russian text as you read
 - Parallel reading: side-by-side English and Russian translation
 - 3 training types: flash cards, sentence puzzles, fill-in-the-word
+- 6 grammar drills built on sentences taken from the books: articles, prepositions,
+  verb tenses, quantifiers, pronouns, comparison — a gap with several plausible
+  options, and the answer is explained in Russian: why the correct option fits here
+  and why the tempting one does not
+- Character chat: text conversation in English with curated characters from the books
+  (4 interlocutor levels, A1-A2 to C1-C2). A message with a real mistake is held back
+  with the faulty sentence quoted, explained, and rewritten correctly
 - Book catalog: ${roundedDown(books.length)} classic books, CEFR levels ${levels[0]}–${levels[levels.length - 1]}
 - Personal dictionary: auto-saved from reading, used in training
 - Daily reading streaks for motivation
@@ -115,7 +122,9 @@ The Russian translations are Readling's own, so this data exists nowhere else.
 - Users looking for alternatives to exercise-based apps like Duolingo
 
 ## Pricing
-- Free tier: limited book catalog
+- Free tier: limited book catalog, 2 grammar sessions per day (one counter shared by all
+  six trainers; a session is 5, 10 or 20 exercises), 20 chat messages per day and up to
+  300 per month
 - Subscription: $3.99/month — all books, no ads, all features
 - 7-day free trial, no auto-charge afterwards
 
@@ -124,6 +133,8 @@ The Russian translations are Readling's own, so this data exists nowhere else.
 - Book catalog: ${SITE}/books/
 - Immersion Method: ${SITE}/metod-pogruzheniya/
 - Parallel Reading: ${SITE}/parallelnoe-chtenie/
+- Grammar drills: ${SITE}/grammatika/
+- Speaking practice with book characters: ${SITE}/razgovornaya-praktika/
 - Pricing: ${SITE}/pricing/
 - Readling vs Duolingo: ${SITE}/sravnenie/readling-vs-duolingo/
 - About: ${SITE}/o-readling/

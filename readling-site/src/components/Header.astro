@@ -1,10 +1,17 @@
 ---
 import { links } from '../config/links';
+// Подписи короче, чем заголовки самих страниц, и это вынужденно: семь пунктов
+// полными названиями не помещаются в ряд даже на 1440px. Сокращаем так, чтобы
+// ключевое слово осталось в тексте ссылки («погружение», «Duolingo»), — иначе
+// теряется и якорь, и узнаваемость раздела. Ряду нужно 938px, поэтому ниже
+// 1025px он целиком уходит в бургер (см. медиазапрос в стилях).
 const navItems = [
   { href: '/books/', label: 'Книги' },
-  { href: '/metod-pogruzheniya/', label: 'Метод погружения' },
+  { href: '/metod-pogruzheniya/', label: 'Погружение' },
   { href: '/parallelnoe-chtenie/', label: 'Параллельное чтение' },
-  { href: '/sravnenie/readling-vs-duolingo/', label: 'Readling vs Duolingo' },
+  { href: '/grammatika/', label: 'Грамматика' },
+  { href: '/razgovornaya-praktika/', label: 'Чат с героями' },
+  { href: '/sravnenie/readling-vs-duolingo/', label: 'vs Duolingo' },
   { href: '/pricing/', label: 'Цены' },
 ];
 ---
@@ -78,7 +85,7 @@ const navItems = [
   .header__nav {
     display: flex;
     align-items: center;
-    gap: var(--space-l);
+    gap: var(--space-m);
     margin-left: auto;
   }
 
@@ -119,7 +126,7 @@ const navItems = [
     transition: all var(--duration-fast) var(--ease-out);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .header__nav {
       display: none;
       position: absolute;

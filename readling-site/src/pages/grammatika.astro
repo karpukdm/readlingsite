@@ -1,0 +1,727 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../config/links';
+import { appCatalog } from '../utils/catalog';
+import { getPageDates } from '../utils/dates';
+import Faq from '../components/Faq.astro';
+
+const { datePublished, dateModified } = getPageDates('src/pages/grammatika.astro');
+
+// Шесть тренажёров — ровно те, что есть в приложении, с их подписями.
+// Порядок тот же, что на экране: менять его здесь, не меняя в приложении,
+// значит обещать читателю не тот экран, который он откроет.
+const trainers = [
+  {
+    title: 'Артикли',
+    hint: 'a / an / the — и вариант «без артикля»',
+    text: 'В русском артиклей нет — и рука ставит их наугад, по слуху, которого пока не выработалось.',
+  },
+  {
+    title: 'Предлоги',
+    hint: 'in / on / at и другие',
+    text: 'Предлог редко переводится один в один. Его приходится запоминать вместе с выражением — а для этого нужно много живых примеров.',
+  },
+  {
+    title: 'Времена глагола',
+    hint: 'took / has taken / was taking',
+    text: 'Время подсказывает не таблица, а смысл фразы. Здесь эта фраза целиком авторская, не урезанная под правило.',
+  },
+  {
+    title: 'Количество',
+    hint: 'much / many / a few',
+    text: 'Исчисляемое или нет, много или мало — на такой развилке правдоподобно выглядит любой из вариантов.',
+  },
+  {
+    title: 'Местоимения',
+    hint: 'he / him / his',
+    text: 'Формы путаются там, где в русском работает падеж: «him» и «his» — по-русски одно и то же «его».',
+  },
+  {
+    title: 'Сравнение',
+    hint: 'bigger / more beautiful / the best',
+    text: 'Короткое слово или длинное, сравнительная степень или превосходная — правило простое, а ошибаются в нём постоянно.',
+  },
+];
+
+// Вопросы и ответы: один массив на видимый блок и на разметку FAQPage.
+const faqItems = [
+  {
+    q: 'Нужно ли сначала прочитать книгу, чтобы решать упражнения?',
+    a: 'Нет. Предложения взяты из книг каталога, но заранее читать их не нужно: открываете «Артикли» и начинаете. Если фраза вырвана из незнакомого сюжета и смысл ускользает, под ней есть кнопка «Показать перевод».',
+  },
+  {
+    q: 'Сколько упражнений доступно бесплатно?',
+    a: 'Два занятия в день — на все шесть тренажёров вместе, а не по два на каждый. В занятии 5, 10 или 20 упражнений, то есть бесплатно выходит до сорока вопросов в день. Этого хватает, чтобы понять, ваше это или нет. Подписка снимает ограничение.',
+  },
+  {
+    q: 'Объясняют ли, почему мой вариант неправильный?',
+    a: 'Разбор всегда состоит из двух половин: почему здесь подходит правильный вариант и почему не годится тот, что напрашивался. А во временах глагола, количестве и сравнении разобран каждый вариант: приложение называет верный ответ, тут же объясняет выбранный вами, а остальные можно раскрыть тут же — если хочется понять, чем они отличаются.',
+  },
+  {
+    q: 'На каком языке написаны объяснения?',
+    a: 'На русском. Разбор грамматики — то место, где родной язык экономит время: правило, объяснённое по-английски, приходится сначала перевести, а потом уже понять.',
+  },
+  {
+    q: 'Заменит ли это учебник грамматики?',
+    a: 'Нет, и не пытается. Учебник даёт систему: здесь правило, здесь исключения, здесь таблица. Тренажёр отвечает на другой вопрос — узна́ете ли вы это правило в живом предложении, где оно не подписано. Одно без другого работает хуже.',
+  },
+];
+---
+
+<BaseLayout
+  title="Упражнения по грамматике английского с разбором ответов | Readling"
+  description="Шесть тренажёров английской грамматики: артикли, предлоги, времена, количество, местоимения, сравнение. Предложения из настоящих книг, разбор ответа на русском."
+  canonicalPath="/grammatika"
+>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/screen-grammar-280.webp" type="image/webp" fetchpriority="high"
+          imagesrcset="/screen-grammar-280.webp 280w, /screen-grammar-560.webp 560w, /screen-grammar.webp 834w" imagesizes="280px" />
+  </Fragment>
+
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <div class="container">
+      <a href="/">Главная</a>
+      <span class="breadcrumbs__sep">/</span>
+      <span>Грамматика</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <h1 class="mb-m">Упражнения по грамматике английского — на предложениях из книг</h1>
+        <p class="hero__subtitle mb-l">
+          <strong>Артикли, предлоги, времена, количество, местоимения, сравнение — шесть мест,
+          где русскоязычные ошибаются годами.</strong>
+          Тренируете их не на учебных фразах, а на настоящих предложениях из книг.
+          Ответили — и сразу по-русски: почему здесь так и почему не годится вариант,
+          к которому тянулась рука.
+        </p>
+        <div class="store-buttons">
+          <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+          <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="/screen-grammar-280.webp 280w, /screen-grammar-560.webp 560w, /screen-grammar.webp 834w"
+            sizes="280px"
+          />
+          <img src="/screen-grammar.png" alt="Экран грамматических тренажёров Readling: вкладка «Грамматика» со списком упражнений — артикли, предлоги, времена глагола, количество, местоимения, сравнение" class="hero__phone" width="834" height="1731" fetchpriority="high" decoding="async" />
+        </picture>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIX TRAINERS -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">Шесть тренажёров — по числу мест, где спотыкаются все</h2>
+        <p class="max-w-prose mx-auto">
+          Правило про артикли вы, скорее всего, знаете. Проблема не в правиле: в живом
+          предложении его никто не подписал, и рука ставит «the» наугад. Тренажёр не
+          объясняет правило заново — он ловит момент, когда вы его не узнали.
+        </p>
+      </div>
+      <div class="trainers">
+        {trainers.map(t => (
+          <div class="card trainer">
+            <h3 class="trainer__title">{t.title}</h3>
+            <p class="trainer__hint" lang="en">{t.hint}</p>
+            <p class="trainer__text">{t.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="text-center mb-l">Как проходит упражнение</h2>
+      <div class="how">
+        <div class="how__steps">
+          <ol class="steps-list" role="list">
+            <li>
+              <h3>Предложение из книги, а не из учебника</h3>
+              <p>
+                Фразу никто не сочинял под правило: это обычная авторская строчка, где артикль
+                стоит не потому, что так требует параграф учебника. Если сюжет незнаком —
+                кнопка «Показать перевод» открывает русскую версию предложения.
+              </p>
+            </li>
+            <li>
+              <h3>Варианты ответа на выбор</h3>
+              <p>
+                Все правдоподобные — наугад не угадаешь, придётся подумать.
+                В длинном предложении пропусков бывает несколько.
+              </p>
+            </li>
+            <li>
+              <h3>Один ответ — без подбора</h3>
+              <p>
+                Переиграть нельзя, иначе это угадайка. Зато объяснение вы читаете в ту же
+                секунду, пока ещё помните, почему выбрали именно так, — и ошибка
+                запоминается вместо того, чтобы повториться.
+              </p>
+            </li>
+            <li>
+              <h3>Пять минут или полчаса — сколько есть</h3>
+              <p>
+                Пять упражнений — пока ждёте кофе, двадцать — если сели всерьёз.
+                Вышли на середине — продолжите с того же места.
+              </p>
+            </li>
+          </ol>
+        </div>
+        <div class="how__visual">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/screen-grammar-explain-280.webp 280w, /screen-grammar-explain-560.webp 560w, /screen-grammar-explain.webp 834w"
+              sizes="300px"
+            />
+            <img src="/screen-grammar-explain.png" alt="Разбор упражнения по временам глагола в Readling: предложение с подставленным словом knows и объяснение, почему остальные варианты не подходят" class="how__phone" width="834" height="1731" loading="lazy" decoding="async" />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE EXPLANATION -->
+  <section class="section">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 class="mb-s">Разбирается не только правильный ответ</h2>
+        <p class="max-w-prose mx-auto">
+          Знать, что верно «knows», — половина дела. Вторая половина — понять, почему рука
+          тянулась к «is knowing». Во временах глагола, количестве и сравнении разобран
+          каждый вариант, а не только верный.
+        </p>
+      </div>
+
+      {/* Разбор не выдуман для сайта: это ответ приложения на упражнение из
+          «Убить пересмешника». Отсюда и странность вроде «англичанин возьмёт» —
+          текст приведён так, как его видит пользователь. */}
+      <div class="exercise-demo max-w-wide mx-auto">
+        <div class="exercise-demo__head">
+          <span class="kicker">Времена глагола</span>
+          <span class="exercise-demo__counter">3 / 3</span>
+        </div>
+        <p class="exercise-demo__sentence" lang="en">
+          “Jem,” I said, “I think Atticus <mark class="exercise-demo__answer">knows</mark> it anyway.”
+        </p>
+        <div class="exercise-demo__verdict">Правильно!</div>
+        <p class="exercise-demo__main">
+          Слова «I think Atticus knows it anyway» говорят о состоянии, а не о действии:
+          знание нельзя начать и закончить, как работу. Такие глаголы английский не ставит
+          в форму на «-ing» ни в каком времени, поэтому здесь возможна только форма «knows».
+        </p>
+        <ul class="exercise-demo__options" role="list">
+          <li>
+            <span class="exercise-demo__option" lang="en">was knowing</span>
+            <span>Формы на «-ing» у «know» не бывает, и прошедшее время этого не меняет.</span>
+          </li>
+          <li>
+            <span class="exercise-demo__option" lang="en">is knowing</span>
+            <span>Так по-английски не говорят: «know» — состояние, а не занятие, и формы на «-ing» у него не бывает.</span>
+          </li>
+          <li>
+            <span class="exercise-demo__option" lang="en">has been knowing</span>
+            <span>И это форма на «-ing». Чтобы сказать, как долго он знает, англичанин возьмёт «has known».</span>
+          </li>
+        </ul>
+      </div>
+
+      <p class="exercise-demo__source max-w-wide mx-auto">
+        Это настоящий ответ приложения на упражнение из «Убить пересмешника» —
+        ни слова не поправлено для сайта.
+      </p>
+
+      <div class="grid-3" style="margin-top: var(--space-xxl);">
+        <div class="card">
+          <h3 class="mb-s">Видно, где рассуждение свернуло не туда</h3>
+          <p>
+            Ошиблись — карточка называет правильный ответ и тут же разбирает выбранный вами.
+            Видно не только верную форму, но и место, где рассуждение свернуло не туда.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Объяснение на русском</h3>
+          <p>
+            Объяснение на родном языке читается с одного раза. То же правило по-английски
+            приходится сперва разобрать как текст и только потом — как правило.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="mb-s">Правильный ответ всегда один</h3>
+          <p>
+            Во временах, количестве и сравнении предложение перед показом отдельно
+            проверяют: если в пропуск честно встают два варианта, вы его не увидите.
+            Ошиблись — значит, есть что понять, а не о чём спорить.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY BOOKS -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="why">
+        <div>
+          <h2 class="mb-m">Почему предложения из книг работают лучше учебных</h2>
+          <p class="mb-m">
+            Учебное предложение пишут под правило. Оно короткое, прозрачное, без лишних слов —
+            и подсказывает ответ одной своей формой. Вы решаете упражнение правильно —
+            и не узнаёте ту же конструкцию на первой же странице настоящей книги.
+          </p>
+          <p class="mb-m">
+            В книге предложение длиннее, в нём есть придаточное, прямая речь и пара слов,
+            которых вы не знаете. Ровно в таком виде английский и встретится вам дальше —
+            в статье, в сериале, в письме от коллеги.
+          </p>
+          <p>
+            Предложения — из тех же {appCatalog.books} книг, что и в каталоге для чтения.
+            Читать их заранее не нужно: если сюжет незнаком, перевод фразы открывается
+            в одно нажатие.
+          </p>
+        </div>
+        <div class="why__compare">
+          <div class="why__card">
+            <span class="why__label">Учебное предложение</span>
+            <p lang="en">I ___ a book yesterday.</p>
+            <p class="why__note">Подсказка в самом предложении: «yesterday» решает всё за вас.</p>
+          </div>
+          <div class="why__card why__card--real">
+            <span class="why__label">Предложение из книги</span>
+            <p lang="en">“Jem,” I said, “I think Atticus ___ it anyway.”</p>
+            <p class="why__note">Указателя времени нет. Решает смысл глагола — как в настоящем тексте.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIMITS -->
+  {/* Здесь стояла таблица «бесплатно / подписка», но сравнивать в ней было
+      нечего: три строки из четырёх совпадали в обеих колонках, а вид таблицы
+      обещал разбор тарифов. Два абзаца говорят то же самое и не пугают. */}
+  <section class="section">
+    <div class="container max-w-prose mx-auto text-center">
+      <h2 class="mb-m">Бесплатно — два занятия в день, и это не урезанная версия</h2>
+      <p class="mb-m">
+        Два занятия в сутки на все шесть тренажёров вместе. В занятии 5, 10 или
+        20 упражнений на ваш выбор — то есть до сорока вопросов в день, чего хватает,
+        чтобы понять, ваше это или нет.
+      </p>
+      <p>
+        Подписка не открывает ничего «получше» — она снимает потолок. Сами тренажёры,
+        разбор ответов и перевод предложения работают и без неё.
+        <a href="/pricing/">Все тарифы — на одной странице →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- RELATED -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="text-center mb-l">Грамматика — одна из частей приложения</h2>
+      <p class="text-center max-w-prose mx-auto mb-xl">
+        Readling начинался как читалка и остаётся ею: тренажёры нужны, чтобы то,
+        что вы встретили в книге, не выветрилось через неделю.
+      </p>
+      <div class="grid-3">
+        <a href="/razgovornaya-praktika/" class="card related-card">
+          <h3 class="mb-s">Разговорная практика</h3>
+          <p>Переписка по-английски с героями книг. Ошиблись — приложение остановит и покажет, как сказать правильно.</p>
+          <span class="related-card__link">Подробнее →</span>
+        </a>
+        <a href="/parallelnoe-chtenie/" class="card related-card">
+          <h3 class="mb-s">Параллельное чтение</h3>
+          <p>Оригинал и русский перевод рядом. Удобно, когда хочется разобрать конструкцию целиком, а не один пропуск.</p>
+          <span class="related-card__link">Подробнее →</span>
+        </a>
+        <a href="/metod-pogruzheniya/" class="card related-card">
+          <h3 class="mb-s">Метод погружения</h3>
+          <p>Английский появляется внутри русского текста и постепенно вытесняет его. К концу книги вы читаете в оригинале.</p>
+          <span class="related-card__link">Подробнее →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container text-center">
+      <h2 class="mb-m">Проверьте себя на первом же предложении — бесплатно</h2>
+      <p class="max-w-prose mx-auto mb-l">
+        Скачайте Readling, откройте вкладку «Грамматика» и выберите тренажёр.
+        Подписка нужна, только если двух занятий в день окажется мало.
+      </p>
+      <div class="store-buttons" style="justify-content: center;">
+        <a href={links.appStore} target="_blank" rel="noopener" class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} target="_blank" rel="noopener" class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+    </div>
+  </section>
+
+  <Faq title="Частые вопросы о грамматических упражнениях" items={faqItems} />
+
+  <!-- Schema.org -->
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Упражнения по грамматике английского в Readling",
+      "description": "Шесть тренажёров английской грамматики на предложениях из книг: артикли, предлоги, времена глагола, количество, местоимения, сравнение. Разбор ответа на русском.",
+      "image": "https://readling.club/screen-grammar.png",
+      "url": "https://readling.club/grammatika/",
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+      "inLanguage": "ru",
+      "author": {
+        "@type": "Person",
+        "name": "Дзмитрий Карпук",
+        "jobTitle": "Основатель Readling",
+        "url": "https://readling.club/o-readling/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Readling",
+        "url": "https://readling.club/",
+        "logo": { "@type": "ImageObject", "url": "https://readling.club/logo.png" }
+      },
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://readling.club/grammatika/" }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Грамматика", "item": "https://readling.club/grammatika/" }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .breadcrumbs {
+    padding: var(--space-m) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
+
+  .hero {
+    background: var(--gradient-hero);
+    padding: var(--space-xxl) 0;
+    border-bottom: 1px solid var(--color-card-border);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .hero__subtitle {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .hero__phone {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xxl);
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+  }
+
+  .kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--color-primary);
+  }
+
+  /* ===== Шесть тренажёров ===== */
+  .trainers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-l);
+  }
+
+  .trainer__title {
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Строка с примерами — единственное место карточки, где текст английский.
+     Моноширинный набор отделяет её от русского описания ниже без цвета:
+     синим она читалась бы как ссылка. */
+  .trainer__hint {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    margin-bottom: var(--space-s);
+  }
+
+  .trainer__text {
+    font-size: 0.9375rem;
+  }
+
+  /* ===== Как проходит упражнение ===== */
+  .how {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-xxl);
+    align-items: center;
+  }
+
+  .how__phone {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: var(--radius-xxl);
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+  }
+
+  .steps-list {
+    counter-reset: step;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .steps-list li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 56px;
+  }
+
+  .steps-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-primary-tint);
+    color: var(--color-primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .steps-list h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .steps-list p {
+    font-size: 0.9375rem;
+  }
+
+  /* ===== Демонстрация разбора ===== */
+  .exercise-demo {
+    background: var(--color-surface);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-l);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .exercise-demo__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-m);
+    margin-bottom: var(--space-m);
+  }
+
+  .exercise-demo__counter {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .exercise-demo__sentence {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    margin-bottom: var(--space-l);
+  }
+
+  .exercise-demo__answer {
+    background: var(--color-success-light);
+    color: var(--color-success);
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: var(--radius-xs);
+  }
+
+  .exercise-demo__verdict {
+    font-weight: 700;
+    color: var(--color-success);
+    margin-bottom: var(--space-s);
+  }
+
+  .exercise-demo__main {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    margin-bottom: var(--space-m);
+  }
+
+  .exercise-demo__source {
+    margin-top: var(--space-sm);
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+  }
+
+  .exercise-demo__options {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding-top: var(--space-m);
+    border-top: 1px solid var(--color-card-border);
+  }
+
+  .exercise-demo__options li {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .exercise-demo__option {
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .exercise-demo__option::after {
+    content: ' — ';
+    font-weight: 400;
+    color: var(--color-text-tertiary);
+  }
+
+  /* ===== Почему из книг ===== */
+  .why {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xxl);
+    align-items: center;
+  }
+
+  .why__compare {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .why__card {
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-m);
+    background: var(--color-surface);
+  }
+
+  .why__card--real {
+    border-color: rgba(0, 122, 255, 0.3);
+    box-shadow: 0 0 0 1px rgba(0, 122, 255, 0.08);
+  }
+
+  .why__label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--space-s);
+  }
+
+  .why__card p {
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+
+  .why__note {
+    font-size: 0.875rem !important;
+    color: var(--color-text-tertiary) !important;
+    margin-top: var(--space-s);
+  }
+
+  /* ===== Смежные страницы ===== */
+  .related-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .related-card:hover {
+    color: inherit;
+  }
+
+  .related-card p {
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-s);
+  }
+
+  .related-card__link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  @media (max-width: 900px) {
+    .trainers {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero__inner,
+    .how,
+    .why {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__inner {
+      text-align: center;
+    }
+
+    .hero__visual {
+      order: -1;
+    }
+
+    .store-buttons {
+      justify-content: center;
+    }
+
+    .trainers {
+      grid-template-columns: 1fr;
+    }
+
+    .how__visual {
+      order: -1;
+    }
+
+    .exercise-demo__sentence {
+      font-size: 1rem;
+    }
+  }
+</style>

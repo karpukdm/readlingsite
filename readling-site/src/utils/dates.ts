@@ -23,6 +23,8 @@ const MANUAL_DATES: Record<string, { datePublished?: string; dateModified?: stri
   'src/pages/parallelnoe-chtenie.astro': { datePublished: '2026-03-15T00:00:00Z' },
   'src/pages/sravnenie/readling-vs-duolingo.astro': { datePublished: '2026-03-15T00:00:00Z' },
   'src/pages/o-readling.astro': { datePublished: '2026-05-25T00:00:00Z' },
+  'src/pages/grammatika.astro': { datePublished: '2026-09-11T00:00:00Z' },
+  'src/pages/razgovornaya-praktika.astro': { datePublished: '2026-09-11T00:00:00Z' },
 };
 
 export function getPageDates(relPath: string): { datePublished: string; dateModified: string } {

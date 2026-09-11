@@ -14,6 +14,10 @@ const faqItems = [
     a: 'Ничего не списывается автоматически. Пробный период просто даёт доступ ко всем функциям на 7 дней. После этого вы продолжите пользоваться бесплатной версией — а подписку оформите только если сами захотите.',
   },
   {
+    q: 'Что именно ограничено в бесплатной версии?',
+    a: 'Три вещи. Каталог книг открыт частично. Грамматических занятий — два в день, и это общий счётчик на все шесть тренажёров; в занятии 5, 10 или 20 упражнений на ваш выбор. Сообщений персонажам — двадцать в день и не больше трёхсот в месяц. Всё остальное работает и без подписки: оба режима чтения, перевод слов, личный словарь, разбор ответов в тренажёрах и перевод реплик в чате.',
+  },
+  {
     q: 'Как отменить подписку?',
     a: 'Через настройки App Store или Google Play — так же, как любую другую подписку. После отмены вы сможете пользоваться подпиской до конца оплаченного периода.',
   },
@@ -124,6 +128,14 @@ const faqItems = [
               <span class="pricing-card__check">&#10003;</span>
               До 50 карточек фраз в словаре
             </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">&#10003;</span>
+              Грамматика — 2 занятия в день
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check">&#10003;</span>
+              Чат с персонажами — 20 сообщений в день
+            </li>
             <li class="pricing-card__feature pricing-card__feature--muted">
               <span class="pricing-card__dash">—</span>
               Ограниченный каталог книг
@@ -168,6 +180,14 @@ const faqItems = [
             <li class="pricing-card__feature">
               <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
               <strong>Все типы тренировок</strong>
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              <strong>Грамматика без ограничений</strong>
+            </li>
+            <li class="pricing-card__feature">
+              <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
+              <strong>3000 сообщений персонажам в месяц</strong>
             </li>
             <li class="pricing-card__feature">
               <span class="pricing-card__check pricing-card__check--accent">&#10003;</span>
@@ -236,6 +256,13 @@ const faqItems = [
           <div>
             <h3 class="mb-xs">Безлимитные тренировки</h3>
             <p>Флэш-карточки, пазлы предложений, вставка слов — без ограничений по количеству. Учите столько, сколько хотите.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-item__icon">&#128172;</div>
+          <div>
+            <h3 class="mb-xs">Грамматика и разговор без оглядки на счётчик</h3>
+            <p>Бесплатно — два <a href="/grammatika/">грамматических занятия</a> и двадцать сообщений <a href="/razgovornaya-praktika/">персонажам книг</a> в день. С подпиской занятия идут без ограничений, а в чате остаётся только месячный потолок — 3000 сообщений.</p>
           </div>
         </div>
         <div class="value-item">
@@ -309,7 +336,7 @@ const faqItems = [
       "name": "Readling — английский по книгам",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "iOS, Android",
-      "description": `Подписка на приложение Readling — изучение английского через чтение книг. ${appCatalog.books} книг, безлимитные тренировки.`,
+      "description": `Подписка на приложение Readling — изучение английского через чтение книг. ${appCatalog.books} книг, безлимитные тренировки и упражнения по грамматике, 3000 сообщений в чате с персонажами книг в месяц.`,
       "url": "https://readling.club/pricing/",
       "image": "https://readling.club/logo.png",
       "publisher": { "@type": "Organization", "name": "Readling", "url": "https://readling.club/" },
