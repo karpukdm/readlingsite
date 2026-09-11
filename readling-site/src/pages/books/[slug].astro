@@ -629,7 +629,15 @@ const faqItems = [...coreFaq, ...rotatedOptional];
       "genre": genres.map((g: string) => genreLabels[g] || g),
       "inLanguage": ["en", "ru"],
       "bookFormat": "https://schema.org/EBook",
-      "isAccessibleForFree": false,
+      // `isAccessibleForFree` у самой книги не выставляем. Это стандартный
+      // сигнал пейволла, и относится он к содержимому страницы, а не к
+      // продукту: объявляя `false`, мы сообщали поисковику, что страница
+      // закрыта, хотя открыто на ней всё до последней буквы. Для Bing такая
+      // страница перестаёт годиться в источники Copilot — она у него в отчёте
+      // «cannot appear in Copilot and grounding results». Что полный текст
+      // книги доступен по подписке, сказано офферами на /pricing/, и это
+      // утверждение о продукте, а не о странице. Отрывки ниже помечены
+      // `true`: они опубликованы целиком и действительно бесплатны.
       "audience": {
         "@type": "EducationalAudience",
         "educationalRole": "student",
