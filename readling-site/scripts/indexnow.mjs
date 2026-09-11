@@ -76,14 +76,19 @@ const inSitemap = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m =>
 
 let paths;
 if (explicit.length) {
+  // Явно переданные пути фильтру по sitemap не подчиняются. Протокол просит
+  // сообщать и об удалённых или переехавших URL, а их в sitemap по определению
+  // нет: retired-слуги книг отдают 301, и пока Bing не сходит за ними заново,
+  // он держит в индексе исходный адрес и считает его живой страницей.
   paths = explicit;
 } else {
   const newest = Object.values(manifest).map(e => e.lastmod).sort().at(-1);
   paths = Object.entries(manifest)
     .filter(([, e]) => e.lastmod === newest)
-    .map(([p]) => p);
+    .map(([p]) => p)
+    .filter(p => inSitemap.has(p));
 }
-paths = paths.filter(p => inSitemap.has(p)).sort();
+paths = [...new Set(paths)].sort();
 
 if (!paths.length) {
   console.log('нечего отправлять: в последней сборке не изменилась ни одна страница из sitemap');
@@ -94,11 +99,27 @@ console.log(`кандидатов: ${paths.length}`);
 
 const ready = [];
 const skipped = [];
+// Коды, при которых URL имеет смысл отправлять. 200 — страница на месте;
+// 301/308/404/410 — она переехала или исчезла, и это ровно то, о чём движку и
+// надо сообщить. Всё остальное (502, таймаут) — повод не тревожить краулер.
+const RETIRED = new Set([301, 308, 404, 410]);
+
 for (const p of paths) {
   const entry = manifest[p];
-  if (!entry) { skipped.push([p, 'нет в манифесте']); continue; }
-  const { ok, why } = await isDeployed(p, entry);
-  (ok ? ready : skipped).push(ok ? p : [p, why]);
+  if (entry) {
+    const { ok, why } = await isDeployed(p, entry);
+    (ok ? ready : skipped).push(ok ? p : [p, why]);
+    continue;
+  }
+  // Пути вне манифеста — это retired-адреса: сверять отпечаток не с чем,
+  // проверяем только, что прод отвечает про них что-то определённое.
+  const res = await fetch(SITE + p, { redirect: 'manual' });
+  if (RETIRED.has(res.status)) {
+    ready.push(p);
+    console.log(`  retired  ${p} — HTTP ${res.status}`);
+  } else {
+    skipped.push([p, `нет в манифесте, HTTP ${res.status}`]);
+  }
 }
 
 for (const [p, why] of skipped) console.log(`  пропуск  ${p} — ${why}`);
