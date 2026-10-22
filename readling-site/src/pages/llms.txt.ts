@@ -126,7 +126,7 @@ The Russian translations are Readling's own, so this data exists nowhere else.
   six trainers; a session is 5, 10 or 20 exercises), 20 chat messages per day and up to
   300 per month
 - Subscription: $3.99/month — all books, no ads, all features
-- 7-day free trial, no auto-charge afterwards
+- 7 days of Premium as a gift for new users (the free tier stays available), no auto-charge afterwards
 
 ## Links
 - Website: ${SITE}
