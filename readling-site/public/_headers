@@ -54,6 +54,9 @@
 /o-readling/*
   Cache-Control: public, max-age=300, must-revalidate
 
+/download/*
+  Cache-Control: public, max-age=300, must-revalidate
+
 # Sitemap и robots — обновляются с каждым деплоем
 /sitemap.xml
   Cache-Control: public, max-age=3600

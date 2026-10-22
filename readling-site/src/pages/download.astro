@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../config/links';
+---
+
+<BaseLayout
+  title="Скачать Readling — App Store и Google Play"
+  description="Скачайте Readling для iPhone, iPad или Android. Английский по книгам: 7 дней бесплатно, без рекламы."
+  canonicalPath="/download/"
+  noindex={true}
+>
+  {/* Короткая ссылка «скачать» для соцсетей, рассылок и QR: телефон сразу
+      уходит в свой магазин, остальным (компьютер, неизвестное устройство)
+      показываем обе кнопки. Скрипт стоит в <head>, чтобы редирект случился
+      до отрисовки страницы и без мигания. iPadOS 13+ представляется
+      «Macintosh», поэтому его отличаем от Mac по сенсорному экрану. */}
+  <script is:inline slot="head" define:vars={{ appStore: links.appStore, googlePlay: links.googlePlay }}>
+    (function () {
+      var ua = navigator.userAgent;
+      var isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+      if (isIOS) location.replace(appStore);
+      else if (/Android/.test(ua)) location.replace(googlePlay);
+    })();
+  </script>
+
+  <section class="section download">
+    <div class="container text-center">
+      <h1 class="mb-m">Скачать Readling</h1>
+      <p class="download__text mb-l">
+        Английский по книгам на iPhone, iPad и Android. 7 дней бесплатно, без рекламы.
+      </p>
+      <div class="store-buttons" style="justify-content: center;">
+        <a href={links.appStore} class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .download {
+    padding: var(--space-xxl) 0;
+  }
+
+  .download__text {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    max-width: 480px;
+    margin: 0 auto var(--space-l);
+  }
+</style>
