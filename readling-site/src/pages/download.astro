@@ -1,6 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { links } from '../config/links';
+
+const PAGE_URL = new URL('/download/', Astro.site).toString();
+const PLAY_PACKAGE = new URL(links.googlePlay).searchParams.get('id');
+
+// Выход из встроенного браузера в системный: страница откроется заново уже
+// там и сама уведёт в магазин. x-safari-https понимает iOS 17+; intent://
+// без package открывает браузер по умолчанию.
+const safariEscape = PAGE_URL.replace(/^https:/, 'x-safari-https:');
+const androidEscape = `intent://${PAGE_URL.replace(/^https:\/\//, '')}#Intent;scheme=https;action=android.intent.action.VIEW;end`;
+
+// Google Play напрямую, минуя веб-страницу магазина (она сама потом дёргает
+// market://, а это встроенный браузер и режет). Если Play Маркета нет —
+// откроется обычная страница приложения.
+const playIntent = `intent://details?id=${PLAY_PACKAGE}#Intent;scheme=market;package=com.android.vending;S.browser_fallback_url=${encodeURIComponent(links.googlePlay)};end`;
 ---
 
 <BaseLayout
@@ -13,13 +27,28 @@ import { links } from '../config/links';
       уходит в свой магазин, остальным (компьютер, неизвестное устройство)
       показываем обе кнопки. Скрипт стоит в <head>, чтобы редирект случился
       до отрисовки страницы и без мигания. iPadOS 13+ представляется
-      «Macintosh», поэтому его отличаем от Mac по сенсорному экрану. */}
+      «Macintosh», поэтому его отличаем от Mac по сенсорному экрану.
+      Та же проверка стоит у кнопки «Скачать» в src/components/Header.astro.
+
+      Встроенный браузер TikTok не даёт странице открыть другое приложение
+      (магазин — тоже приложение) и показывает «Не удалось выполнить
+      действие». Автоматический переход там не сработает никогда, поэтому
+      в TikTok вместо редиректа показываем лестницу из способов, от самого
+      удобного к самому надёжному: кнопка магазина → открыть страницу
+      в системном браузере → скопировать ссылку. Какие из первых двух
+      пропустит конкретная версия TikTok, заранее не узнать; последний
+      работает всегда. */}
   <script is:inline slot="head" define:vars={{ appStore: links.appStore, googlePlay: links.googlePlay }}>
     (function () {
       var ua = navigator.userAgent;
       var isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-      if (isIOS) location.replace(appStore);
-      else if (/Android/.test(ua)) location.replace(googlePlay);
+      var isAndroid = /Android/.test(ua);
+      if (!isIOS && !isAndroid) return;
+      if (!/musical_ly|trill_|Bytedance|TikTok/i.test(ua)) {
+        location.replace(isIOS ? appStore : googlePlay);
+        return;
+      }
+      document.documentElement.dataset.inapp = isIOS ? 'ios' : 'android';
     })();
   </script>
 
@@ -29,13 +58,77 @@ import { links } from '../config/links';
       <p class="download__text mb-l">
         Английский по книгам на iPhone, iPad и Android. 7 дней бесплатно, без рекламы.
       </p>
+
       <div class="store-buttons" style="justify-content: center;">
-        <a href={links.appStore} class="store-btn"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
-        <a href={links.googlePlay} class="store-btn store-btn--google"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+        <a href={links.appStore} class="store-btn download__ios"><img src="/badge-appstore.svg" alt="Загрузите в App Store" /></a>
+        <a href={links.googlePlay} data-inapp-href={playIntent} class="store-btn store-btn--google download__android"><img src="/badge-google-play.png" alt="Доступно в Google Play" /></a>
+      </div>
+
+      <div class="download__escape">
+        <p class="download__escape-title">Магазин не открылся?</p>
+        <p class="download__escape-text">
+          TikTok не пускает в магазины приложений из своего браузера.
+          Откройте эту страницу в <span class="download__ios">Safari</span><span class="download__android">браузере</span> —
+          она сразу перенаправит куда нужно.
+        </p>
+        <a href={safariEscape} class="btn btn--primary download__escape-btn download__ios">Открыть в Safari</a>
+        <a href={androidEscape} class="btn btn--primary download__escape-btn download__android">Открыть в браузере</a>
+        <button type="button" class="btn btn--secondary download__escape-btn" id="copy-link" data-url={PAGE_URL}>
+          Скопировать ссылку
+        </button>
+        <p class="download__escape-hint">
+          Или нажмите «⋯» в правом верхнем углу и выберите
+          «Открыть в <span class="download__ios">Safari</span><span class="download__android">браузере</span>».
+        </p>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    // Play-кнопка в TikTok ведёт сразу в приложение Play Маркета (см. playIntent).
+    if (document.documentElement.dataset.inapp === 'android') {
+      document.querySelectorAll('[data-inapp-href]').forEach(function (a) {
+        a.href = a.dataset.inappHref;
+      });
+    }
+
+    var button = document.getElementById('copy-link');
+    if (!button) return;
+    var label = button.textContent.trim();
+
+    function fallbackCopy(text) {
+      var input = document.createElement('textarea');
+      input.value = text;
+      input.setAttribute('readonly', '');
+      input.style.position = 'fixed';
+      input.style.opacity = '0';
+      document.body.appendChild(input);
+      input.select();
+      input.setSelectionRange(0, text.length);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(input);
+      return ok;
+    }
+
+    function done(ok) {
+      button.textContent = ok ? 'Ссылка скопирована — вставьте её в браузер' : button.dataset.url;
+      setTimeout(function () { button.textContent = label; }, 4000);
+    }
+
+    button.addEventListener('click', function () {
+      var url = button.dataset.url;
+      // Clipboard API во встроенных браузерах бывает отключён — тогда старый способ.
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(fallbackCopy(url)); });
+      } else {
+        done(fallbackCopy(url));
+      }
+    });
+  })();
+</script>
 
 <style>
   .download {
@@ -47,5 +140,61 @@ import { links } from '../config/links';
     color: var(--color-text-secondary);
     max-width: 480px;
     margin: 0 auto var(--space-l);
+  }
+
+  /* Блок выхода из TikTok и подписи под платформу видны только в TikTok. */
+  .download__escape {
+    display: none;
+    max-width: 360px;
+    margin: var(--space-xl) auto 0;
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--color-card-border);
+  }
+
+  :global(html[data-inapp]) .download__escape {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .download__escape-title {
+    font-weight: 700;
+    font-size: 1.0625rem;
+  }
+
+  .download__escape-text,
+  .download__escape-hint {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+  }
+
+  .download__escape-text {
+    margin-bottom: var(--space-s);
+  }
+
+  .download__escape-hint {
+    margin-top: var(--space-s);
+  }
+
+  .download__escape-btn {
+    width: 100%;
+    white-space: normal;
+  }
+
+  :global(html[data-inapp='ios']) .download__android,
+  :global(html[data-inapp='android']) .download__ios,
+  .download__escape .download__ios,
+  .download__escape .download__android {
+    display: none;
+  }
+
+  :global(html[data-inapp='ios']) .download__escape .download__ios,
+  :global(html[data-inapp='android']) .download__escape .download__android {
+    display: inline;
+  }
+
+  :global(html[data-inapp='ios']) .download__escape a.download__ios,
+  :global(html[data-inapp='android']) .download__escape a.download__android {
+    display: inline-flex;
   }
 </style>

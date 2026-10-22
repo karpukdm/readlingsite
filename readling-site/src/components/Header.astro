@@ -30,7 +30,18 @@ const navItems = [
         <a href={item.href} class="header__link">{item.label}</a>
       ))}
     </nav>
-    <a href="#download" class="btn btn--primary header__cta">Скачать</a>
+    <a href="#download" class="btn btn--primary header__cta" id="header-cta">Скачать</a>
+    {/* На компьютере кнопка прокручивает к подвалу: там обе кнопки магазинов
+        и QR-код для телефона. С телефона ведём на /download/, которая сразу
+        открывает нужный магазин. Определение устройства то же, что в
+        src/pages/download.astro, — меняя одно, поменяйте и другое. */}
+    <script is:inline>
+      (function () {
+        var ua = navigator.userAgent;
+        var isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+        if (isIOS || /Android/.test(ua)) document.getElementById('header-cta').href = '/download/';
+      })();
+    </script>
     <button class="header__burger" id="burger" aria-label="Открыть меню">
       <span></span>
       <span></span>
