@@ -25,6 +25,7 @@ const MANUAL_DATES: Record<string, { datePublished?: string; dateModified?: stri
   'src/pages/o-readling.astro': { datePublished: '2026-05-25T00:00:00Z' },
   'src/pages/grammatika.astro': { datePublished: '2026-09-11T00:00:00Z' },
   'src/pages/razgovornaya-praktika.astro': { datePublished: '2026-09-11T00:00:00Z' },
+  'src/pages/pravoobladatelyam.astro': { datePublished: '2026-10-24T00:00:00Z' },
 };
 
 export function getPageDates(relPath: string): { datePublished: string; dateModified: string } {

@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { links } from '../config/links';
+import { getPageDates } from '../utils/dates';
+
+const { datePublished, dateModified } = getPageDates('src/pages/pravoobladatelyam.astro');
+const mailto = `mailto:${links.rightsEmail}?subject=${encodeURIComponent('Обращение правообладателя')}`;
+---
+
+<BaseLayout
+  title="Правообладателям — Readling"
+  description="Как правообладателю направить обращение по поводу книги в Readling: что указать в письме, куда писать и в какие сроки мы отвечаем."
+  canonicalPath="/pravoobladatelyam"
+>
+  <!-- BREADCRUMBS -->
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <div class="container">
+      <a href="/">Главная</a>
+      <span class="breadcrumbs__sep">/</span>
+      <span>Правообладателям</span>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container max-w-wide mx-auto">
+      <h1 class="mb-m">Правообладателям</h1>
+      <p class="lead mb-xl">
+        Мы уважаем права авторов, переводчиков и издателей. Если вы считаете, что материал в приложении
+        Readling нарушает ваши права, напишите нам — мы быстро разберёмся.
+      </p>
+
+      <h2 class="mb-m">Куда писать</h2>
+      <p class="mb-l">
+        <a href={mailto} class="rights-email">{links.rightsEmail}</a>
+      </p>
+
+      <h2 class="mb-m">Что указать в обращении</h2>
+      <ul class="bullets mb-l">
+        <li><strong>Кто обращается.</strong> ФИО или название организации, контакты для ответа.</li>
+        <li><strong>Произведение.</strong> Название, автор, а если речь о переводе — переводчик.</li>
+        <li><strong>Где оно в Readling.</strong> Название книги в приложении или ссылка на её страницу на сайте.</li>
+        <li><strong>Основание.</strong> Документ или ссылка, подтверждающие ваши права: договор, свидетельство, доверенность представителя.</li>
+      </ul>
+
+      <h2 class="mb-m">Что мы делаем после получения</h2>
+      <ul class="bullets mb-l">
+        <li><strong>В течение 24 часов</strong> скрываем книгу из приложения на время проверки.</li>
+        <li><strong>В течение 3 рабочих дней</strong> отвечаем по существу: подтверждаем снятие или объясняем, на каком основании материал размещён.</li>
+      </ul>
+
+      <h2 class="mb-m">Сотрудничество</h2>
+      <p class="mb-l">
+        Если вы хотите, чтобы ваши книги или переводы были в Readling на законных основаниях, — напишите на тот же адрес.
+        Мы открыты к лицензионным договорам, в том числе с оплатой процентом от дохода.
+      </p>
+
+      <h2 class="mb-m">Юридическая информация</h2>
+      <p>
+        <a href={links.terms} target="_blank" rel="noopener">Условия использования</a> ·
+        <a href={links.privacy} target="_blank" rel="noopener">Политика конфиденциальности</a>
+      </p>
+    </div>
+  </section>
+
+  <Fragment slot="schema">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Правообладателям",
+      "url": "https://readling.club/pravoobladatelyam/",
+      "inLanguage": "ru",
+      "datePublished": datePublished,
+      "dateModified": dateModified,
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://readling.club/" },
+        { "@type": "ListItem", "position": 2, "name": "Правообладателям", "item": "https://readling.club/pravoobladatelyam/" }
+      ]
+    })} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .breadcrumbs {
+    padding: var(--space-m) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-card-border);
+  }
+  .breadcrumbs a { color: var(--color-text-tertiary); }
+  .breadcrumbs a:hover { color: var(--color-primary); }
+  .breadcrumbs__sep { margin: 0 var(--space-xs); }
+
+  .lead {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-top: var(--space-xxl);
+  }
+
+  .rights-email {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .bullets {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .bullets li {
+    padding-left: var(--space-l);
+    position: relative;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  .bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+  }
+
+  .bullets strong {
+    color: var(--color-text);
+  }
+</style>
