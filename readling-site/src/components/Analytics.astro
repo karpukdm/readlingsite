@@ -13,6 +13,13 @@ const GA_ID = import.meta.env.PUBLIC_GA_ID;
       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
       ym(YM_ID, "init", { defer: true, clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
+
+      // Цель «telegram_click»: ссылки на канал помечены data-tg с местом
+      // (header, menu, footer), чтобы в Метрике было видно, какое работает.
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[data-tg]');
+        if (a) ym(YM_ID, 'reachGoal', 'telegram_click', { place: a.getAttribute('data-tg') });
+      });
     </script>
     <noscript><div><img src={`https://mc.yandex.ru/watch/${YM_ID}`} style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   </>

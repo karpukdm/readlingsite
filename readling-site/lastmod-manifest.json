@@ -1,402 +1,402 @@
 {
   "/": {
-    "hash": "054570466aa7135c",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "16cdf7a590e25a6d",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/404.html": {
-    "hash": "bd90f4e36974234a",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "8292174e16757069",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/": {
-    "hash": "cd95a6c73e6f377c",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "79426e24f5f17da1",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/1984/": {
-    "hash": "1000ca388eed2c90",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "48be636bb731e12f",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/a-study-in-scarlet/": {
-    "hash": "c06a8d64c18cbb66",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "9611500de25bfba0",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/a-tale-of-two-cities/": {
-    "hash": "adcc8c046a349929",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "8b143d78715d255d",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/adventures-of-huckleberry-finn/": {
-    "hash": "b22b04f3dbe9da78",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "59903194bdc50d9b",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/alice-s-adventures-in-wonderland/": {
-    "hash": "b7e45a5eb496630c",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "c2ae8c12ab8c6bba",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/alye-parusa/": {
-    "hash": "c2b24d5293ae689a",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "bf397e4fadf03db1",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/anna-karenina/": {
-    "hash": "c06b1ab269baeb59",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "41eae4a49b2c60a6",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/anne-of-green-gables/": {
-    "hash": "634f355460425caa",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "1d6591b9070a9e86",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/bleak-house/": {
-    "hash": "53e87028fc54d23f",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "e3424cbd367179d8",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/bratya-karamazovy/": {
-    "hash": "1d59b01041b4e525",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "235951a60c82f27a",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/chelovek-nevidimka/": {
-    "hash": "c5f9cf7cf405d816",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "a62d0b777056365e",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/crime-and-punishment/": {
-    "hash": "eeb11e6422eea150",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "1a908c55f8234c43",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/david-copperfield/": {
-    "hash": "093dd5ead240ddf7",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "845092db75b0f3b9",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/dracula/": {
-    "hash": "c8b22d6dbc364c44",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "86806f993aa4c5e1",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/dubrovskiy/": {
-    "hash": "b7526c80703553bb",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "677ec4fc5ced479c",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/dvadtsat-tysyach-le-pod-vodoy/": {
-    "hash": "7595264931285104",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "fe4b49cb3d073022",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/dvenadtsat-stulev/": {
-    "hash": "8a4ce391f13f1fc2",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "e26427824ec0cdb3",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/emma/": {
-    "hash": "2402b806ac288a7b",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "5a4f78c539ec4499",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/english-fairy-tales/": {
-    "hash": "c76f825eecb8d180",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "b79658e1875badbf",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/fairy-tales-of-hans-christian-andersen/": {
-    "hash": "b1e788a53903adf1",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "84a6b90d5c351565",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/frankenstein-or-the-modern-prometheus/": {
-    "hash": "e6ae32132669a971",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "cba41278960df34a",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/giperboloid-inzhenera-garina/": {
-    "hash": "66a6a03d45992b60",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "f0350705e19b7b83",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/great-expectations/": {
-    "hash": "32f85f42074e7a07",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "e8c167ec10bbfabe",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/hard-times/": {
-    "hash": "a916e89537d8e835",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "9059766c74b7ab02",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/his-last-bow-some-later-reminiscences-of-sherlock-holmes/": {
-    "hash": "19c2cb3823505a3b",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "194e6eecf253cd30",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/idiot/": {
-    "hash": "d4478a23a1df07e4",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "7197e9b04946caca",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/jane-eyre-an-autobiography/": {
-    "hash": "d3457e3c2e123c86",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "4c8d94719e85809b",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/kentervilskoe-prividenie/": {
-    "hash": "62e9f1837d7751dc",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "5e53f183e5713df9",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/legenda-o-sonnoy-loshchine/": {
-    "hash": "a8f8b329c5a0b38d",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "24cf47c48b1a6fd3",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/little-women-or-meg-jo-beth-and-amy/": {
-    "hash": "57e913aabce38e2c",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "4552ab390af0b3db",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/mansfield-park/": {
-    "hash": "832223b334a9e180",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "0e774550cdef7215",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/martin-eden/": {
-    "hash": "93e821b199a75036",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "a164bfddf47afe75",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/mashina-vremeni/": {
-    "hash": "c1fd18848638d9b4",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "0060f56f0f1ba923",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/master-i-margarita/": {
-    "hash": "8faea48a1be453b5",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "b28ad2c14bab9974",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/middlemarch/": {
-    "hash": "8fe086907132a739",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "4a5f61e48c2f4a90",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/moby-dick-or-the-whale/": {
-    "hash": "be978bb7f4e27227",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "29784cddab2ef036",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/myortvye-dushi/": {
-    "hash": "a102a3bfe1354d87",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "f4e80aadaba86f16",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/northanger-abbey/": {
-    "hash": "82d701ea55429ba6",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "48bef40dd7c5b968",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/oliver-tvist/": {
-    "hash": "8bdf30c55315d93f",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "b94b688f304d1aec",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/ostrov-sokrovishch/": {
-    "hash": "f4e3363b67856522",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "28b703f255df3e4f",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/ottsy-i-deti/": {
-    "hash": "8942c649b6401c35",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "9a724bfb3a772b30",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/persuasion/": {
-    "hash": "dc218f526cf4afe9",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "c34419ccadf0f41a",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/peter-pan/": {
-    "hash": "f9563bbb20119bde",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "27938da5659d8026",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/pigmalion/": {
-    "hash": "1d296b5b515051b4",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "e05c04d893405c54",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/pride-and-prejudice/": {
-    "hash": "8f9a6f58f7421088",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "552b2ea07fd070e8",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/priklyucheniya-toma-soyera/": {
-    "hash": "6b11118fb06c502e",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "816e2b38a69cef20",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/puteshestvie-k-tsentru-zemli/": {
-    "hash": "2a080e31568f66fe",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "872e84b689e4fe7e",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/puteshestviya-gullivera/": {
-    "hash": "ef92204601a99457",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "c0aae9816c49d07d",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/robinzon-kruzo/": {
-    "hash": "7bd4733b3fefd3a5",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "d84167dbe1e50ea2",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/sense-and-sensibility/": {
-    "hash": "2bab97c38feae28b",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "2ffdf0ec3d355491",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/skazki-bratev-grimm/": {
-    "hash": "6229e4b29b2fcc5d",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "d19a3c8fea9a1703",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/sobache-serdtse/": {
-    "hash": "406bd87e3b882c32",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "4868e404934bb693",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/sobor-parizhskoy-bogomateri/": {
-    "hash": "5c70c15aaec1ef55",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "1255f144a415cbe2",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/tainstvennyy-ostrov/": {
-    "hash": "8da3ce15eb578e23",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "135148e41a940ee1",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/tak-govoril-zaratustra/": {
-    "hash": "b9204da6ffd0de10",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "e8fb6b99f09f6cab",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-adventures-of-sherlock-holmes/": {
-    "hash": "292ddbb25b6ed1a8",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "cf8fc73608670d4e",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-blue-castle-a-novel/": {
-    "hash": "d578b6a6ef972b5a",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "aae9d96cfdf3f98e",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-call-of-the-wild/": {
-    "hash": "70732761bd007479",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "a1301b584bceee8d",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-case-book-of-sherlock-holmes/": {
-    "hash": "779b724a07848ab3",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "329660a026026c23",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-count-of-monte-cristo/": {
-    "hash": "1d53bba422c99bdf",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "0890e181e64fa930",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-enchanted-april/": {
-    "hash": "315327a6b7a4ea7a",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "0287330f105ee745",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-fairy-tales-of-charles-perrault/": {
-    "hash": "7d50e8bd4ede0d18",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "03dffd96488ca173",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-great-gatsby/": {
-    "hash": "75b9d857967eb1c4",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "b806aa17556b0f86",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-hound-of-the-baskervilles/": {
-    "hash": "cd172f2bc3320505",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "839bb05ddaf6bc8b",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-importance-of-being-earnest-a-trivial-comedy-for-serious-people/": {
-    "hash": "58cd369749159c73",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "840233030a3ea757",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-iron-heel/": {
-    "hash": "6238a03d08082662",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "78d7aacc4f785cca",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-jungle-book/": {
-    "hash": "ebcbd3f7cc377cf6",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "acff0bc773cb4e76",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-king-in-yellow/": {
-    "hash": "256d0a8ed731d9bf",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "a8c9aa11a876c977",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-little-lady-of-the-big-house/": {
-    "hash": "1678c7b9e5fa8d9b",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "8c4a2e5ddc917726",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-memoirs-of-sherlock-holmes/": {
-    "hash": "47133b232c19331d",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "1f3dc5d26804d201",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-picture-of-dorian-gray/": {
-    "hash": "073e6ddd4cde5539",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "33ec8f71a7721f90",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-return-of-sherlock-holmes/": {
-    "hash": "30d46af43b64c802",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "8dcca578d8152f79",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-sign-of-the-four/": {
-    "hash": "cf78a2ae10a64380",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "acf56b736cf8b6de",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-strange-case-of-dr-jekyll-and-mr-hyde/": {
-    "hash": "9a1e3b2a11b119e1",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "a00650f1951a671e",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-valley-of-fear/": {
-    "hash": "8b794ad8390a936b",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "652d889975639d2a",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/the-wonderful-wizard-of-oz/": {
-    "hash": "639b4220b7844bb0",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "338cc095d9fae751",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/through-the-looking-glass/": {
-    "hash": "43995a9596fa4d33",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "5f76ed0c4839fb89",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/tri-mushketyora/": {
-    "hash": "69b5f1e6dd687d21",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "18108cedee4fb0bb",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/twenty-years-after/": {
-    "hash": "55e85ff228caba89",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "ebb171daf6bf8919",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/voyna-mirov/": {
-    "hash": "3560030893eb928f",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "8926d2b31b8ec181",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/white-fang/": {
-    "hash": "d1c0f5e9b914659f",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "f336333a7944bc9c",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/books/wuthering-heights/": {
-    "hash": "4f8226dfdada56a7",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "8ff714c8f0223a08",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/download/": {
-    "hash": "919e42109b59822f",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "137135a2dd5853e9",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/grammatika/": {
-    "hash": "0ab4f0ca48f73ab3",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "f47a237dfa33b456",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/metod-pogruzheniya/": {
-    "hash": "beed6f165dad9d9c",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "fa657ec987f65a9b",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/o-readling/": {
-    "hash": "97d777415031d524",
-    "lastmod": "2026-10-24T20:25:13.675Z"
+    "hash": "b8309228956a7b23",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/parallelnoe-chtenie/": {
-    "hash": "ead36d0dd797fc5a",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "cd83dfbac65520d1",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/pravoobladatelyam/": {
-    "hash": "1f63a03b26e25e82",
-    "lastmod": "2026-10-24T20:25:13.675Z"
+    "hash": "fb87ed3c5d5bcd11",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/pricing/": {
-    "hash": "87ec074f7bed0b60",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "0fdd4827d56956de",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/razgovornaya-praktika/": {
-    "hash": "415bd2fa851dfd9a",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "3d2f0cd47c5b2e5f",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/sravnenie/readling-vs-duolingo/": {
-    "hash": "b3a4f3f3ece089fc",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "aca23cd753a59d15",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/uroven/a1/": {
-    "hash": "c9f391a7decfdbe8",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "61ca182f0b72ea78",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/uroven/a2/": {
-    "hash": "fe49b1f0a5cd38db",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "4e67961c1c0dd7ff",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/uroven/b1/": {
-    "hash": "6f3859fe4fd3afb5",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "6509c80588b3c1f8",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/uroven/b2/": {
-    "hash": "e4f4e3dc111c22f4",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "752331759894fd40",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/uroven/c1/": {
-    "hash": "d25f2dd1b4f7a304",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "557e29285dcd84b2",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   },
   "/uroven/c2/": {
-    "hash": "2a8233018c965a96",
-    "lastmod": "2026-10-24T20:07:31.159Z"
+    "hash": "8bb9782031decfd6",
+    "lastmod": "2026-11-14T06:59:00.378Z"
   }
 }

@@ -34,6 +34,13 @@ const currentYear = new Date().getFullYear();
           Readling
         </a>
         <p class="footer__desc">Приложение для изучения английского через чтение книг</p>
+        <a href={links.telegram} target="_blank" rel="noopener" class="footer-tg" data-tg="footer">
+          <span class="footer-tg__icon"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></span>
+          <span class="footer-tg__text">
+            <span class="footer-tg__title">Readling в Telegram</span>
+            <span class="footer-tg__sub">Новые книги и функции — узнавайте первыми</span>
+          </span>
+        </a>
       </div>
       <div class="footer-col">
         <h2 class="footer-col__title">Возможности</h2>
@@ -58,7 +65,7 @@ const currentYear = new Date().getFullYear();
         <a href="/o-readling/">О Readling</a>
         <a href="https://readling.notion.site/Privacy-Policy-28905c6ed51e80ceb8cafbd84d6eeb42?pvs=74" target="_blank" rel="noopener">Конфиденциальность</a>
         <a href="https://readling.notion.site/Terms-of-Use-2d405c6ed51e80d3b5f2cf3ed237b3ec" target="_blank" rel="noopener">Условия использования</a>
-        <a href="https://t.me/readlingapp" target="_blank" rel="noopener">Поддержка</a>
+        <a href={links.support} target="_blank" rel="noopener">Поддержка</a>
         <a href="/pravoobladatelyam/">Правообладателям</a>
       </div>
     </div>
@@ -170,6 +177,54 @@ const currentYear = new Date().getFullYear();
     height: 32px;
     border-radius: var(--radius-sm);
     object-fit: cover;
+  }
+
+  .footer-tg {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-s);
+    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-s);
+    max-width: 320px;
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+  }
+
+  .footer-tg:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-tint);
+  }
+
+  .footer-tg__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #2AABEE;
+    color: #fff;
+  }
+
+  .footer-tg__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer-col a.footer-tg .footer-tg__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .footer-tg__sub {
+    font-size: 0.8125rem;
+    color: var(--color-text-tertiary);
+    line-height: 1.35;
   }
 
   .footer__desc {
