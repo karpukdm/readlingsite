@@ -33,7 +33,7 @@ const navItems = [
       <a href={links.telegram} target="_blank" rel="noopener" class="header__link header__link--tg" data-tg="menu">Наш Telegram-канал</a>
     </nav>
     <a href="#download" class="btn btn--primary header__cta" id="header-cta">Скачать</a>
-    <a href={links.telegram} target="_blank" rel="noopener" class="header__tg" data-tg="header" aria-label="Readling в Telegram" title="Readling в Telegram"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg></a>
+    <a href={links.telegram} target="_blank" rel="noopener" class="header__tg" data-tg="header" aria-label="Readling в Telegram" title="Readling в Telegram"><img src="/telegram-logo.svg" width="36" height="36" alt="" /></a>
     {/* На компьютере кнопка прокручивает к подвалу: там обе кнопки магазинов
         и QR-код для телефона. С телефона ведём на /download/, которая сразу
         открывает нужный магазин. Определение устройства то же, что в
@@ -121,21 +121,19 @@ const navItems = [
 
   .header__tg {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    margin-left: calc(-1 * var(--space-s));
     flex-shrink: 0;
+    margin-left: calc(-1 * var(--space-s));
     border-radius: 50%;
-    background: #2AABEE;
-    color: #fff;
-    transition: color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
+    transition: transform var(--duration-fast) var(--ease-out), filter var(--duration-fast) var(--ease-out);
+  }
+
+  .header__tg img {
+    display: block;
   }
 
   .header__tg:hover {
-    color: #fff;
-    background: #229ED9;
+    transform: scale(1.06);
+    filter: brightness(0.95);
   }
 
   .header__cta {
